@@ -15,9 +15,9 @@ Import mixin-interface into your project:
 const MixinInterface = require('mixin-interface');
 ```
 
-#### MixinInterface services
+## MixinInterface services
 
-## MixinInterface.getInstanceName
+### MixinInterface.getInstanceName
 ```javascript
 MixinInterface.getInstanceName(object);
 ```
@@ -37,7 +37,7 @@ class Animal {
 }
 ```
 
-## MixinInterface.implements
+### MixinInterface.implements
 ```javascript
 MixinInterface.implements([interface_class1, interface_class2, ...], this);
 ```
@@ -59,7 +59,7 @@ class Animal {
 }
 ```
 
-## MixinInterface.isInstanceOf
+### MixinInterface.isInstanceOf
 ```javascript
 MixinInterface.isInstanceOf(interface_class, object);
 ```
@@ -73,7 +73,7 @@ var an_animal = new Animal();
 console.log(an_animal.name + " is a 'IAnimal':    " + MixinInterface.isInstanceOf(IAnimal, an_animal))
 ```
 
-## MixinInterface.extendsInterface
+### MixinInterface.extendsInterface
 ```javascript
 MixinInterface.extendsInterface(interface_class, object);
 ```
