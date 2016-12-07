@@ -15,7 +15,17 @@ const MixinInterface = require('mixin-interface');
 ```
 
 ## How to run provided Unit Test (test.js)
-First install [NodeJS](https://nodejs.org/en/) then:
+### Step 1: Install Prerequisite Tools (NodeJS and Git)
+* Install [NodeJS](https://nodejs.org/en/) and [Git] (https://git-scm.com/)
+
+### Step 2: Clone the mixin-interface repository locally 
+```bash
+git clone git://github.com/Echopraxium/mixin-interface
+cd mixin-interface
+npm update
+```
+
+### Step 3: Run the Unit Test
 ```bash
 node test.js
 ```
