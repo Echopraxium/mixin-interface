@@ -15,24 +15,29 @@ const MixinInterface = require('mixin-interface');
 ```
 
 ## How to run the provided Unit Test
-### Step 1: Install Prerequisite Tools
+#### Step 1: Install Prerequisite Tools
 * Install [NodeJS](https://nodejs.org/en/) and [Git] (https://git-scm.com/)
 
-### Step 2: Clone the mixin-interface repository locally 
+#### Step 2: Clone the mixin-interface repository locally
 ```bash
 git clone git://github.com/Echopraxium/mixin-interface
 cd mixin-interface
 npm update
 ```
 
-### Step 3: Run the Unit Test
+#### Step 3: Run the Unit Test
 ```bash
 node test.js
 ```
 
-## MixinInterface services
+## API Documentation
+The API services are provided as static methods of the MixinInterface class.
+* MixinInterface.implements: defines an interface as a child of another interface
+* MixinInterface.extendsInterface: defines that a class is an interface
+* MixinInterface.isInstanceOf: a replacement of _instanceof_ operator to support interface classes
+* MixinInterface.getInstanceName: a bonus service to generate instance names based on implementation class
 
-### MixinInterface.getInstanceName()
+#### MixinInterface.getInstanceName()
 ```javascript
 MixinInterface.getInstanceName(object)
 ```
@@ -52,7 +57,7 @@ class ImplementationClassSample {
 }
 ```
 
-### MixinInterface.implements()
+#### MixinInterface.implements()
 ```javascript
 MixinInterface.implements([interface_class1, interface_class2, ...], object)
 ```
@@ -74,7 +79,7 @@ class Animal {
 }
 ```
 
-### MixinInterface.isInstanceOf()
+#### MixinInterface.isInstanceOf()
 ```javascript
 MixinInterface.isInstanceOf(interface_class, object)
 ```
@@ -88,7 +93,7 @@ var an_animal = new Animal();
 console.log(an_animal.name + " is a 'IAnimal':    " + MixinInterface.isInstanceOf(IAnimal, an_animal))
 ```
 
-### MixinInterface.extendsInterface()
+#### MixinInterface.extendsInterface()
 ```javascript
 MixinInterface.extendsInterface(interface_class, object)
 ```
