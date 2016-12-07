@@ -14,8 +14,8 @@ Import mixin-interface into your project:
 const MixinInterface = require('mixin-interface');
 ```
 
-## How to run provided Unit Test (test.js)
-### Step 1: Install Prerequisite Tools (NodeJS and Git)
+## How to run the provided Unit Test
+### Step 1: Install Prerequisite Tools
 * Install [NodeJS](https://nodejs.org/en/) and [Git] (https://git-scm.com/)
 
 ### Step 2: Clone the mixin-interface repository locally 
@@ -32,27 +32,27 @@ node test.js
 
 ## MixinInterface services
 
-### MixinInterface.getInstanceName
+### MixinInterface.getInstanceName()
 ```javascript
-MixinInterface.getInstanceName(object);
+MixinInterface.getInstanceName(object)
 ```
 
-This service is a bonus feature to generate instance names from their implementation class, it is advised to use it in the implementation class constructor.
+This service is a bonus feature which generates instance names (from their implementation class name), it is advised to use it in the implementation class constructor.
 
 ```javascript
 const appRoot        = require('app-root-path');
 const MixinInterface = require(appRoot + '/src/mixin_interface.js').MixinInterface;
 
-class Animal {
+class ImplementationClassSample {
 	constructor() {
-      ...
+	  //...
       this._name = MixinInterface.getInstanceName(this);
-      ...
+	  //...
 	}
 }
 ```
 
-### MixinInterface.implements
+### MixinInterface.implements()
 ```javascript
 MixinInterface.implements([interface_class1, interface_class2, ...], object)
 ```
@@ -69,12 +69,12 @@ class Animal {
 	constructor() {
       this._implemented_types = {};  // ** Required **
       this._name = MixinInterface.getInstanceName(this);
-      MixinInterface.implements([IAnimal, ILifeForm], this);;
+      MixinInterface.implements([IAnimal, ILifeForm], this);
 	}
 }
 ```
 
-### MixinInterface.isInstanceOf
+### MixinInterface.isInstanceOf()
 ```javascript
 MixinInterface.isInstanceOf(interface_class, object)
 ```
@@ -88,7 +88,7 @@ var an_animal = new Animal();
 console.log(an_animal.name + " is a 'IAnimal':    " + MixinInterface.isInstanceOf(IAnimal, an_animal))
 ```
 
-### MixinInterface.extendsInterface
+### MixinInterface.extendsInterface()
 ```javascript
 MixinInterface.extendsInterface(interface_class, object)
 ```
