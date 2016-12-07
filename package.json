@@ -1,0 +1,29 @@
+{
+  "name": "mixin-interface",
+  "version": "1.0.0",
+  "description": "An es6 implementation of interface classes with support of type checking, inheritance as well as raising an error when the interface's methods are not provided by the implementation class.",
+  "main": "test.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Echopraxium/mixin-interface.git"
+  },
+  "keywords": [
+    "es6",
+    "interface",
+    "class",
+    "mixin"
+  ],
+  "author": "Michel Kern",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Echopraxium/mixin-interface/issues"
+  },
+  "homepage": "https://github.com/Echopraxium/mixin-interface#readme",
+  "dependencies": {
+    "app-root-path": "^2.0.1",
+    "es6-mixins": "^1.0.2"
+  }
+}
