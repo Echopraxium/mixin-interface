@@ -40,9 +40,9 @@ The API services are provided as static methods of the MixinInterface class.
 **Error Management**: an error trap is also set to warn the developer if an interface's service is not provided by the implementation class.
 
 Please note that in the following:
-*_interface_ stands for _interface class_
-*_implementation_ stands for _implementation class_
-*_object_ stands for _instance of an implementation class_
+* _interface_ stands for _interface class_
+* _implementation_ stands for _implementation class_
+* _object_ stands for _instance of an implementation class_
 
 #### MixinInterface.getInstanceName()
 ```javascript
@@ -68,7 +68,8 @@ class ImplementationClassSample {
 MixinInterface.implements([interface_1, interface_2, ...], object)
 ```
 This service must be used in the constructor of the implementation.
-*Caution !* It is mandatory to define `this._implemented_types` property (in the implementation constructor) because *MixinInterface API* relies on this property to operate properly.
+
+**Caution !** It is mandatory to define `this._implemented_types` property (in the implementation constructor) because *MixinInterface API* relies on this property to operate properly.
 
 ```javascript
 const appRoot        = require('app-root-path');
