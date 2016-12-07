@@ -1,4 +1,3 @@
-"# mixin-interface" 
 ## mixin-interface
 
 An es6 implementation of interface classes with support of type checking and interface inheritance.
@@ -13,6 +12,12 @@ Import mixin-interface into your project:
 
 ```javascript
 const MixinInterface = require('mixin-interface');
+```
+
+## How to run provided Unit Test (test.js)
+First install [NodeJS](https://nodejs.org/en/) then:
+```bash
+node test.js
 ```
 
 ## MixinInterface services
@@ -39,7 +44,7 @@ class Animal {
 
 ### MixinInterface.implements
 ```javascript
-MixinInterface.implements([interface_class1, interface_class2, ...], this);
+MixinInterface.implements([interface_class1, interface_class2, ...], object)
 ```
 
 This service must be used in the constructor of the implementation class:
@@ -61,7 +66,7 @@ class Animal {
 
 ### MixinInterface.isInstanceOf
 ```javascript
-MixinInterface.isInstanceOf(interface_class, object);
+MixinInterface.isInstanceOf(interface_class, object)
 ```
 
 This service provides type-checking for an instance of an implementation class:
@@ -75,10 +80,10 @@ console.log(an_animal.name + " is a 'IAnimal':    " + MixinInterface.isInstanceO
 
 ### MixinInterface.extendsInterface
 ```javascript
-MixinInterface.extendsInterface(interface_class, object);
+MixinInterface.extendsInterface(interface_class, object)
 ```
 
-This service provides support of type-checking for interface inheritance. It must be used in the constructor of the interface class:
+This service provides support of type-checking for interface inheritance. It must be used in the constructor of an interface class which extends another interface class:
 
 ```javascript
 const appRoot        = require('app-root-path');
