@@ -29,5 +29,5 @@ class Animal {
   live() {
     console.log("Animal.live");
   } // ILifeForm.live()
-} // ImplementationBase class
+} // Animal class
 exports.Animal = Animal;

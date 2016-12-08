@@ -37,8 +37,8 @@ node test.js
 - - - -
 ## How to Define an Interface
 Here is an example of an interface (provided in `./src/test_classes/i_life_form.js`). 
-* Here we define a single service (`live()`) 
-* To guarantee that the service is provided by the implentation class, we put `MixinInterface.checksIfServicesAreImplemented` in the fallback implementation of the service (the one which is defined in the interface).
+* Here we define a single service: `live()` 
+* To guarantee that the service is provided by the implementation class, we put `MixinInterface.checksIfServicesAreImplemented` in the fallback implementation of the service (the one which is defined in the interface).
 ```javascript
 class ILifeForm {
   // Fallback implementation of 'live' service
@@ -52,8 +52,8 @@ exports.ILifeForm = ILifeForm;
 ## How to extend an Interface Class
 Here is an example of an extended interface (provided in `./src/test_classes/i_animal.js`). 
 * Here we want to subclass the previously defined interface (`ILifeForm`), to define that we must define an `extendsInterface` static method and call `MixinInterface.extendsInterface` with the parent interface as first parameter.
-* We then define a new service (`run()`) 
-* To guarantee that the new service is provided by the implentation class, we put `MixinInterface.checksIfServicesAreImplemented` in the fallback implementation of the service (the one which is defined in the interface).
+* We then define a new service: `run()` 
+* To guarantee that the new service is provided by the implementation class, we put `MixinInterface.checksIfServicesAreImplemented` in the fallback implementation of the service (the one which is defined in the interface).
 ```javascript
 const appRoot        = require('app-root-path');
 const MixinInterface = require(appRoot + '/src/mixin_interface.js').MixinInterface;
@@ -75,9 +75,9 @@ exports.IAnimal = IAnimal;
 ```
 - - - -
 ## How to code an Implementation class
-An implementation class may implement one or more interfaces. In order to implement an interface we must:
+Here is an example of an interface (provided in `./src/test_classes/animal.js`). An implementation class may implement one or more interfaces. In order to implement an interface we must:
 * Put `MixinInterface.implementsInterfaces` in the constructor and provide an array of implemented interfaces (without including their parent classes)
-* Provide implementation of All services defined in each interface as well as their parent interfaces
+* Provide implementation of All services (e.g. `live()`, `run()`, ...) defined in each interface as well as their parent interfaces
 ```javascript
 const appRoot        = require('app-root-path');
 const MixinInterface = require(appRoot + '/src/mixin_interface.js').MixinInterface;
@@ -102,7 +102,7 @@ class Animal {
   live() {
     console.log("Animal.live");
   } // ILifeForm.live()
-} // ImplementationBase class
+} // Animal class
 exports.Animal = Animal;
 ```
 - - - -
