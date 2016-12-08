@@ -23,21 +23,25 @@ const FlyingFish     = require(appRoot + '/src/test_classes/flying_fish.js').Fly
 //==================== start of test.js ====================
 console.log();
 console.log("---------- Unit Test for mixin-interface module ----------");
-var an_animal = new Animal();
-console.log("Instance of 'Animal' created: " + an_animal.name);
-console.log(an_animal.name + " is a 'Animal':     " + MixinInterface.isInstanceOf(Animal, an_animal));
-console.log(an_animal.name + " is a 'ILifeForm':  " + MixinInterface.isInstanceOf(ILifeForm, an_animal));
-console.log(an_animal.name + " is a 'IAnimal':    " + MixinInterface.isInstanceOf(IAnimal, an_animal));
-console.log(an_animal.name + " is a 'IMammal':    " + MixinInterface.isInstanceOf(IMammal, an_animal));
-console.log(an_animal.name + " is a 'IBird':      " + MixinInterface.isInstanceOf(IBird, an_animal));
-console.log(an_animal.name + " is a 'IFish':      " + MixinInterface.isInstanceOf(IFish, an_animal));
-an_animal.run();
-an_animal.live();
+var an_animal_0 = new Animal();
+console.log("Instance of 'Animal' created: " + an_animal_0.name);
+console.log(an_animal_0.name + " is a 'Animal':     " + MixinInterface.isInstanceOf(Animal,    an_animal_0));
+console.log(an_animal_0.name + " is a 'ILifeForm':  " + MixinInterface.isInstanceOf(ILifeForm, an_animal_0));
+console.log(an_animal_0.name + " is a 'IAnimal':    " + MixinInterface.isInstanceOf(IAnimal,   an_animal_0));
+console.log(an_animal_0.name + " is a 'IMammal':    " + MixinInterface.isInstanceOf(IMammal,   an_animal_0));
+console.log(an_animal_0.name + " is a 'IBird':      " + MixinInterface.isInstanceOf(IBird,     an_animal_0));
+console.log(an_animal_0.name + " is a 'IFish':      " + MixinInterface.isInstanceOf(IFish,     an_animal_0));
+an_animal_0.run();
+an_animal_0.live();
+console.log("----------");
+var an_animal_1 = new Animal();
+console.log("Another instance of 'Animal' created: " + an_animal_1.name);
 
 console.log("----------");
 var a_cat = new Cat();
 console.log("Instance of 'Cat' created: " + a_cat.name);
 console.log(a_cat.name + " is a 'Animal':     " + MixinInterface.isInstanceOf(Animal, a_cat));
+console.log(a_cat.name + " is a 'Cat':        " + MixinInterface.isInstanceOf(Cat, a_cat));
 console.log(a_cat.name + " is a 'ILifeForm':  " + MixinInterface.isInstanceOf(ILifeForm, a_cat));
 console.log(a_cat.name + " is a 'IAnimal':    " + MixinInterface.isInstanceOf(IAnimal, a_cat));
 console.log(a_cat.name + " is a 'IMammal':    " + MixinInterface.isInstanceOf(IMammal, a_cat));
@@ -54,6 +58,7 @@ console.log(a_flying_fish.name + " is a 'ILifeForm':  " + MixinInterface.isInsta
 console.log(a_flying_fish.name + " is a 'IAnimal':    " + MixinInterface.isInstanceOf(IAnimal, a_flying_fish));
 console.log(a_flying_fish.name + " is a 'IBird':      " + MixinInterface.isInstanceOf(IBird, a_flying_fish));
 console.log(a_flying_fish.name + " is a 'IFish':      " + MixinInterface.isInstanceOf(IFish, a_flying_fish));
+console.log(a_flying_fish.name + " is a 'IMammal':    " + MixinInterface.isInstanceOf(IMammal, a_flying_fish));
 a_flying_fish.fly();
 a_flying_fish.swim();
 a_flying_fish.run();

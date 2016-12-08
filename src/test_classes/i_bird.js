@@ -17,18 +17,9 @@ class IBird extends IAnimal {
     MixinInterface.extendsInterface(IAnimal, instance);
   } // IBird.extendsInterface()
 
+  // Fallback implementation of 'fly' service
   fly() {
-    if (! this.hasOwnProperty('swim')) {
-      var error_msg = "IFish.swim not found on " + this.name;
-      throw new Error(error_msg);
-    }
+	MixinInterface.checksIfServicesAreImplemented(IBird, ['fly'], this);
   } // IBird.fly
-
-  run() {
-    if (! this.hasOwnProperty('run')) {
-      var error_msg = "IAnimal.run not found on " + this.name;
-      throw new Error(error_msg);
-    }
-  } // IAnimal.run
 } // IBird class
 exports.IBird = IBird;

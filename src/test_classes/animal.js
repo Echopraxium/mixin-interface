@@ -14,21 +14,15 @@ const ILifeForm      = require(appRoot + '/src/test_classes/i_life_form.js').ILi
 //==================== Animal implementation class ====================
 class Animal {
   constructor() {
-    this._implemented_types = {}; // ** Required **
-    this._name = MixinInterface.getInstanceName(this);
-    MixinInterface.implements([IAnimal, ILifeForm], this);
+    this._name = MixinInterface.generateInstanceName(this);
+    MixinInterface.implementsInterfaces(Animal, [IAnimal, ILifeForm], this);
   } // Thing constructor
 
   get name() {
     return this._name;
   } // 'name' getter
 
-  set name(value) {
-    if (value !== undefined)
-      this._name = value;
-  } // 'name' setter
-
-  run(msg) {
+  run() {
     console.log("Animal.run");
   } // IAnimal.run()
 

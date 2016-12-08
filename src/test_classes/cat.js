@@ -17,19 +17,19 @@ const IMammal        = require(appRoot + '/src/test_classes/i_mammal.js').IMamma
 class Cat extends Animal {
   constructor(args) {
     super();
-    MixinInterface.implements([IMammal], this);
+    MixinInterface.implementsInterfaces(Cat, [IMammal], this);
   } // Cat constructor
-
-  live() {
-    console.log('Cat.live');
-  } // ILifeForm.live
-
-  run() {
-    console.log('Cat.run');
-  } // IAnimal.run
 
   suckle() {
     console.log('Cat.suckle');
   } // IMammal.suckle
+
+  run() {
+    console.log('Cat.run');
+  } // IAnimal.run
+  
+  live() {
+    console.log('Cat.live');
+  } // ILifeForm.live
 } // Cat class
 exports.Cat = Cat;

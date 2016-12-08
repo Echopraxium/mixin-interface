@@ -17,11 +17,9 @@ class IMammal extends IAnimal {
     MixinInterface.extendsInterface(IAnimal, instance);
   } // IMammal.extendsInterface()
 
+  // Fallback implementation of 'suckle' service
   suckle() {
-    if (! this.hasOwnProperty('suckle')) {
-      var error_msg = "IMammal.suckle not found on " + this.name;
-      throw new Error(error_msg);
-    }
+    MixinInterface.checksIfServicesAreImplemented(IMammal, ['suckle'], this);
   } // IMammal.run
 } // IMammal class
 exports.IMammal = IMammal;

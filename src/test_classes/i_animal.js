@@ -17,11 +17,9 @@ class IAnimal extends ILifeForm {
     MixinInterface.extendsInterface(ILifeForm, instance);
   } // IAnimal.extendsInterface()
 
+  // Fallback implementation of 'run' service
   run() {
-    if (! this.hasOwnProperty('run')) {
-      var error_msg = "IAnimal.run not found on " + this.name;
-      throw new Error(error_msg);
-    }
+	MixinInterface.checksIfServicesAreImplemented(IAnimal, ['run'], this);
   } // IAnimal.run
 } // IAnimal class
 exports.IAnimal = IAnimal;

@@ -17,11 +17,9 @@ class IFish extends IAnimal {
     MixinInterface.extendsInterface(IAnimal, instance);
   } // IBird.extendsInterface()
 
+  // Fallback implementation of 'swim' service
   swim() {
-    if (! this.hasOwnProperty('swim')) {
-      var error_msg = "IFish.swim not found on " + this.name;
-      throw new Error(error_msg);
-    }
+	MixinInterface.checksIfServicesAreImplemented(IFish, ['swim'], this);
   } // IFish.swim()
 } // IFish class
 exports.IFish = IFish;

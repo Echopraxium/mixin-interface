@@ -1,7 +1,8 @@
 //==============================================================
 // flying_fish.js
 // Purpose: 'FlyingFish' implementation class
-//          implements IBird (child of IAnimal) and IFish interfaces
+//          implements IBird (child of IAnimal) 
+//          and        IFish interfaces (child of IAnimal) 
 // Project: mixin-interface module
 //==============================================================
 'use strict';
@@ -18,7 +19,7 @@ const IFish          = require(appRoot + '/src/test_classes/i_fish.js').IFish;
 class FlyingFish extends Animal {
   constructor() {
     super();
-    MixinInterface.implements([IBird, IFish], this);
+    MixinInterface.implementsInterfaces(FlyingFish, [IBird, IFish], this);
   } // FlyingFish constructor
 
   fly() {
@@ -32,5 +33,9 @@ class FlyingFish extends Animal {
   run() {
     console.log('FlyingFish.run');
   } // IAnimal.run
+  
+  live() {
+    console.log('FlyingFish.live');
+  } // ILifeForm.live
 } // FlyingFish class
 exports.FlyingFish = FlyingFish;

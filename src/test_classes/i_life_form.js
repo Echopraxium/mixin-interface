@@ -6,14 +6,14 @@
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
+const appRoot        = require('app-root-path');
+const MixinInterface = require(appRoot + '/src/mixin_interface.js').MixinInterface;
 
 //==================== ILifeForm interface class ====================
 class ILifeForm {
+  // Fallback implementation of 'live' service
   live() {
-    if (! this.hasOwnProperty('live')) {
-      var error_msg = "ILifeForm.live not found on " + this.name;
-      throw new Error(error_msg);
-    }
+	MixinInterface.checksIfServicesAreImplemented(ILifeForm, ['live'], this);
   } // ILifeForm.live
 } // ILifeForm class
 exports.ILifeForm = ILifeForm;
