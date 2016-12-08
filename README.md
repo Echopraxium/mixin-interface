@@ -12,7 +12,7 @@ Please note that in the following:
 npm install mixin-interface -S
 ```
 
-## **Quickstart**: how to run the provided _Unit Test_
+## Quickstart
 #### Step 1: Install Prerequisite Tools
 Install [_NodeJS_](https://nodejs.org/en/) and [_Git_](https://git-scm.com/)
 
