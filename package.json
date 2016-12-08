@@ -1,6 +1,6 @@
 {
   "name": "mixin-interface",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An es6 implementation of interface classes with support of type checking, inheritance as well as raising an error when the interface's methods are not provided by the implementation class.",
   "main": "test.js",
   "scripts": {
