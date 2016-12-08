@@ -32,7 +32,7 @@ node test.js
 Here is an example of an interface (look at `./src/test_classes/i_life_form.js` for the full sample). 
 * Here we define a single service: `live()` 
 * To guarantee that the service is provided by the implementation class, we put `MixinInterface.checksIfServicesAreImplemented` in the fallback implementation of the service (the one which is defined in the interface).
-* Please note that I use the 'I prefix' naming convention as a reminder that it is an interface. This is a reminiscence of [_Hungarian notation_](https://en.wikipedia.org/wiki/Hungarian_notation) , a fairly old _identifier naming convention_.
+* Please note that I use the '_I prefix_' naming convention as a reminder that it is an interface. This is a reminiscence of [_Hungarian notation_](https://en.wikipedia.org/wiki/Hungarian_notation) , a fairly old _identifier naming convention_.
 ```javascript
 class ILifeForm {
   // Fallback implementation of 'live' service
@@ -44,9 +44,9 @@ class ILifeForm {
 - - - -
 ## How to extend an Interface Class
 Here is an example of an extended interface (look at `./src/test_classes/i_animal.js` for the full sample). 
-* Here we want to subclass the previously defined interface (`ILifeForm`), to define that we must define an `extendsInterface` static method and call `MixinInterface.extendsInterface` with the parent interface as first parameter.
-* We then define a new service: `run()` 
-* To guarantee that the new service is provided by the implementation class, we put `MixinInterface.checksIfServicesAreImplemented` in the fallback implementation of the service (the one which is defined in the interface).
+* Here we want to subclass the previously defined interface (`ILifeForm`). We must implement an `extendsInterface` static method. The body of this method is just a call to `MixinInterface.extendsInterface` with the parent interface as first parameter.
+* We then define a new service: `run()`. It will be a regular method of an es6 class.
+* To guarantee that the new service is provided by the implementation class, we put `MixinInterface.checksIfServicesAreImplemented` in the  implementation of the service. This will raise an error if the implementation class does'nt provide an implementation for this service (look at _How to code an Implementation class_ hereafter)
 ```javascript
 class IAnimal extends ILifeForm {
   // required so that isInstanceOf(ILifeForm, instance) returns true
