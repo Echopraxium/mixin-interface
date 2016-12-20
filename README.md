@@ -29,92 +29,117 @@ node test.js
 ```
 - - - -
 ## How to Define an Interface
-Here is an example of an interface (look at `./src/test_classes/i_life_form.js` for the full sample). 
-* Here we define a single service: `live()` 
-* To guarantee that the service is provided by the implementation class, we put `MixinInterface.checksIfServicesAreImplemented` in the fallback implementation of the service (the one which is defined in the interface).
+Here is an example of an interface (look at `./src/test_classes/i_life_form.js` for the full sample).
+* Here we define a single service: `live()`
+* To guarantee that the service is provided by the implementation class, we put `$$.checksIfServicesAreImplemented` in the fallback implementation of the service (the one which is defined in the interface).
 * Please note that I use the '_I prefix_' naming convention as a reminder that it is an interface. This is a reminiscence of [_Hungarian notation_](https://en.wikipedia.org/wiki/Hungarian_notation) , a fairly old _identifier naming convention_.
 ```javascript
-class ILifeForm {
+'use strict';
+/*jshint node: true*/
+/*jshint esversion: 6*/
+const appRoot         = require('app-root-path');
+const $$              = require(appRoot + '/src/mixin_interface.js').$$;
+
+//==================== ILifeForm interface class ====================
+class ILifeForm  {
   // Fallback implementation of 'live' service
   live() {
-	MixinInterface.checksIfServicesAreImplemented(ILifeForm, ['live'], this);
+    $$.checksIfServicesAreImplemented(ILifeForm, ['live'], this);
   } // ILifeForm.live
 } // ILifeForm class
 ```
 - - - -
 ## How to extend an Interface Class
-Here is an example of an extended interface (look at `./src/test_classes/i_animal.js` for the full sample). 
-* Here we want to subclass the previously defined interface (`ILifeForm`). We must implement an `extendsInterface` static method. The body of this method is just a call to `MixinInterface.extendsInterface` with the parent interface as first parameter.
+Here is an example of an extended interface (look at `./src/test_classes/i_animal.js` for the full sample).
+* Here we want to subclass the previously defined interface (`ILifeForm`). We must implement an `extendsInterface` static method. The body of this method is just a call to `$$.extendsInterface` with the parent interface as first parameter.
 * We then define a new service: `run()`. It will be a regular method of an es6 class.
-* To guarantee that the new service is provided by the implementation class, we put `MixinInterface.checksIfServicesAreImplemented` in the  implementation of the service. This will raise an error if the implementation class does'nt provide an implementation for this service (look at _How to code an Implementation class_ hereafter)
+* To guarantee that the new service is provided by the implementation class, we put `$$.checksIfServicesAreImplemented` in the  implementation of the service. This will raise an error if the implementation class does'nt provide an implementation for this service (look at _How to code an Implementation class_ hereafter)
 ```javascript
+'use strict';
+/*jshint node: true*/
+/*jshint esversion: 6*/
+const appRoot         = require('app-root-path');
+const $$              = require(appRoot + '/src/mixin_interface.js').$$;
+const ILifeForm       = require(appRoot + '/src/test_classes/i_life_form.js').ILifeForm;
+
+//==================== IAnimal interface class ====================
 class IAnimal extends ILifeForm {
   // required so that isInstanceOf(ILifeForm, instance) returns true
   static extendsInterface(instance) {
-    MixinInterface.extendsInterface(ILifeForm, instance);
+    $$.extendsInterface(ILifeForm, instance);
   } // IAnimal.extendsInterface()
 
   // Fallback implementation of 'run' service
   run() {
-	MixinInterface.checksIfServicesAreImplemented(IAnimal, ['run'], this);
+    $$.checksIfServicesAreImplemented(IAnimal, ['run'], this);
   } // IAnimal.run
 } // IAnimal class
 ```
 - - - -
 ## How to code an Implementation class
 Here is an example of an interface (look at `./src/test_classes/animal.js` for the full sample). An implementation class may implement one or more interfaces. In order to implement an interface we must:
-* Put `MixinInterface.implementsInterfaces` in the constructor and provide an array of implemented interfaces (without including their parent classes)
+* Put `$$.implementsInterfaces` in the constructor and provide an array of implemented interfaces (without including their parent classes)
 * Provide implementation of All services (e.g. `live()`, `run()`, ...) defined in each interface as well as their parent interfaces
 ```javascript
-class Animal {
+'use strict';
+/*jshint node: true*/
+/*jshint esversion: 6*/
+const appRoot         = require('app-root-path');
+const mixin_interface = require(appRoot + '/src/mixin_interface.js');
+const $$              = mixin_interface.$$;
+const $$Object        = mixin_interface.$$Object;
+const IAnimal         = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
+const ILifeForm       = require(appRoot + '/src/test_classes/i_life_form.js').ILifeForm;
+
+//==================== Animal implementation class ====================
+class Animal extends $$Object {
   constructor() {
-    this._name = MixinInterface.generateInstanceName(this);
-    MixinInterface.implementsInterfaces(Animal, [IAnimal, ILifeForm], this);
+    super();
+    $$.implementsInterfaces(Animal, [IAnimal, ILifeForm], this);
   } // Thing constructor
 
-  get name() {
-    return this._name;
-  } // 'name' getter
-
   run() {
-    console.log("Animal.run");
+    console.log("--> Animal.run");
   } // IAnimal.run()
 
   live() {
-    console.log("Animal.live");
+    console.log("--> Animal.live");
   } // ILifeForm.live()
 } // Animal class
+exports.Animal = Animal;
 ```
 - - - -
 ## MixinInterface API Documentation
 The API services are provided as static methods of the `MixinInterface` class.
-* **MixinInterface.implementsInterfaces**: defines that a class implements one or more interface
-* **MixinInterface.extendsInterface**: defines an interface as a child of another interface
-* **MixinInterface.isInstanceOf**: a replacement of `instanceof` operator to support interface classes
-* **MixinInterface.generateInstanceName**: a bonus service to generate a numbered instance name based on implementation class
 
 Please note that in the following:
 * _interface_ stands for _interface class_
 * _implementation_ stands for _implementation class_
 * _object_ stands for _instance of an implementation class_
+* **$$** is a shortcut for `MixinInterface`
 
-#### MixinInterface.implementsInterfaces()
+* **$$.implementsInterfaces**: defines that a class implements one or more interface
+* **$$.extendsInterface**: defines an interface as a child of another interface
+* **$$.isInstanceOf**: a replacement of `instanceof` operator to support interface classes
+
+
+#### $$.implementsInterfaces()
 ```javascript
-MixinInterface.implementsInterfaces([interface_1, interface_2, ...], object)
+$$.implementsInterfaces([interface_1, interface_2, ...], object)
 ```
 This service must be used in the constructor of the implementation. Look at `./src/test_classes/animal.js` for a full implementation sample.
 
 ```javascript
-class Animal {
+class Animal extends $$Object {
 	constructor() {
-      this._name = MixinInterface.getInstanceName(this);
-      MixinInterface.implementsInterfaces([IAnimal, ILifeForm], this);
+	  super();
+      $$.implementsInterfaces([IAnimal, ILifeForm], this);
 	}
 }
 ```
-#### MixinInterface.extendsInterface()
+#### $$.extendsInterface()
 ```javascript
-MixinInterface.extendsInterface(interface_class, object)
+$$.extendsInterface(interface_class, object)
 ```
 This service provides support of type-checking for interface inheritance. This service is required when an interface extends (is a child of) another interface. It allows to check if an instance is `instanceof` either of its implementation or any of its implemented interfaces (including their parent interfaces). Look at `./src/test_classes/i_animal.js` for a full implementation sample.
 
@@ -122,31 +147,16 @@ This service provides support of type-checking for interface inheritance. This s
 class IAnimal extends ILifeForm {
   // required so that isInstanceOf(ILifeForm, instance) returns true
   static extendsInterface(instance) {
-    MixinInterface.extendsInterface(ILifeForm, instance);
+    $$.extendsInterface(ILifeForm, instance);
   } // IAnimal.extendsInterface()
 ```
-#### MixinInterface.isInstanceOf()
+#### $$.isInstanceOf()
 ```javascript
-MixinInterface.isInstanceOf(interface_class, object)
+$$.isInstanceOf(interface_class, object)
 ```
 This service provides type-checking for an instance of an implementation. Look at `./test.js` for a full implementation sample.
 
 ```javascript
 var an_animal = new Animal();
-console.log(an_animal.name + " is a 'IAnimal':    " + MixinInterface.isInstanceOf(IAnimal, an_animal))
-```
-#### MixinInterface.generateInstanceName()
-```javascript
-MixinInterface.generateInstanceName(object)
-```
-This service is a bonus feature which generates instance names (from their implementation), it is advised to use it in the implementation constructor (see sample below). Look at `./src/test_classes/animal.js` for a full implementation sample.
-
-```javascript
-class Animal {
-	constructor() {
-	  //...
-      this._name = MixinInterface.generateInstanceName(this);
-	  //...
-	}
-}
+console.log(an_animal.name + " is a 'IAnimal':    " + $$.isInstanceOf(IAnimal, an_animal))
 ```

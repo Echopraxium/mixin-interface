@@ -6,28 +6,26 @@
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const appRoot        = require('app-root-path');
-const MixinInterface = require(appRoot + '/src/mixin_interface.js').MixinInterface;
-const IAnimal        = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
-const ILifeForm      = require(appRoot + '/src/test_classes/i_life_form.js').ILifeForm;
+const appRoot         = require('app-root-path');
+const mixin_interface = require(appRoot + '/src/mixin_interface.js');
+const $$              = mixin_interface.$$;
+const $$Object        = mixin_interface.$$Object;
+const IAnimal         = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
+const ILifeForm       = require(appRoot + '/src/test_classes/i_life_form.js').ILifeForm;
 
 //==================== Animal implementation class ====================
-class Animal {
+class Animal extends $$Object {
   constructor() {
-    this._name = MixinInterface.generateInstanceName(this);
-    MixinInterface.implementsInterfaces(Animal, [IAnimal, ILifeForm], this);
+    super();
+    $$.implementsInterfaces(Animal, [IAnimal, ILifeForm], this);
   } // Thing constructor
 
-  get name() {
-    return this._name;
-  } // 'name' getter
-
   run() {
-    console.log("Animal.run");
+    console.log("--> Animal.run");
   } // IAnimal.run()
 
   live() {
-    console.log("Animal.live");
+    console.log("--> Animal.live");
   } // ILifeForm.live()
 } // Animal class
 exports.Animal = Animal;

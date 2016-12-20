@@ -14,7 +14,10 @@
     "es6",
     "interface",
     "class",
-    "mixin"
+    "mixin",
+    "mixins",
+    "method",
+    "javascript"
   ],
   "author": "Michel Kern",
   "license": "MIT",
@@ -25,5 +28,6 @@
   "dependencies": {
     "app-root-path": "^2.0.1",
     "es6-mixins": "^1.0.2"
-  }
+  },
+  "devDependencies": {}
 }
