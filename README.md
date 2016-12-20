@@ -29,7 +29,7 @@ node test.js
 ```
 - - - -
 ## How to Define an Interface
-Here is an example of an interface (look at `./src/test_classes/i_life_form.js` for the full sample).
+Here is an example of an interface (see `./src/test_classes/i_life_form.js`).
 * Here we define a single service: `live()`
 * To guarantee that the service is provided by the implementation class, we put `$$.checksIfServicesAreImplemented` in the fallback implementation of the service (the one which is defined in the interface).
 * Please note that I use the '_I prefix_' naming convention as a reminder that it is an interface. This is a reminiscence of [_Hungarian notation_](https://en.wikipedia.org/wiki/Hungarian_notation) , a fairly old _identifier naming convention_.
@@ -50,7 +50,7 @@ class ILifeForm  {
 ```
 - - - -
 ## How to extend an Interface Class
-Here is an example of an extended interface (look at `./src/test_classes/i_animal.js` for the full sample).
+Here is an example of an extended interface (see `./src/test_classes/i_animal.js`).
 * Here we want to subclass the previously defined interface (`ILifeForm`). We must implement an `extendsInterface` static method. The body of this method is just a call to `$$.extendsInterface` with the parent interface as first parameter.
 * We then define a new service: `run()`. It will be a regular method of an es6 class.
 * To guarantee that the new service is provided by the implementation class, we put `$$.checksIfServicesAreImplemented` in the  implementation of the service. This will raise an error if the implementation class does'nt provide an implementation for this service (look at _How to code an Implementation class_ hereafter)
@@ -77,8 +77,9 @@ class IAnimal extends ILifeForm {
 ```
 - - - -
 ## How to code an Implementation class
-Here is an example of an interface (look at `./src/test_classes/animal.js` for the full sample). An implementation class may implement one or more interfaces. In order to implement an interface we must:
-* Put `$$.implementsInterfaces` in the constructor and provide an array of implemented interfaces (without including their parent classes)
+Here is an example of an implementation class (see `./src/test_classes/animal.js`). An implementation class may implement one or more interfaces. In order to implement an interface we must:
+* Inherit from `$$Object` by using `extends` keyword for defining a subclass. This is mainly to benefit from the _automatic instance naming_ feature (this feature is provided by the `name` attribute on each instance from `$$Object` or any of its subclasses)
+* Put `$$.implementsInterfaces` in the constructor and provide an array of implemented interfaces (without including their parent classes, I mean those declared by `extends`)
 * Provide implementation of All services (e.g. `live()`, `run()`, ...) defined in each interface as well as their parent interfaces
 ```javascript
 'use strict';
@@ -117,6 +118,7 @@ Please note that in the following:
 * _implementation_ stands for _implementation class_
 * _object_ stands for _instance of an implementation class_
 * **$$** is a shortcut for `MixinInterface`
+
 
 * **$$.implementsInterfaces**: defines that a class implements one or more interface
 * **$$.extendsInterface**: defines an interface as a child of another interface
