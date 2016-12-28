@@ -79,7 +79,7 @@ FlyingFish_0 is a 'IMammal':    false
 ```
 
 - - - -
-## How to Define an _Interface class_
+## How to Define an Interface
 Here is an example of an interface (see `./src/test_classes/i_life_form.js`).
 * Here we define a single service: `live()`
 * To guarantee that the service is provided by the _implementation_, we put `mixin_interface.raiseErrorIfServiceNotImplemented` in the fallback implementation of each service defined by the interface.
@@ -102,7 +102,7 @@ class ILifeForm {
 exports.ILifeForm = ILifeForm;
 ```
 - - - -
-## How to subclass of an _Interface class_
+## How to subclass an Interface
 Here is an example of an extended interface (see `./src/test_classes/i_animal.js`).
 * Here we want to define `IAnimal` as a subclass of the `ILifeForm` _interface_.
 * Use this syntax: `class IAnimal extends $interface(ILifeForm)` to define that `IAnimal` is a subclass of `ILifeForm`.
@@ -133,7 +133,7 @@ exports.IAnimal = IAnimal;
 ```
 
 - - - -
-## How to code an _Implementation class_
+## How to code an Implementation
 Here is an example of an _implementation_ (see `./src/test_classes/animal.js`). An _implementation_ may implement one or more _interfaces_. In order to implement an interface we must:
 * Inherit from `$Object` by using `extends $implementation()` to define a subclass. This also provides the _automatic instance naming_ feature (this feature is provided by the `name` attribute on each instance from `$Object` or any of its subclasses
 * Put `$$.implements(Animal, ILifeForm, IAnimal)` just after the class definition. This is required so that `$$.isInstanceOf` works properly to identify an object both as an being an instance of an _implementation_ (and its superclasses) as well being an instance of an interface class (and its superclasses).
@@ -169,7 +169,7 @@ exports.Animal = Animal;
 ```
 
 - - - -
-## How to subclass of an _Implementation class_
+## How to subclass an Implementation
 Here is an example of how to subclass an _implementation_ (see `./src/test_classes/cat.js`). Here we want to implement the `IMammal` _interface_, this is how to do it:
 * Inherit from `$Object` by using `extends $implementation()` to define a subclass.
 * Put `$$.implements(Cat, IMammal)` just after the class definition.
