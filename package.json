@@ -1,6 +1,6 @@
 {
   "name": "mixin-interface",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.",
   "main": "test.js",
   "scripts": {
