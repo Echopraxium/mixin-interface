@@ -6,31 +6,30 @@
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const appRoot   = require('app-root-path');
-const $$        = require(appRoot + '/src/mixin_interface.js').$$;
-const Animal    = require(appRoot + '/src/test_classes/animal.js').Animal;
-const IAnimal   = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
-const IMammal   = require(appRoot + '/src/test_classes/i_mammal.js').IMammal;
+const appRoot          = require('app-root-path');
+const mixin_interface  = require(appRoot + '/src/mixin_interface.js');
+const $$               = mixin_interface.$$;
+const $implementation  = mixin_interface.$implementation;
+const Animal           = require(appRoot + '/src/test_classes/animal.js').Animal;
+const IMammal          = require(appRoot + '/src/test_classes/i_mammal.js').IMammal;
 
 //==================== Cat implementation class ====================
-// https://www.npmjs.com/package/es6-mixins
-//class Cat extends ImplementationBase {
-class Cat extends Animal {
-  constructor(args) {
+class Cat extends $implementation(Animal, IMammal) {
+  constructor() {
     super();
-    $$.implementsInterfaces(Cat, [IMammal], this);
   } // Cat constructor
 
   suckle() {
     console.log('--> Cat.suckle');
   } // IMammal.suckle
 
-  run() {
+  __run() {
     console.log('--> Cat.run');
   } // IAnimal.run
 
-  live() {
+  __live() {
     console.log('--> Cat.live');
   } // ILifeForm.live
 } // Cat class
+$$.implements(Cat, IMammal);
 exports.Cat = Cat;

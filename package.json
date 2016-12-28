@@ -1,7 +1,7 @@
 {
   "name": "mixin-interface",
   "version": "1.0.11",
-  "description": "An es6 implementation of interface classes with support of type checking, inheritance as well as raising an error when the interface's methods are not provided by the implementation class.",
+  "description": "An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.",
   "main": "test.js",
   "scripts": {
     "test": "node test.js"
@@ -27,7 +27,8 @@
   "homepage": "https://github.com/Echopraxium/mixin-interface#readme",
   "dependencies": {
     "app-root-path": "^2.0.1",
-    "es6-mixins": "^1.0.2"
+    "caller-id": "^0.1.0",
+    "mixin": "^0.2.0"
   },
   "devDependencies": {}
 }

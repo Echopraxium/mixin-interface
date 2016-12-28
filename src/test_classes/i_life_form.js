@@ -6,14 +6,15 @@
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const appRoot         = require('app-root-path');
-const $$              = require(appRoot + '/src/mixin_interface.js').$$;
+const appRoot          = require('app-root-path');
+const mixin_interface  = require(appRoot + '/src/mixin_interface.js');
+const $$               = mixin_interface.$$;
 
 //==================== ILifeForm interface class ====================
-class ILifeForm  {
+class ILifeForm {
   // Fallback implementation of 'live' service
   live() {
-    $$.checksIfServicesAreImplemented(ILifeForm, ['live'], this);
+    mixin_interface.raiseErrorIfServiceNotImplemented(ILifeForm, this);
   } // ILifeForm.live
 } // ILifeForm class
 exports.ILifeForm = ILifeForm;
