@@ -156,6 +156,7 @@ MxI.$implements(Animal, ILifeForm, IAnimal);
 - - - -
 ## How to subclass an Implementation class
 Here is an example of how to subclass an _implementation class_ (see `./src/test_classes/cat.js`). Here we want to both to subclass `Animal` and implement the `IMammal` _interface class_, this is how to do it:
+
 1. Inherit from `Animal` by using the `MxI.$SuperImplementation().$with()` _idiom_ just after`extends` to define a subclass and the _interfaces_ that it implements.
 2. Put `MxI.$implements(Cat, IMammal)` just after the class definition.
 3. Provide implementation of the service defined by `IMammal` (`suckle()`). If a service from the parent _interfaces_ is not provided then it may be inherited from the parent _implementation_.
