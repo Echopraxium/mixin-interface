@@ -10,7 +10,6 @@ Changelog since release 2.0.2:
 * Error Fixes and better consistency in code comments
 
 #### Installation and Usage:
-
 ```bash
 npm install mixin-interface -S
 ```
