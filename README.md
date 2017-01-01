@@ -189,8 +189,8 @@ MxI.$implements(Cat, IMammal);
 - - - -
 ## Developer's Reference for API services of mixin-interface package
 
-Please note that in the following:
-* _object_ stands for _instance of an _implementation class_
+>Please note that in the following:   
+* _object_ stands for _instance of an _implementation class_.  
 * **MxI** is a _namespace_ for all the API services of _mixin-interface_ package.
 
 
