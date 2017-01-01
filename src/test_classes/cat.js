@@ -1,20 +1,18 @@
 //==============================================================
-// flying_fish.js
-// Purpose: 'FlyingFish' class
+// cat.js
+// Purpose: 'Cat' implementation class
 // Project: mixin-interface module
 //==============================================================
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const appRoot          = require('app-root-path');
-const mixin_interface  = require(appRoot + '/src/mixin_interface.js');
-const $$               = mixin_interface.$$;
-const $implementation  = mixin_interface.$implementation;
-const Animal           = require(appRoot + '/src/test_classes/animal.js').Animal;
-const IMammal          = require(appRoot + '/src/test_classes/i_mammal.js').IMammal;
+const appRoot = require('app-root-path');
+const MxI     = require(appRoot + '/src/mixin_interface.js').MxI;
+const Animal  = require(appRoot + '/src/test_classes/animal.js').Animal;
+const IMammal = require(appRoot + '/src/test_classes/i_mammal.js').IMammal;
 
 //==================== Cat implementation class ====================
-class Cat extends $implementation(Animal, IMammal) {
+class Cat extends MxI.$SuperImplementation(Animal).$with(IMammal) {
   constructor() {
     super();
   } // Cat constructor
@@ -31,5 +29,5 @@ class Cat extends $implementation(Animal, IMammal) {
     console.log('--> Cat.live');
   } // ILifeForm.live
 } // Cat class
-$$.implements(Cat, IMammal);
+MxI.$implements(Cat, IMammal);
 exports.Cat = Cat;

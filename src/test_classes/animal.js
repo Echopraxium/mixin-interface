@@ -1,21 +1,19 @@
 //==============================================================
 // animal.js
-// Purpose: Thing base class
-// Project: Weekplan Generator
+// Purpose: 'Animal' implementation class
+//          child of 'ILifeForm' interface
+// Project: mixin-interface module
 //==============================================================
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const appRoot          = require('app-root-path');
-const mixin_interface  = require(appRoot + '/src/mixin_interface.js');
-const $$               = mixin_interface.$$;
-const $implementation  = mixin_interface.$implementation;
-const $Object          = mixin_interface.$Object;
-const IAnimal          = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
-const ILifeForm        = require(appRoot + '/src/test_classes/i_life_form.js').ILifeForm;
+const appRoot   = require('app-root-path');
+const MxI       = require(appRoot + '/src/mixin_interface.js').MxI;
+const IAnimal   = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
+const ILifeForm = require(appRoot + '/src/test_classes/i_life_form.js').ILifeForm;
 
 //==================== Animal implementation class ====================
-class Animal extends $implementation($Object, IAnimal) {
+class Animal extends MxI.$SuperImplementation(MxI.$Object).$with(IAnimal) {
   constructor() {
     super();
   } // Animal constructor
@@ -28,5 +26,5 @@ class Animal extends $implementation($Object, IAnimal) {
     console.log("--> Animal.live");
   } // ILifeForm.live()
 } // Animal class
-$$.implements(Animal, ILifeForm, IAnimal);
+MxI.$implements(Animal, ILifeForm, IAnimal);
 exports.Animal = Animal;

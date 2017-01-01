@@ -1,24 +1,22 @@
 //==============================================================
 // flying_fish.js
-// Purpose: 'FlyingFish' implementation class
-//          implements IBird (child of IAnimal)
-//          and        IFish interfaces (child of IAnimal)
+// Purpose: 'FlyingFish' implementation class which implements 2 interfaces:
+//          - 'IBird' (child of 'IAnimal')
+//          - 'IFish' (child of 'IAnimal')
 // Project: mixin-interface module
 //==============================================================
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const appRoot          = require('app-root-path');
-const mixin_interface  = require(appRoot + '/src/mixin_interface.js');
-const $$               = mixin_interface.$$;
-const $implementation  = mixin_interface.$implementation;
-const Animal           = require(appRoot + '/src/test_classes/animal.js').Animal;
-const IAnimal          = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
-const IBird            = require(appRoot + '/src/test_classes/i_bird.js').IBird;
-const IFish            = require(appRoot + '/src/test_classes/i_fish.js').IFish;
+const appRoot  = require('app-root-path');
+const MxI      = require(appRoot + '/src/mixin_interface.js').MxI
+const Animal   = require(appRoot + '/src/test_classes/animal.js').Animal;
+const IAnimal  = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
+const IBird    = require(appRoot + '/src/test_classes/i_bird.js').IBird;
+const IFish    = require(appRoot + '/src/test_classes/i_fish.js').IFish;
 
 //==================== FlyingFish implementation class ====================
-class FlyingFish extends $implementation(Animal, IBird, IFish) {
+class FlyingFish extends MxI.$SuperImplementation(Animal).$with(IBird, IFish) {
   constructor() {
     super();
   } // FlyingFish constructor
@@ -39,5 +37,5 @@ class FlyingFish extends $implementation(Animal, IBird, IFish) {
     console.log('--> FlyingFish.live');
   } // ILifeForm.live
 } // FlyingFish class
-$$.implements(FlyingFish, IBird, IFish);
+MxI.$implements(FlyingFish, IBird, IFish);
 exports.FlyingFish = FlyingFish;
