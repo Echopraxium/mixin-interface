@@ -128,8 +128,10 @@ Here is an example of an _implementation class_ (see `./src/test_classes/animal.
 1. Inherit from `MxI.$Object` (pr any of its subclasses) by using the `MxI.$SuperImplementation().$with()` _idiom_ just after `extends` to define a subclass and the _interfaces_ that it implements (`IAnimal` here). 
  
  >Note: Inheriting from `MxI.$Object` also provides the _automatic instance naming_ feature (this feature is provided by the `name` attribute on each instance from `MxI.$Object` or any of its subclasses.
+ 
 2. Put `MxI.$implements(Animal, ILifeForm, IAnimal)` just after the class definition. This is required so that `MxI.$isInstanceOf()` works properly to identify an object both as an being an instance of an _implementation_ (and its superclasses) as well being an instance of an interface class (and its superclasses).
 3. Provide implementation of all services (e.g. `live()`, `run()`, ...) defined in each interface as well as their parent interfaces. If a service is not provided it may be inherited from the parent _implementation_.
+
 ```javascript
 const appRoot   = require('app-root-path');
 const MxI       = require(appRoot + '/src/mixin_interface.js').MxI;
