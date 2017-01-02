@@ -186,7 +186,8 @@ MxI.$implements(Cat, IMammal);
 # API Developer's Reference
 
 >Please note that in the following:   
-* _object_ stands for _instance of an _implementation class_.  
+* _object_ stands for _instance of an _implementation class_. 
+* _service_ stands for _method defined by an interface class_. 
 * **MxI** is a _namespace_ for all the API services of _mixin-interface_ package.
 
 
@@ -195,7 +196,7 @@ MxI.$implements(Cat, IMammal);
 * **MxI.$isInstanceOf()**: a replacement for `instanceof` operator
 * **MxI.$raiseNotImplementedError()**: provides error handling if a service of an _interface class_ is not implemented
 
-### `MxI.$SuperImplementation().$with()` and `MxI.$implements()` 
+## MxI.$SuperImplementation().$with() and MxI.$implements()
 ```javascript
 MxI.$SuperImplementation(parent_implementation_class).$with(...interfaces)
 MxI.$implements(parent_implementation_class, ...interfaces)
@@ -209,7 +210,7 @@ class Animal extends MxI.$SuperImplementation(MxI.$Object).$with(IAnimal) {
 MxI.$implements(Animal, ILifeForm, IAnimal);
 ```
 
-### `$MxI.$SuperInterface()` and `MxI.$inherits()`
+## $MxI.$SuperInterface() and MxI.$inherits()
 ```javascript
 MxI.$SuperInterface(parent_interface_class)
 MxI.$inherits(parent_interface_class, ...interfaces)
@@ -223,7 +224,7 @@ class IAnimal extends MxI.$SuperInterface(ILifeForm)  {
 MxI.$inherits(IAnimal, ILifeForm);
 ```
 
-### `MxI.$isInstanceOf()`
+## MxI.$isInstanceOf()
 ```javascript
 MxI.$isInstanceOf(type, object)
 ```
@@ -231,11 +232,10 @@ This service provides type-checking for an object (see `./test.js` for a unit te
 
 ```javascript
 var a_cat = new Cat();
-...
 console.log(a_cat.name + " is a 'IMammal': " + MxI.$isInstanceOf(IMammal, a_cat));
 ```
 
-### `MxI.$raiseNotImplementedError()`
+## MxI.$raiseNotImplementedError()
 ```javascript
 MxI.$raiseNotImplementedError(_interface_, object)
 ```
