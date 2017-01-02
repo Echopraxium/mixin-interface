@@ -154,7 +154,7 @@ Here is an example of how to subclass an _implementation class_ (see `./src/test
 
 1. Inherit from `Animal` by using the `MxI.$SuperImplementation().$with()` _idiom_ just after`extends` to define a subclass and the _interfaces_ that it implements.
 2. Put `MxI.$implements(Cat, IMammal)` just after the class definition.
-3. Provide implementation of the service defined by `IMammal` (`suckle()`). If a service from the parent _interfaces_ is not provided then it may be inherited from the parent _implementation_.
+3. Provide implementation of the service defined by `IMammal` (`suckle()`). If a service from the parent _interfaces_ is not provided then it may be inherited from the parent _implementation_. Notice this is the case in the following sample: for `run()` an `live()`, as they are _disabled_ by the `__` prefix then it is the parent class implementation which is inherited instead.
 ```javascript
 const appRoot = require('app-root-path');
 const MxI     = require(appRoot + '/src/mixin_interface.js').MxI;
@@ -211,7 +211,7 @@ class Animal extends MxI.$SuperImplementation(MxI.$Object).$with(IAnimal) {
 MxI.$implements(Animal, ILifeForm, IAnimal);
 ```
 
-## $MxI.$SuperInterface() and MxI.$inherits()
+## MxI.$SuperInterface() and MxI.$inherits()
 ```javascript
 MxI.$SuperInterface(parent_interface_class)
 MxI.$inherits(parent_interface_class, ...interfaces)
