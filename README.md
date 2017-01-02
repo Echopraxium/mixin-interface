@@ -185,10 +185,10 @@ MxI.$implements(Cat, IMammal);
 # mixin-interface API Developer's Reference
 
 >Please note that in the following:   
+* **API service** stands for _function provided by the mixin-interface package_ (e.g. `Mxi.$isInstanceOf()`).
 * **MxI** is the _namespace_ for all the API services.
 * **object** stands for _instance of an _implementation class_. 
 * **service** stands for _method defined by an interface class_ (e.g. `IAnimal.run()`). 
-* **API service** stands for _function provided by the mixin-interface package_ (e.g. `Mxi.$isInstanceOf()`).
 * **type** stands for either an _implementation class_ or an _interface class_ (e.g. `Animal` or `IAnimal`). 
 
 
