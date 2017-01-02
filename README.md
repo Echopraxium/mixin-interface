@@ -111,7 +111,6 @@ const ILifeForm = require(appRoot + '/src/test_classes/i_life_form.js').ILifeFor
 class IAnimal extends MxI.$SuperInterface(ILifeForm)  {
   // Fallback implementation of 'run' service
   run() {
-    console.log("--> IAnimal.run");
     MxI.$raiseNotImplementedError(IAnimal, this);
   } // IAnimal.run
 } // IAnimal class
