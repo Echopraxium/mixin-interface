@@ -77,9 +77,8 @@ FlyingFish_0 is a 'IMammal':     false
 ---------- End of UnitTest ----------
 ```
 
-Please notice that an _implementation class_ may either _inherit_ (i.e implementation of services from _interface classes_  - ) from its parent class (e.g. `FlyingFish` class inherits `IAnimal.run()` and `IAnimal.live()` from `Animal`) but it is also possible to _override_ them as well.
+Please notice that an _implementation class_ may either _inherit_ (i.e implementation of services from _interface classes_) from its parent class (e.g. `FlyingFish` inherits `IAnimal.run()` and `IAnimal.live()` from `Animal`) but it is also possible to _override_ them as well.
 
-- - - -
 ## How to Define an Interface class
 Here is an example of an interface (see `./src/test_classes/i_life_form.js`). Here we define a single service: `live()`
 * To guarantee that the service is provided by the _implementation_, we put `MxI.$raiseNotImplementedError` in the fallback implementation of each service defined by the interface. This will raise an Error if an _implementation_ which defines that it implements this _interface_ doesn't provide implemention of the services).
@@ -87,7 +86,6 @@ Please note that I use the '_I prefix_' naming convention as a reminder that it 
 ```javascript
 const appRoot = require('app-root-path');
 const MxI     = require(appRoot + '/src/mixin_interface.js').MxI;
-
 //==================== ILifeForm interface class ====================
 class ILifeForm {
   // Fallback implementation of 'live' service
@@ -96,7 +94,7 @@ class ILifeForm {
   } // ILifeForm.live
 } // ILifeForm class
 ```
-- - - -
+
 ## How to subclass an Interface class
 Here is an example of a subclass of an _interface class_ (see `./src/test_classes/i_animal.js`). Here we want to define `IAnimal` as a subclass of the `ILifeForm` _interface class_.
 
@@ -109,7 +107,6 @@ Here is an example of a subclass of an _interface class_ (see `./src/test_classe
 const appRoot   = require('app-root-path');
 const MxI       = require(appRoot + '/src/mixin_interface.js').MxI;
 const ILifeForm = require(appRoot + '/src/test_classes/i_life_form.js').ILifeForm;
-
 //==================== IAnimal interface class ====================
 class IAnimal extends MxI.$SuperInterface(ILifeForm)  {
   // Fallback implementation of 'run' service
@@ -121,7 +118,6 @@ class IAnimal extends MxI.$SuperInterface(ILifeForm)  {
 MxI.$inherits(IAnimal, ILifeForm);
 ```
 
-- - - -
 ## How to code an Implementation class
 Here is an example of an _implementation class_ (see `./src/test_classes/animal.js`). An _implementation_ may implement one or more _interface classes_. In order to implement services of an _interface class_ we must:
 
@@ -137,7 +133,6 @@ const appRoot   = require('app-root-path');
 const MxI       = require(appRoot + '/src/mixin_interface.js').MxI;
 const IAnimal   = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
 const ILifeForm = require(appRoot + '/src/test_classes/i_life_form.js').ILifeForm;
-
 //==================== Animal implementation class ====================
 class Animal extends MxI.$SuperImplementation(MxI.$Object).$with(IAnimal) {
   constructor() {
@@ -155,7 +150,6 @@ class Animal extends MxI.$SuperImplementation(MxI.$Object).$with(IAnimal) {
 MxI.$implements(Animal, ILifeForm, IAnimal);
 ```
 
-- - - -
 ## How to subclass an Implementation class
 Here is an example of how to subclass an _implementation class_ (see `./src/test_classes/cat.js`). Here we want to both to subclass `Animal` and implement the `IMammal` _interface class_, this is how to do it:
 
@@ -167,7 +161,6 @@ const appRoot = require('app-root-path');
 const MxI     = require(appRoot + '/src/mixin_interface.js').MxI;
 const Animal  = require(appRoot + '/src/test_classes/animal.js').Animal;
 const IMammal = require(appRoot + '/src/test_classes/i_mammal.js').IMammal;
-
 //==================== Cat implementation class ====================
 class Cat extends MxI.$SuperImplementation(Animal).$with(IMammal) {
   constructor() {
@@ -188,6 +181,7 @@ class Cat extends MxI.$SuperImplementation(Animal).$with(IMammal) {
 } // Cat class
 MxI.$implements(Cat, IMammal);
 ```
+
 - - - -
 ## Developer's Reference for API services of mixin-interface package
 
@@ -201,8 +195,7 @@ MxI.$implements(Cat, IMammal);
 * **MxI.$isInstanceOf()**: a replacement for `instanceof` operator
 * **MxI.$raiseNotImplementedError()**: provides error handling if a service of an _interface class_ is not implemented
 
-
-#### `MxI.$SuperImplementation().$with()` and `MxI.$implements()` 
+## `MxI.$SuperImplementation().$with()` and `MxI.$implements()` 
 ```javascript
 MxI.$SuperImplementation(parent_implementation_class).$with(...interfaces)
 MxI.$implements(parent_implementation_class, ...interfaces)
@@ -216,7 +209,7 @@ class Animal extends MxI.$SuperImplementation(MxI.$Object).$with(IAnimal) {
 MxI.$implements(Animal, ILifeForm, IAnimal);
 ```
 
-#### `$MxI.$SuperInterface()` and `MxI.$inherits()`
+## `$MxI.$SuperInterface()` and `MxI.$inherits()`
 ```javascript
 MxI.$SuperInterface(parent_interface_class)
 MxI.$inherits(parent_interface_class, ...interfaces)
@@ -230,7 +223,7 @@ class IAnimal extends MxI.$SuperInterface(ILifeForm)  {
 MxI.$inherits(IAnimal, ILifeForm);
 ```
 
-#### MxI.$isInstanceOf()
+## `MxI.$isInstanceOf()`
 ```javascript
 MxI.$isInstanceOf(type, object)
 ```
@@ -242,7 +235,7 @@ var a_cat = new Cat();
 console.log(a_cat.name + " is a 'IMammal': " + MxI.$isInstanceOf(IMammal, a_cat));
 ```
 
-#### MxI.$raiseNotImplementedError()
+## `MxI.$raiseNotImplementedError()`
 ```javascript
 MxI.$raiseNotImplementedError(_interface_, object)
 ```
