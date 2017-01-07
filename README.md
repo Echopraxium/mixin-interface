@@ -4,7 +4,7 @@ An es6 (ECMAScript 2015) lightweight implementation of interface classes with `m
 
 Changelog since release 2.3.5:
 * Syntactic Sugar enhancements
-  * `MxI.$SuperInterface` becomes `$SuperInterface`
+  * `MxI.$SuperInterface` becomes `$Interface`
   * `MxI.$SuperImplementation(super_type).$with(...interfaces)` becomes `$Implementation(super_type).$with(...interfaces)`
   * `MxI.$extends()` becomes `MxI.$setClass(type).$asImplementationOf(...interfaces)`
   * `MxI.$inherits()` becomes `MxI.$setAsInterface(type).$asChildOf(parent_interface)`
