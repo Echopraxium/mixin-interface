@@ -1,7 +1,7 @@
 //==============================================================
 // i_lifeform.js
 // Purpose: 'ILifeForm' interface class (uses mixins)
-// Project: mixin-interface module
+// Project: 'mixin-interface' module
 //==============================================================
 'use strict';
 /*jshint node: true*/
@@ -9,11 +9,12 @@
 const appRoot = require('app-root-path');
 const MxI     = require(appRoot + '/src/mixin_interface.js').MxI;
 
-//==================== ILifeForm interface class ====================
+//==================== 'ILifeForm' interface class ====================
 class ILifeForm {
   // Fallback implementation of 'live' service
   live() {
     MxI.$raiseNotImplementedError(ILifeForm, this);
   } // ILifeForm.live
-} // ILifeForm class
+} // 'ILifeForm' class
+MxI.$setAsInterface(ILifeForm);
 exports.ILifeForm = ILifeForm;

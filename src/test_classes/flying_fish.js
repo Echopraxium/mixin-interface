@@ -1,9 +1,12 @@
 //==============================================================
 // flying_fish.js
-// Purpose: 'FlyingFish' implementation class which implements 2 interfaces:
+// Purpose: 'FlyingFish' implementation class which implements 4 interfaces:
 //          - 'IBird' (child of 'IAnimal')
 //          - 'IFish' (child of 'IAnimal')
-// Project: mixin-interface module
+//          as well as  (via its parent class 'Animal'):
+//          - 'ILifeForm'
+//          - 'IAnimal' (child of 'ILifeForm')
+// Project: 'mixin-interface' module
 //==============================================================
 'use strict';
 /*jshint node: true*/
@@ -15,11 +18,11 @@ const IAnimal  = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
 const IBird    = require(appRoot + '/src/test_classes/i_bird.js').IBird;
 const IFish    = require(appRoot + '/src/test_classes/i_fish.js').IFish;
 
-//==================== FlyingFish implementation class ====================
-class FlyingFish extends MxI.$SuperImplementation(Animal).$with(IBird, IFish) {
+//==================== 'FlyingFish' implementation class ====================
+class FlyingFish extends MxI.$Implementation(Animal).$with(IBird, IFish) {
   constructor() {
     super();
-  } // FlyingFish constructor
+  } // 'FlyingFish' constructor
 
   fly() {
     console.log('--> FlyingFish.fly');
@@ -36,6 +39,6 @@ class FlyingFish extends MxI.$SuperImplementation(Animal).$with(IBird, IFish) {
   __live() {
     console.log('--> FlyingFish.live');
   } // ILifeForm.live
-} // FlyingFish class
-MxI.$implements(FlyingFish, IBird, IFish);
+} // 'FlyingFish' class
+MxI.$setClass(FlyingFish).$asImplementationOf(IBird, IFish);
 exports.FlyingFish = FlyingFish;

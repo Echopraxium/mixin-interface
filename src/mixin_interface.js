@@ -1,7 +1,8 @@
 //==============================================================
 // mixin_interface.js
-// Purpose: implementation of interface classes in es6
-// Project: mixin-interface module
+// Purpose:  implementation of interface classes in es6
+//           https://www.npmjs.com/package/mixin-interface
+// Project: 'mixin-interface' module
 //==============================================================
 //'use strict';
 /*jshint node: true*/
@@ -9,12 +10,11 @@
 const mixin     = require('mixin');
 const caller_id = require('caller-id');
 
-//================ $Object: Base Implementation class ================
+//================ '$Object' Base Implementation class ================
 class $Object {
   constructor(...args) {
-    //console.log('$Object constructor');
     this._$name = this.generateInstanceName();
-  }
+  } // '$Object' constructor
 
   generateInstanceName() {
     var class_name = this.constructor.name;
@@ -42,42 +42,43 @@ class $Object {
     return this._$name;
   } // 'name' getter
 } // $Object
+$Object._$is_interface = false;
 exports.$Object = $Object;
-//================ $Object: Base Implementation class
+//================ '$Object' Base Implementation class
 
 
-//================================ $MxI$ Namespace ================================
+//================================ '$MxI$' Namespace ================================
 var MxI = 
   (function(){
 	return {
 		//--------------------- $Object ---------------------
 		'$Object': $Object,
-
-		//-------------------- implements --------------------
-		'$implements': function(arg_type, ...arg_interfaces) {
-            if (arg_type === undefined)
-              return;
-            var interfaces = Array.from(arg_interfaces);
-            arg_type._$implemented_interfaces = interfaces;
-        }, // $implements
 		
-		//---------- inherits ----------
-        '$inherits': function(arg_interface, arg_parent_interface) {
-            if (arg_interface === undefined || arg_parent_interface === undefined)
+		//-------------------- $setClass --------------------
+		'$setClass': function(arg_type) {
+			if (arg_type === undefined)
               return;
-            arg_interface._$parent_interface = arg_parent_interface;
-        }, // $inherits
+            return new $MixinImplementation(arg_type);
+        }, // $setClass
 		
-		//------------------ $SuperInterface ------------------
-		'$SuperInterface': function(arg_super_interface) {
-            var mixed = mixin($Object, arg_super_interface);
+		//------------------ $setAsInterface ------------------
+		'$setAsInterface': function(arg_type) {
+			if (arg_type === undefined)
+              return;
+		    arg_type._$is_interface = true;
+            return new $MixinSetInterface(arg_type);
+        }, // $setAsInterface
+		
+	    //------------------ $Interface ------------------
+		'$Interface': function(arg_super_type) {
+            var mixed = mixin($Object, arg_super_type);
             return mixed;
-        }, // $SuperInterface
+        }, // $Interface
 		
-	    //---------------- $SuperImplementation ----------------
-		'$SuperImplementation': function(arg_parent_implementation) {
-		    return new $MixinInterface(arg_parent_implementation);
-        }, // $SuperImplementation
+	    //---------------- $Implementation ----------------
+		'$Implementation': function(arg_super_implementation) {
+		    return new $MixinInterface(arg_super_implementation);
+        }, // $Implementation
 		
 		//------------------- $isInstanceOf -------------------
         '$isInstanceOf': function(type, instance) {
@@ -112,13 +113,28 @@ var MxI =
 
             return false;
         }, // $isInstanceOf()
+		
+		//---------- $isInterface ----------
+        '$isInterface': function(arg_type) {
+			if (   arg_type                === undefined
+			    || arg_type._$is_interface === undefined) {
+				return false;
+			}
+
+		    if (arg_type._$is_interface === true)
+		        return true;
+			else {
+				return false;
+			}
+		    return false;
+        }, // $isInterface
   
         //---------- $raiseNotImplementedError ---------
         '$raiseNotImplementedError': function(arg_interface, instance) {
 			if (arg_interface === undefined ||  instance === undefined) {
               return;
             }
-
+			
             var caller_data = caller_id.getData();
             var error_msg   = "** mixin-interface Error ** " + arg_interface.name + "." +
                               caller_data.functionName + " not found on " + instance.name;
@@ -140,18 +156,18 @@ function getClass(instance) {
 } // getClass
 
 
-//==================== MixinInterface class ====================
+//==================== '$MixinInterface' class ====================
 class $MixinInterface {
-	constructor(parent_implementation) {
-	    this._$parent_implementation = parent_implementation;
+	constructor(arg_type) {
+	    this._$parent_implementation = arg_type;
     } // $MixinInterface constructor
 	
-	$with(...arg_implemented_interfaces) {
+	$with(...arg_interfaces) {
 		//class C {}
         //class A {}
         //class CA extends mixin(C, A) {}
 
-        var implemented_interfaces = Array.from(arg_implemented_interfaces);
+        var implemented_interfaces = Array.from(arg_interfaces);
         if (implemented_interfaces.length === 0)
             return this._$parent_implementation;
 
@@ -169,4 +185,38 @@ class $MixinInterface {
 
         return mixed;
 	} // $MixinInterface.$with
-} // $MixinInterface class
+} // '$MixinInterface' class
+
+
+//==================== '$MixinSetInterface' class ====================
+class $MixinSetInterface {
+	constructor(arg_type) {
+	    this._$arg_type = arg_type;
+    } // $MixinSetInterface constructor
+	
+	$asChildOf(arg_super_type) {
+		var arg_type = this._$arg_type;  
+		if (arg_super_type === undefined || arg_super_type === undefined) {
+			return;
+		} 
+		arg_type._$is_interface     = true;
+        arg_type._$parent_interface = arg_super_type;
+	} // $MixinSetInterface.$asChildOf
+} // '$MixinSetInterface' class
+
+
+//==================== '$MixinImplementation' class ====================
+class $MixinImplementation {
+	constructor(arg_type) {
+	    this._$arg_type = arg_type;
+    } // $MixinInterface constructor
+	
+	$asImplementationOf(...arg_interfaces) {
+		var arg_type = this._$arg_type;
+        if (arg_type === undefined)
+            return;
+        var interfaces = Array.from(arg_interfaces);
+        arg_type._$implemented_interfaces = interfaces;
+	    arg_type._$is_interface = false;
+	} // $MixinImplementation.$asImplementationOf
+} // '$MixinImplementation' class

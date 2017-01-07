@@ -1,7 +1,7 @@
 //==============================================================
 // i_animal.js
 // Purpose: 'IAnimal' interface class (uses mixins)
-// Project: mixin-interface module
+// Project: 'mixin-interface' module
 //==============================================================
 'use strict';
 /*jshint node: true*/
@@ -10,13 +10,12 @@ const appRoot   = require('app-root-path');
 const MxI       = require(appRoot + '/src/mixin_interface.js').MxI;
 const ILifeForm = require(appRoot + '/src/test_classes/i_life_form.js').ILifeForm;
 
-//==================== IAnimal interface class ====================
-class IAnimal extends MxI.$SuperInterface(ILifeForm)  {
+//==================== 'IAnimal' interface class ====================
+class IAnimal extends MxI.$Interface(ILifeForm)  {
   // Fallback implementation of 'run' service
   run() {
-    console.log("--> IAnimal.run");
     MxI.$raiseNotImplementedError(IAnimal, this);
   } // IAnimal.run
-} // IAnimal class
-MxI.$inherits(IAnimal, ILifeForm);
+} // 'IAnimal' class
+MxI.$setAsInterface(IAnimal).$asChildOf(ILifeForm);
 exports.IAnimal = IAnimal;

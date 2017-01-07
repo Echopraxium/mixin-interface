@@ -2,7 +2,7 @@
 // i_mammal.js
 // Purpose: 'IMammal' interface class (uses mixins)
 //          child of 'IAnimal' interface
-// Project: mixin-interface module
+// Project: 'mixin-interface' module
 //==============================================================
 'use strict';
 /*jshint node: true*/
@@ -11,12 +11,12 @@ const appRoot = require('app-root-path');
 const MxI     = require(appRoot + '/src/mixin_interface.js').MxI;
 const IAnimal = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
 
-//==================== IMammal interface class ====================
-class IMammal extends MxI.$SuperInterface(IAnimal) {
+//==================== 'IMammal' interface class ====================
+class IMammal extends MxI.$Interface(IAnimal) {
   // Fallback implementation of 'suckle' service
   suckle() {
     MxI.$raiseNotImplementedError(IMammal, this);
   } // IMammal.run
-} // IMammal class
-MxI.$inherits(IMammal, IAnimal);
+} // 'IMammal' class
+MxI.$setAsInterface(IMammal).$asChildOf(IAnimal);
 exports.IMammal = IMammal;

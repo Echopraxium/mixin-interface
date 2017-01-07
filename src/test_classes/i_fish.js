@@ -1,7 +1,7 @@
 //==============================================================
 // i_fish.js
 // Purpose: 'IFish' interface class (uses mixins)
-// Project: mixin-interface module
+// Project: 'mixin-interface' module
 //==============================================================
 'use strict';
 /*jshint node: true*/
@@ -10,12 +10,12 @@ const appRoot = require('app-root-path');
 const MxI     = require(appRoot + '/src/mixin_interface.js').MxI;
 const IAnimal = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
 
-//==================== IFish interface class ====================
-class IFish extends MxI.$SuperInterface(IAnimal) {
+//==================== 'IFish' interface class ====================
+class IFish extends MxI.$Interface(IAnimal) {
   // Fallback implementation of 'swim' service
   swim() {
     MxI.$raiseNotImplementedError(IFish, this);
   } // IFish.swim()
-} // IFish class
-MxI.$inherits(IFish, IAnimal);
+} // 'IFish' class
+MxI.$setAsInterface(IFish).$asChildOf(IAnimal);
 exports.IFish = IFish;
