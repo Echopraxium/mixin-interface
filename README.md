@@ -96,7 +96,7 @@ FlyingFish_0 is a 'IMammal' ?     false
 Here is an example of an _interface class_ (see `./src/test_classes/i_life_form.js`). Here we define a single service: `live()`
 1. Use `MxI.$raiseNotImplementedError()` in order to guarantee that the service is provided by the _implementation_. This should be put in the _Fallback implementation_ of each service defined by the interface. 
 
->This will raise an Error if an _implementation_ which defines that it implements this _interface_ doesn't provide implemention of the service(s) (see paragraph on `MxI.$raiseNotImplementedError` API service at the end of this document).
+ >This will raise an Error if an _implementation_ which defines that it implements this _interface_ doesn't provide implemention of the service(s) (see paragraph on `MxI.$raiseNotImplementedError` API service at the end of this document).
 
 2. Insert `MxI.$setAsInterface(ILifeForm)` after the class definition to define that this is an _interface_class_ 
 
@@ -121,12 +121,12 @@ Here is an example of a subclass of an _interface class_ (see `./src/test_classe
 1. Use this syntax: `class IAnimal extends $Interface(ILifeForm)` to define that `IAnimal` is a subclass of `ILifeForm`.
 2. Add `MxI.$setAsInterface(IAnimal).$asChildOf(ILifeForm)` _idiom_ just after the class definition.
 
->This is required so that `MxI.$isInstanceOf()` works properly to identify an object both as an being an instance of an _implementation class_ (and its superclasses) as well being an instance of an _interface class_ (and its superclasses).
+ >This is required so that `MxI.$isInstanceOf()` works properly to identify an object both as an being an instance of an _implementation class_ (and its superclasses) as well being an instance of an _interface class_ (and its superclasses).
 
 3. We then define a new service: `run()`. It will be a regular method of an es6 class. 
 4. Use `MxI.$raiseNotImplementedError()` in order to guarantee that the service is provided by the _implementation class_. This should be put in the _Fallback implementation_ of each service defined by the interface. 
 
->This will raise an error if the _implementation class_ does'nt provide (directly or via inheritance) one of the service(s) defined by the _interface class(es)_ (see paragraph on `MxI.$raiseNotImplementedError` API service at the end of this document). 
+ >This will raise an error if the _implementation class_ does'nt provide (directly or via inheritance) one of the service(s) defined by the _interface class(es)_ (see paragraph on `MxI.$raiseNotImplementedError` API service at the end of this document). 
 
 ```javascript
 const appRoot   = require('app-root-path');
@@ -151,11 +151,11 @@ Here is an example of an _implementation class_ (see `./src/test_classes/animal.
  
 2. Put `MxI.$setClass(Animal).$asImplementationOf(ILifeForm, IAnimal)` _idiom_ just after the class definition. 
 
->This is required so that `MxI.$isInstanceOf()` works properly to identify an object both as an being an instance of an _implementation_ (and its superclasses) as well being an instance of an interface class (and its superclasses).
+ >This is required so that `MxI.$isInstanceOf()` works properly to identify an object both as an being an instance of an _implementation_ (and its superclasses) as well being an instance of an interface class (and its superclasses).
 
 3. Provide implementation of all services (e.g. `live()`, `run()`, ...) defined in each interface as well as their parent interfaces. 
 
->If a service is not provided it may be inherited from the parent _implementation class_.
+ >If a service is not provided it may be inherited from the parent _implementation class_.
 
 ```javascript
 const appRoot   = require('app-root-path');
@@ -186,11 +186,11 @@ Here is an example of how to subclass an _implementation class_ (see `./src/test
 2. Put `MxI.$implements(Cat, IMammal)` just after the class definition.
 3. Provide implementation of the service defined by `IMammal` (`suckle()`). If a service from the parent _interfaces_ is not provided then it may be inherited from the parent _implementation class_.
 
->Notice this is the case in the following sample: for `run()` an `live()`, as they are _disabled_ by the `__` prefix then it is the implementation from the parent class which is inherited instead.
+ >Notice this is the case in the following sample: for `run()` an `live()`, as they are _disabled_ by the `__` prefix then it is the implementation from the parent class which is inherited instead.
 
 4. Put `MxI.$setClass(Cat).$asImplementationOf(IMammal)` _idiom_ just after the class definition. 
 
->This is required so that `MxI.$isInstanceOf()` works properly to identify an object both as being an instance of an _implementatio class_ (and its superclass(es)) as well being an instance of an _interface class_ (and its superclass(es)).
+ >This is required so that `MxI.$isInstanceOf()` works properly to identify an object both as being an instance of an _implementatio class_ (and its superclass(es)) as well being an instance of an _interface class_ (and its superclass(es)).
 
 ```javascript
 const appRoot = require('app-root-path');
