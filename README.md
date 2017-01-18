@@ -228,14 +228,23 @@ MxI.$setClass(Cat).$asImplementationOf(IMammal);
 
 >Please note that in the following:   
 > **API service** stands for _function provided by the mixin-interface package_ (e.g. `Mxi.$isInstanceOf()`).
+
 > **MxI** is the _namespace_ for all the _mixin-interface_ API services.
+
 > **object** stands for _instance of an _implementation class_. 
+
 > **service** stands for _function defined by an interface class_ (e.g. `IAnimal.run()`). 
+
 > **type** stands for either an _implementation class_ (e.g. `Animal`) or an _interface class_ (e.g. `IAnimal`). 
+
 > **interface** stands for _interface class_.
+
 > **super_interface** stands for _superclass of the interface class_.
+
 > **implementation** stands for _implementation class_.
+
 > **super_implementation** stands for _superclass of the implementation class_.
+
 > **...interfaces** stands for _list of implemented interfaces_. The list is provided as _interface class(es)_ separated by a comma (e.g. `ILifeForm` and `IAnimal, ILifeForm` are valid _...interfaces_ arguments).
 
 * **MxI.$isInstanceOf()**: replacement for javascript `instanceof` operator
