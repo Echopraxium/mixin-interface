@@ -7,8 +7,8 @@ Changelog since release 3.0.2:
  * Definition of an _interface class_: now it must always have a superclass (`MxI.$IBaseInterface` if no other _interface class_ applies)
  * Removal of `app-root-path` dependency (which in fact generated buggy side effects when another module depends on `mixin-interface`)
 * Better naming pattern: instances are now named with _SerpentCase_ pattern instead of the previous _PascalCase_ pattern (e.g. `FlyingFish_0`)
- > e.g. the first instance of `FlyingFish` will be named `flying_fish_0`
- > this feature adds a new dependency (`change-case`)
+ > e.g. the first instance of `FlyingFish` will be named `flying_fish_0`  
+ > This feature adds a new dependency (`change-case`)
 
 
 #### Installation and Usage:
@@ -226,7 +226,8 @@ MxI.$setClass(Cat).$asImplementationOf(IMammal);
 - - - -
 # mixin-interface API Developer's Reference
 
->Please note that in the following:   
+Please note that in the following: 
+  
 > **API service** stands for _function provided by the mixin-interface package_ (e.g. `Mxi.$isInstanceOf()`).  
 > **MxI** is the _namespace_ for all the _mixin-interface_ API services.  
 > **object** stands for _instance of an _implementation class_.   
