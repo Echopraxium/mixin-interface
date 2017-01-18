@@ -7,10 +7,9 @@
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const appRoot   = require('app-root-path');
-const MxI       = require(appRoot + '/src/mixin_interface.js').MxI;
-const IAnimal   = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
-const ILifeForm = require(appRoot + '/src/test_classes/i_life_form.js').ILifeForm;
+const MxI        = require('../mixin_interface.js').MxI;
+const IAnimal    = require('./i_animal.js').IAnimal;
+const ILifeForm  = require('./i_life_form.js').ILifeForm;
 
 //==================== 'Animal' implementation class ====================
 class Animal extends MxI.$Implementation(MxI.$Object).$with(IAnimal) {
@@ -26,5 +25,5 @@ class Animal extends MxI.$Implementation(MxI.$Object).$with(IAnimal) {
     console.log("--> Animal.live");
   } // ILifeForm.live()
 } // 'Animal' class
-MxI.$setClass(Animal).$asImplementationOf(ILifeForm, IAnimal);
+MxI.$setClass(Animal).$asImplementationOf(IAnimal, ILifeForm);
 exports.Animal = Animal;

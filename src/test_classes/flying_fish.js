@@ -11,12 +11,11 @@
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const appRoot  = require('app-root-path');
-const MxI      = require(appRoot + '/src/mixin_interface.js').MxI
-const Animal   = require(appRoot + '/src/test_classes/animal.js').Animal;
-const IAnimal  = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
-const IBird    = require(appRoot + '/src/test_classes/i_bird.js').IBird;
-const IFish    = require(appRoot + '/src/test_classes/i_fish.js').IFish;
+const MxI      = require('../mixin_interface.js').MxI
+const Animal   = require('./animal.js').Animal;
+const IAnimal  = require('./i_animal.js').IAnimal;
+const IBird    = require('./i_bird.js').IBird;
+const IFish    = require('./i_fish.js').IFish;
 
 //==================== 'FlyingFish' implementation class ====================
 class FlyingFish extends MxI.$Implementation(Animal).$with(IBird, IFish) {

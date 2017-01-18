@@ -6,9 +6,8 @@
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const appRoot   = require('app-root-path');
-const MxI       = require(appRoot + '/src/mixin_interface.js').MxI;
-const ILifeForm = require(appRoot + '/src/test_classes/i_life_form.js').ILifeForm;
+const MxI       = require('../mixin_interface.js').MxI;
+const ILifeForm = require('./i_life_form.js').ILifeForm;
 
 //==================== 'IAnimal' interface class ====================
 class IAnimal extends MxI.$Interface(ILifeForm)  {

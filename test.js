@@ -7,19 +7,17 @@
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const appRoot         = require('app-root-path');
-const mixin_interface = require(appRoot + '/src/mixin_interface.js');
+const mixin_interface = require('./src/mixin_interface.js');
 const MxI             = mixin_interface.MxI;
+const ILifeForm       = require('./src/test_classes/i_life_form.js').ILifeForm;
+const IAnimal         = require('./src/test_classes/i_animal.js').IAnimal;
+const IMammal         = require('./src/test_classes/i_mammal.js').IMammal;
+const IFish           = require('./src/test_classes/i_fish.js').IFish;
+const IBird           = require('./src/test_classes/i_bird.js').IBird;
 
-const ILifeForm       = require(appRoot + '/src/test_classes/i_life_form.js').ILifeForm;
-const IAnimal         = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
-const IMammal         = require(appRoot + '/src/test_classes/i_mammal.js').IMammal;
-const IFish           = require(appRoot + '/src/test_classes/i_fish.js').IFish;
-const IBird           = require(appRoot + '/src/test_classes/i_bird.js').IBird;
-
-const Animal          = require(appRoot + '/src/test_classes/animal.js').Animal;
-const Cat             = require(appRoot + '/src/test_classes/cat.js').Cat;
-const FlyingFish      = require(appRoot + '/src/test_classes/flying_fish.js').FlyingFish;
+const Animal          = require('./src/test_classes/animal.js').Animal;
+const Cat             = require('./src/test_classes/cat.js').Cat;
+const FlyingFish      = require('./src/test_classes/flying_fish.js').FlyingFish;
 
 //==================== start of test.js ====================
 var unit_test_step = 0;
@@ -29,20 +27,17 @@ console.log("---------- Unit Test for mixin-interface module ----------");
 unit_test_step++;
 var an_animal_0 = new Animal();
 console.log(unit_test_step + ".Instance of 'Animal' created: " + an_animal_0.name);
-console.log(an_animal_0.name + " is a 'MxI.$Object' ? " + MxI.$isInstanceOf(MxI.$Object, an_animal_0));
-console.log(an_animal_0.name + " is a 'ILifeForm' ?   " + MxI.$isInstanceOf(ILifeForm,   an_animal_0));
-console.log(an_animal_0.name + " is a 'Animal' ?      " + MxI.$isInstanceOf(Animal,      an_animal_0));
-console.log(an_animal_0.name + " is a 'IAnimal' ?     " + MxI.$isInstanceOf(IAnimal,     an_animal_0));
-console.log(an_animal_0.name + " is a 'IMammal' ?     " + MxI.$isInstanceOf(IMammal,     an_animal_0));
-console.log(an_animal_0.name + " is a 'IBird' ?       " + MxI.$isInstanceOf(IBird,       an_animal_0));
-console.log(an_animal_0.name + " is a 'IFish' ?       " + MxI.$isInstanceOf(IFish,       an_animal_0));
+console.log(an_animal_0.name + " is a 'MxI.$Object'    ?   " + MxI.$isInstanceOf(MxI.$Object, an_animal_0));
+console.log(an_animal_0.name + " is a 'ILifeForm' ?        " + MxI.$isInstanceOf(ILifeForm,   an_animal_0));
+console.log(an_animal_0.name + " is a 'Animal' ?           " + MxI.$isInstanceOf(Animal,      an_animal_0));
+console.log(an_animal_0.name + " is a 'IAnimal' ?          " + MxI.$isInstanceOf(IAnimal,     an_animal_0));
+
+console.log(an_animal_0.name + " is a 'IMammal' ?          " + MxI.$isInstanceOf(IMammal,     an_animal_0));
+
+console.log(an_animal_0.name + " is a 'IBird' ?            " + MxI.$isInstanceOf(IBird,       an_animal_0));
+console.log(an_animal_0.name + " is a 'IFish' ?            " + MxI.$isInstanceOf(IFish,       an_animal_0));
 an_animal_0.run();
 an_animal_0.live();
-
-console.log("----------");
-unit_test_step++;
-var an_animal_1 = new Animal();
-console.log(unit_test_step + ". Another instance of 'Animal' created: " + an_animal_1.name);
 
 
 console.log("----------");
@@ -81,15 +76,31 @@ a_flying_fish.live();
 console.log("----------");
 unit_test_step++;
 console.log(unit_test_step + ". Check for each type if it is an Interface class or an Implementation class");
-console.log("'MxI.$Object' is an interface ? " + MxI.$isInterface(MxI.$Object));
-console.log("'ILifeForm'   is an interface ? " + MxI.$isInterface(ILifeForm));
-console.log("'IAnimal'     is an interface ? " + MxI.$isInterface(IAnimal));
-console.log("'IBird'       is an interface ? " + MxI.$isInterface(IBird));
-console.log("'IFish'       is an interface ? " + MxI.$isInterface(IFish));
+console.log("'MxI.$Object'         is an interface ? " + MxI.$isInterface(MxI.$Object));
+console.log("'MxI.$IBaseInterface' is an interface ? " + MxI.$isInterface(MxI.$IBaseInterface));
+console.log("'ILifeForm'           is an interface ? " + MxI.$isInterface(ILifeForm));
+console.log("'IAnimal'             is an interface ? " + MxI.$isInterface(IAnimal));
+console.log("'IBird'               is an interface ? " + MxI.$isInterface(IBird));
+console.log("'IFish'               is an interface ? " + MxI.$isInterface(IFish));
 
-console.log("'Animal'      is an interface ? " + MxI.$isInterface(Animal));
-console.log("'Cat'         is an interface ? " + MxI.$isInterface(Cat));
-console.log("'FlyingFish'  is an interface ? " + MxI.$isInterface(FlyingFish));
+console.log("'Animal'              is an interface ? " + MxI.$isInterface(Animal));
+console.log("'Cat'                 is an interface ? " + MxI.$isInterface(Cat));
+console.log("'FlyingFish'          is an interface ? " + MxI.$isInterface(FlyingFish));
 
-console.log("---------- End of UnitTest ----------");
+console.log("----------");
+unit_test_step++;
+console.log(unit_test_step + ". Check generated names for instances");
+var an_object = new MxI.$Object();
+console.log("Instance of 'MxI.$Object' created:        " + an_object.name);
+
+var another_animal = new Animal();
+console.log("Another instance of 'Animal' created:     " + another_animal.name);
+
+var another_flying_fish = new FlyingFish();
+console.log("Another instance of 'FlyingFish' created: " + another_flying_fish.name);
+
+another_animal = new Animal();
+console.log("Another instance of 'Animal' created:     " + another_animal.name);
+
+console.log("---------- End of Unit Test ----------");
 console.log();

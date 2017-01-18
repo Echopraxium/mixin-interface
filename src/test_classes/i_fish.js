@@ -6,9 +6,8 @@
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const appRoot = require('app-root-path');
-const MxI     = require(appRoot + '/src/mixin_interface.js').MxI;
-const IAnimal = require(appRoot + '/src/test_classes/i_animal.js').IAnimal;
+const MxI     = require('../mixin_interface.js').MxI;
+const IAnimal = require('./i_animal.js').IAnimal;
 
 //==================== 'IFish' interface class ====================
 class IFish extends MxI.$Interface(IAnimal) {
