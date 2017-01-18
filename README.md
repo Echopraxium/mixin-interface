@@ -277,7 +277,8 @@ console.log("'IAnimal' is an interface ? " + MxI.$isInterface(IAnimal));
 MxI.$Interface(super_interface)
 MxI.$setAsInterface(interface).$asChildOf(super_interface) 
 ```
-These services allow to define an _interface class_: 
+These services allow to define an _interface class_:
+
 1. Use `MxI.$Interface()` after the `extends` clause of the es6 javascript `class` definition 
 2. After the class definition, use the `MxI.$setAsInterface().$asChildOf()` _idiom_
 
@@ -296,7 +297,8 @@ This code means that `IAnimal` is an _interface class_ which is a subclass of `I
 MxI.$Implementation(super_implementation).$with(...interfaces)
 MxI.$setClass(implementation).$asImplementationOf(...interfaces)
 ```
-These services allow to define an _implementation class_ (see `./src/test_classes/animal.js` for a full sample): 
+These services allow to define an _implementation class_ (see `./src/test_classes/animal.js` for a full sample):
+
 1. Use `MxI.$Implementation()` after the `extends` clause of the es6 javascript `class` definition
 2. After the class definition, use the `MxI.$setClass().$asImplementationOf()` _idiom_
 
@@ -308,6 +310,7 @@ class Animal extends MxI.$Implementation(MxI.$Object).$with(IAnimal) {
 MxI.$setClass(Animal).$asImplementationOf(IAnimal, ILifeForm);
 ```
 This code means:
+
 1. `Animal` is an _implementation class_ which is a subclass of `MxI.$Object` 
 2. `Animal` implements both `IAnimal` and `ILifeForm` _interface classes_
 
