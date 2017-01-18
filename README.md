@@ -6,7 +6,7 @@ Changelog since release 3.0.2:
 * Fix of a huge issue when another module depends on `mixin-interface`
  * Definition of an _interface class_: now it must always have a superclass (`MxI.$IBaseInterface` if no other _interface class_ applies)
  * Removal of `app-root-path` dependency (which in fact generated buggy side effects when another module depends on `mixin-interface`)
-* Better naming pattern: instances are now named with _SerpentCase_ pattern instead of the previous _PascalCase_ pattern (e.g. `FlyingFish_0`)
+* Better naming pattern: instances are now named with _SerpentCase_ pattern instead of the previous _PascalCase_ pattern (e.g. `FlyingFish_0`)  
  > e.g. the first instance of `FlyingFish` will be named `flying_fish_0`  
  > This feature adds a new dependency (`change-case`)
 
