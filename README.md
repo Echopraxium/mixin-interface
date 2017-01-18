@@ -99,11 +99,11 @@ Another instance of 'Animal' created:     animal_2
 ## How to Define an Interface class
 Here is an example of an _interface class_ (see `./src/test_classes/i_life_form.js`). Here we define a single service: `live()`
 
-1. Inherit from `MxI.$IBaseInterface` (or any other _super_interface_ if applicable) by using `MxI.$Interface()` just after the es6 `extends` keyword to define both that it is an _interface class_ and that its _super_interface_ is `MxI.$IBaseInterface`. 
-2. Use `MxI.$raiseNotImplementedError()` in order to guarantee that the service is provided by the _implementation_. This should be put in the _Fallback implementation_ of each service defined by the interface. 
+* Inherit from `MxI.$IBaseInterface` (or any other _super_interface_ if applicable) by using `MxI.$Interface()` just after the es6 `extends` keyword to define both that it is an _interface class_ and that its _super_interface_ is `MxI.$IBaseInterface`. 
+* Use `MxI.$raiseNotImplementedError()` in order to guarantee that the service is provided by the _implementation_. This should be put in the _Fallback implementation_ of each service defined by the interface. 
 
  >This will raise an Error if an _implementation_ which defines that it implements this _interface_ doesn't provide implemention of the service(s) (see paragraph on `MxI.$raiseNotImplementedError` API service at the end of this document).  
-3. Add the `MxI.$setAsInterface().$asChildOf()` _idiom_ after the class definition to define that this is an _interface_class_ and what is its superclass.
+* Add the `MxI.$setAsInterface().$asChildOf()` _idiom_ after the class definition to define that this is an _interface_class_ and what is its superclass.
 
 >Note: To remind that a class is an _interface class_, it is strongly advised to use the '_I prefix_' naming convention as  a reminder. This is a reminiscence of [_Hungarian notation_](https://en.wikipedia.org/wiki/Hungarian_notation) , a fairly old _identifier naming convention_ (e.g. see [Microsoft COM](https://fr.wikipedia.org/wiki/Component_Object_Model))
 
@@ -124,13 +124,13 @@ exports.ILifeForm = ILifeForm;
 ## How to subclass an Interface class
 Here is an example of a subclass of an _interface class_ (see `./src/test_classes/i_animal.js`). Here we want to define `IAnimal` as a subclass of the `ILifeForm` _interface class_.
 
-1. Use this syntax: `class IAnimal extends $Interface()` to define that `IAnimal` is a subclass of `ILifeForm`.
-2. Add the `MxI.$setAsInterface().$asChildOf()` _idiom_ just after the class definition.
+* Use this syntax: `class IAnimal extends $Interface()` to define that `IAnimal` is a subclass of `ILifeForm`.
+* Add the `MxI.$setAsInterface().$asChildOf()` _idiom_ just after the class definition.
 
  >This is required so that `MxI.$isInstanceOf()` works properly to identify an object both as an being an instance of an _implementation class_ (and its superclasses) as well being an instance of an _interface class_ (and its superclasses).
 
-3. We then define a new service: `run()`. It will be a regular method of an es6 class. 
-4. Use `MxI.$raiseNotImplementedError()` in order to guarantee that the service is provided by the _implementation class_. This should be put in the _Fallback implementation_ of each service defined by the interface. 
+* We then define a new service: `run()`. It will be a regular method of an es6 class. 
+* Use `MxI.$raiseNotImplementedError()` in order to guarantee that the service is provided by the _implementation class_. This should be put in the _Fallback implementation_ of each service defined by the interface. 
 
  >This will raise an error if the _implementation class_ does'nt provide (directly or via inheritance) one of the service(s) defined by the _interface class(es)_ (see paragraph on `MxI.$raiseNotImplementedError` API service at the end of this document). 
 
@@ -151,17 +151,17 @@ exports.IAnimal = IAnimal;
 ## How to code an Implementation class
 Here is an example of an _implementation class_ (see `./src/test_classes/animal.js`). An _implementation_ may implement one or more _interface classes_. To implement the services (i.e. defined by the _interface class(es)_ that are declared as implemented by this class) we must:
 
-1. Inherit from `MxI.$Object` (or any of its subclasses) by using the `MxI.$Implementation().$with()` _idiom_ just after the es6 `extends` keyword to define both a subclass and the _interface class(es)_ that it implements (`IAnimal` here). 
+* Inherit from `MxI.$Object` (or any of its subclasses) by using the `MxI.$Implementation().$with()` _idiom_ just after the es6 `extends` keyword to define both a subclass and the _interface class(es)_ that it implements (`IAnimal` here). 
  
  >Inheriting from `MxI.$Object` also provides the _automatic instance naming_ feature (this feature is provided by the `name` attribute on each instance of `MxI.$Object` or any of its subclasses. Each instance name is generated from its class name and its instance count (e.g. `Animal_0`)
  > Instances are named with _SerpentCase_ pattern
  > e.g. the first instance of `FlyingFish` will be named `flying_fish_0`
  
-2. Put `MxI.$setClass(Animal).$asImplementationOf(ILifeForm, IAnimal)` _idiom_ just after the class definition. 
+* Put `MxI.$setClass(Animal).$asImplementationOf(ILifeForm, IAnimal)` _idiom_ just after the class definition. 
 
  >This is syntactically redundant but nevertheless required in order that `MxI.$isInstanceOf()` works correctly (see paragraph on `MxI.$isInstanceOf` API service at the end of this document). 
 
-3. Provide implementation of all services (e.g. `live()`, `run()`, ...) defined in each interface as well as their parent interfaces. 
+* Provide implementation of all services (e.g. `live()`, `run()`, ...) defined in each interface as well as their parent interfaces. 
 
  >If a service is not provided it may be inherited from the parent _implementation class_.
 
@@ -189,12 +189,12 @@ MxI.$setClass(Animal).$asImplementationOf(IAnimal, ILifeForm);
 ## How to subclass an Implementation class
 Here is an example of how to subclass an _implementation class_ (see `./src/test_classes/cat.js`). Here we want to both to subclass `Animal` and implement the `IMammal` _interface class_, this is how to do it:
 
-1. Inherit from `Animal` by using the `MxI.Implementation().$with()` _idiom_ just after `extends` to define both a subclass and the _interfaces_ that it implements.
-2. Provide implementation of the service defined by `IMammal` (`suckle()`). If a service from the parent _interfaces_ is not provided then it may be inherited from the parent _implementation class_.
+* Inherit from `Animal` by using the `MxI.Implementation().$with()` _idiom_ just after `extends` to define both a subclass and the _interfaces_ that it implements.
+* Provide implementation of the service defined by `IMammal` (`suckle()`). If a service from the parent _interfaces_ is not provided then it may be inherited from the parent _implementation class_.
 
  >Notice this is the case in the following sample: for `run()` an `live()`, as they are _disabled_ by the `__` prefix then it is the implementation from the parent class which is inherited instead.
 
-3. Add the `MxI.$setClass(Cat).$asImplementationOf(IMammal)` _idiom_ just after the class definition. 
+* Add the `MxI.$setClass(Cat).$asImplementationOf(IMammal)` _idiom_ just after the class definition. 
 
  >This is required so that `MxI.$isInstanceOf()` works properly to identify an object both as being an instance of an _implementatio class_ (and its superclass(es)) as well being an instance of an _interface class_ (and its superclass(es)).
 
@@ -281,8 +281,8 @@ MxI.$setAsInterface(interface).$asChildOf(super_interface)
 ```
 These services allow to define an _interface class_:
 
-1. Use `MxI.$Interface()` after the `extends` clause of the es6 javascript `class` definition 
-2. After the class definition, use the `MxI.$setAsInterface().$asChildOf()` _idiom_
+* Use `MxI.$Interface()` after the `extends` clause of the es6 javascript `class` definition 
+* After the class definition, use the `MxI.$setAsInterface().$asChildOf()` _idiom_
 
 Example (see `./src/test_classes/i_animal.js` for a full sample):
 ```javascript
@@ -301,8 +301,8 @@ MxI.$setClass(implementation).$asImplementationOf(...interfaces)
 ```
 These services allow to define an _implementation class_ (see `./src/test_classes/animal.js` for a full sample):
 
-1. Use `MxI.$Implementation()` after the `extends` clause of the es6 javascript `class` definition
-2. After the class definition, use the `MxI.$setClass().$asImplementationOf()` _idiom_
+* Use `MxI.$Implementation()` after the `extends` clause of the es6 javascript `class` definition
+* After the class definition, use the `MxI.$setClass().$asImplementationOf()` _idiom_
 
 Example (see `./src/test_classes/animal.js` for a full sample):
 ```javascript
@@ -313,8 +313,8 @@ MxI.$setClass(Animal).$asImplementationOf(IAnimal, ILifeForm);
 ```
 This code means:
 
-1. `Animal` is an _implementation class_ which is a subclass of `MxI.$Object` 
-2. `Animal` implements both `IAnimal` and `ILifeForm` _interface classes_
+* `Animal` is an _implementation class_ which is a subclass of `MxI.$Object` 
+* `Animal` implements both `IAnimal` and `ILifeForm` _interface classes_
 
 ***
 ```javascript
