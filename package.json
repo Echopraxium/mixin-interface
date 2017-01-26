@@ -3,6 +3,7 @@
   "version": "4.0.10",
   "description": "An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.",
   "main": "test.js",
+  "readme": "README.md",
   "scripts": {
     "test": "node test.js"
   },
