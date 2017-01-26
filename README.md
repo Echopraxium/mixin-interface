@@ -3,7 +3,7 @@
 An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.
 
 Changelog since release 4.0.12:
-* New implementation of `MxI` namespace: _IIFE_ (_Immediately-invoked Function Expression_) replaced by an es6 block (`{...}`). 
+* New implementation of `MxI` namespace: _IIFE_ (_Immediately-invoked Function Expression_) replaced by an es6 block (`{...}`).  
  >This is a better way to declare: "_variable MxI has its own scope and hence may be used as a namespace_".
 
 #### Installation and Usage:
