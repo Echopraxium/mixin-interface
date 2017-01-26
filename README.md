@@ -2,14 +2,9 @@
 
 An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.
 
-Changelog since release 3.0.2:
-* Fix of a huge issue when another module depends on `mixin-interface`
- * Definition of an _interface class_: now it must always have a superclass (`MxI.$IBaseInterface` if no other _interface class_ applies)
- * Removal of `app-root-path` dependency (which in fact generated buggy side effects when another module depends on `mixin-interface`)
-* Better naming pattern: instances are now named with _SerpentCase_ pattern instead of the previous _PascalCase_ pattern (e.g. `FlyingFish_0`)  
- > e.g. the first instance of `FlyingFish` will be named `flying_fish_0`  
- > This feature adds a new dependency (`change-case`)
-
+Changelog since release 4.0.12:
+* New implementation of `MxI` namespace: _IIFE_ (_Immediately-invoked Function Expression_) replaced by an es6 block (`{...}`). 
+ >This is a better way to declare: "_variable MxI has its own scope and hence may be used as a namespace_".
 
 #### Installation and Usage:
 ```bash

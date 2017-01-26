@@ -25,6 +25,7 @@ exports.$IBaseInterface = $IBaseInterface;
 class $Object {
   constructor(...args) {
     this._$name = this.generateInstanceName();
+	this._$args = args;
   } // '$Object' constructor
 
   generateInstanceName() {
@@ -42,12 +43,9 @@ class $Object {
 
     $Object._InstanceCount[class_name] = count;
 
-    //var name = class_name + '_' + count;
 	var preformatted_class_name = class_name.replace('.', '_').replace('$', 'mxi');
 	var snake_case_class_name   = change_case.snakeCase(preformatted_class_name);
 	var name = snake_case_class_name + '_' + count;
-	//name = class_name + '_' + count;
-	//name = class_name + '_' + count;
 	
     $Object._InstanceCount[class_name]++;
     return name;
@@ -64,10 +62,11 @@ exports.$Object = $Object;
 //================ '$Object' Base Implementation class
 
 
-//================================ '$MxI$' Namespace ================================
+//================================ 'MxI' Namespace ================================
 var MxI = 
-  (function(){
-	return {
+    //(function(){
+	//return {
+	{
 		//--------------------- $Object ---------------------
 		'$Object': $Object,
 		
@@ -167,7 +166,8 @@ var MxI =
             throw new Error(error_msg);
         } // $raiseNotImplementedError
     };
-}()); // MxI
+	//};
+//}()); // MxI
 exports.MxI= MxI;
 
 
