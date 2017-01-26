@@ -5,7 +5,9 @@ An es6 (ECMAScript 2015) lightweight implementation of interface classes with `m
 Changelog since release 4.0.12:
 * New implementation of `MxI` namespace: _IIFE_ (_Immediately-invoked Function Expression_) replaced by an es6 block (`{...}`).  
 
- >This is a better way to declare: "_variable MxI has its own scope and hence may be used as a namespace_".
+ >This is a better way to declare: "_variable MxI has its own scope and hence may be used as a namespace_".  
+ 
+* Arguments provided to `$Object` constructor (`..args`) are now accessible to subclasses by `this._$args` attribute.
 
 #### Installation and Usage:
 ```bash
