@@ -2,12 +2,13 @@
 
 An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.
 
-Changelog since release 4.0.12:
-* New implementation of `MxI` namespace: _IIFE_ (_Immediately-invoked Function Expression_) replaced by an es6 block (`{...}`).  
-
- >This is a better way to declare: "_variable MxI has its own scope and hence may be used as a namespace_".  
+Changelog since release 4.1.2:
+* Enhancement of `MxI.$Object` usability:  
+ * New method `init(arg_initialized, ...init_args)`: this provides the "_delayed initialization_" feature. This is useful when the initialization data is not available at instanciation time. 
  
-* Arguments provided to `$Object` constructor (`..args`) are now accessible to subclasses by `this._$args` attribute.
+ >A typical example in GUI programming is when you need a widget (e.g. PushButton) but its container (e.g. CommandBar) is not yet created or known at instanciation time, so you may use later the `init()` service so that the PushButton can set its container (e.g. by calling `setContainer()` in the PushButton's implementation of init() service).
+ 
+ >Notice that the first argument of `init()` (`arg_initialized`) is both mandatory and also that it must be a boolean. If one of these constraints is not fullfilled then an exception will be raised.
 
 #### Installation and Usage:
 ```bash
@@ -89,6 +90,10 @@ Instance of 'MxI.$Object' created:        mxi_object_0
 Another instance of 'Animal' created:     animal_1
 Another instance of 'FlyingFish' created: flying_fish_1
 Another instance of 'Animal' created:     animal_2
+----------
+6. Initialize instance
+animal_2 isInitialized():      false
+animal_2 isInitialized():      true
 ---------- End of Unit Test ----------
 ```
 

@@ -102,5 +102,12 @@ console.log("Another instance of 'FlyingFish' created: " + another_flying_fish.n
 another_animal = new Animal();
 console.log("Another instance of 'Animal' created:     " + another_animal.name);
 
+console.log("----------");
+unit_test_step++;
+console.log(unit_test_step + ". Initialize instance");
+console.log(another_animal.name + " isInitialized():      " + another_animal.isInitialized());
+another_animal.init(true);
+console.log(another_animal.name + " isInitialized():      " + another_animal.isInitialized());
+
 console.log("---------- End of Unit Test ----------");
 console.log();

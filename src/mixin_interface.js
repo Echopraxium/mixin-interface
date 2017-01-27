@@ -13,6 +13,16 @@ const change_case = require('change-case');
 
 const SERVICE_NOT_IMPLEMENTED_ERROR_ID     = 100;
 const SUPER_INTERFACE_NOT_DEFINED_ERROR_ID = 101;
+const MANDATORY_ARG_MISSING_ID             = 102;
+const ARG_INITIALIZED_NOT_BOOLEAN_ID       = 103;
+
+// http://www.2ality.com/2016/05/six-nifty-es6-tricks.html
+function $mandatory_arg(obj) {
+	var error_msg   = "** mixin-interface Error " + MANDATORY_ARG_MISSING_ID + " **\n" +
+                      "       in init() of '" + obj.name + "' : 'arg_initialized' is mandatory\n";
+    throw new Error(error_msg);
+} // $mandatory_arg
+
 
 //==================== '$IBaseInterface' interface class ====================
 class $IBaseInterface {
@@ -24,9 +34,28 @@ exports.$IBaseInterface = $IBaseInterface;
 //================ '$Object' Base Implementation class ================
 class $Object {
   constructor(...args) {
-      this._$name = this.generateInstanceName();
-      this._$args = args;
+      this._$name        = this.generateInstanceName();
+      this._$args        = args;
+	  this._$initialized = false;
+	  this._$args_init   = [];
   } // '$Object' constructor
+  
+  init(arg_initialized = $mandatory_arg(this), ...args_init) {
+	  if (arg_initialized===true || arg_initialized===false) {
+		this._$initialized = arg_initialized;
+		if (args_init !== undefined && args_init !== null)
+		  this._$args_init = Array.from(args_init);
+		return;
+	  }
+	
+	  var error_msg = "** mixin-interface Error " + ARG_INITIALIZED_NOT_BOOLEAN_ID + " **\n" +
+                      "       in init() of '" + this.name + "' : 'arg_initialized' must be a boolean\n";
+      throw new Error(error_msg);
+  } // init
+  
+  isInitialized() {
+	  return this._$initialized;
+  } // isInitialized
 
   generateInstanceName() {
     var class_name = this.constructor.name;
@@ -107,20 +136,16 @@ const MxI = {
           return true;
       else {
           // Check if instance 'isinstanceof' an interface class
-          // console.log("---->> instance_type: " + instance_type.name);
           var implemented_interface;
           if (instance_type._$implemented_interfaces !== undefined) {
               // Check if interface class is in _$implemented_interfaces
               for (var i=0; i<instance_type._$implemented_interfaces.length; i++) {
                   implemented_interface = instance_type._$implemented_interfaces[i];
-                  //console.log(">> implemented_interface  " + implemented_interface.name);
                   if (implemented_interface === type)
                       return true;
                   else {
                       var parent_interface = implemented_interface._$super_interface;
-                      //console.log(">>---- parent_interface of " + type.name + " = " + parent_interface.name);
                       while (parent_interface !== undefined) {
-                          //console.log(">>---- parent_interface of " + type.name + " = " + parent_interface.name);
                           if (parent_interface === type)
                               return true;
                           parent_interface = parent_interface._$super_interface;
@@ -156,7 +181,7 @@ const MxI = {
         var caller_data = caller_id.getData();
         var error_msg   = "** mixin-interface Error " + SERVICE_NOT_IMPLEMENTED_ERROR_ID + " ** " +
                           arg_interface.name + "." + caller_data.functionName +
-                          " not found on " + instance.name;
+                          " not found on " + instance.name + "\n";
 
         throw new Error(error_msg);
     } // $raiseNotImplementedError
