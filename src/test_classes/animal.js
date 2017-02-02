@@ -1,8 +1,8 @@
 //==============================================================
 // animal.js
 // Purpose: 'Animal' implementation class
-//          implements of 'IAnimal' interface
-// Project: 'mixin-interface' package
+//          implements 'IAnimal' interface
+// Project: 'mixin-interface' npm package
 //==============================================================
 'use strict';
 /*jshint node: true*/

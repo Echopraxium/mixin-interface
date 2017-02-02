@@ -108,9 +108,7 @@ MxI.$System.log("----------");
 unit_test_step++;
 MxI.$System.log(unit_test_step + ". Initialize instance");
 MxI.$System.log(another_animal.name + " isInitialized():      " + another_animal.isInitialized());
-//another_animal.init();         // to raise Error 102 ('arg_initialized' is mandatory)
-//another_animal.init("hello");  // to raise Error 103 ('arg_initialized' must be a boolean)
-another_animal.init(true);
+another_animal.init();
 MxI.$System.log(another_animal.name + " isInitialized():      " + another_animal.isInitialized());
 
 MxI.$System.log("----------");

@@ -6,7 +6,7 @@
 //          as well as  (via its parent class 'Animal'):
 //          - 'ILifeForm'
 //          - 'IAnimal' (child of 'ILifeForm')
-// Project: 'mixin-interface' module
+// Project: 'mixin-interface' npm package
 //==============================================================
 'use strict';
 /*jshint node: true*/

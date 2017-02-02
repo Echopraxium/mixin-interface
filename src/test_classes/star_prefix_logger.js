@@ -1,7 +1,8 @@
 //==============================================================
 // star_prefix_logger.js
 // Purpose: '$StarPrefixLogger' implementation class
-// Project: 'mixin-interface' package
+//          implements 'MxI.$ILogger' interface
+// Project: 'mixin-interface' npm package
 //==============================================================
 'use strict';
 /*jshint node: true*/

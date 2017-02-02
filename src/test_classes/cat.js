@@ -1,7 +1,8 @@
 //==============================================================
 // cat.js
 // Purpose: 'Cat' implementation class
-// Project: 'mixin-interface' module
+//          implements 'IMammal' interface
+// Project: 'mixin-interface' npm package
 //==============================================================
 'use strict';
 /*jshint node: true*/

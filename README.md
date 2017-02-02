@@ -2,15 +2,21 @@
 
 An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.
 
-Changelog since release 4.2.0:
-* Documentation update for `MxI.$Object`:  
- * _Delayed initialization_: init() and isInitialized() service  
-* New Feature: _Custom Logger_ which allows more flexibiity than `console.log()` (see update of `test.js` sorce code)
+Changelog since release 4.3.1:
+* Enhancements of `MxI.$Object`:  
+   
+ * _Delayed initialization_: `init()` and `isInitialized()` services  
+ 
+ > `init()` signature is now `init(...args_init)` (not more `arg_initialized` argument)
+ 
+* New Feature: _Custom Logger_ which allows more flexibiity than `console.log()` (see update of `test.js` source code)
  * Logger must implement `MxI.$ILogger` Interface  
  * Default Logger provided `MxI.$DefaultLogger` (NB: it is a _Singleton_ implementation class)
  * `MxI.$System.setLogger()` allows to change the Logger and `MxI.$System.resetLogger()` to restore the default logger.
  
- >A custom logger is provided (`./src/test_classes/star_prefix_logger.js`), it just adds `* ` prefix on each output (see last stepin output of `test.js`)
+ >A custom logger is provided (`./src/test_classes/star_prefix_logger.js`), it just adds '* ' prefix on each output (see last step in output of `test.js`)
+ 
+* MxI workspace provides `$mandatory_arg` function to set a mandatory argument on a service 
 
 #### Installation and Usage:
 ```bash
@@ -249,12 +255,12 @@ Please note that in the following:
 > **super_implementation** stands for _superclass of the implementation class_.  
 > **...interfaces** stands for _list of implemented interfaces_. The list is provided as _interface class(es)_ separated by a comma (e.g. `ILifeForm` and `IAnimal, ILifeForm` are valid _...interfaces_ arguments).  
 
-* **MxI.$isInstanceOf()**: replacement for javascript `instanceof` operator
-* **MxI.$isInterface()**: checks if a _type_ is an _interface class_ or not
+* **MxI.$isInstanceOf()**: replacement for javascript `instanceof` operator.
+* **MxI.$isInterface()**: checks if a _type_ is an _interface class_ or not.
 
-* **MxI.$Interface()**: defines an _interface class_ and its _super_interface_
-* **MxI.$setAsInterface().$asChildOf()**: defines that a class is an _interface class_ and its _super_implementation_
- >This is syntactically redundant but nevertheless required in order that `MxI.$isInstanceOf()` works correctly
+* **MxI.$Interface()**: defines an _interface class_ and its _super_interface_.
+* **MxI.$setAsInterface().$asChildOf()**: defines that a class is an _interface class_ and its _super_implementation_.
+ >This is syntactically redundant but nevertheless required in order that `MxI.$isInstanceOf()` works correctly.
 
 * **MxI.$Implementation().$with()**: defines an _implementation class_ and its superclass (`Mxi.$Object` if no other class applies).
 * **MxI.$setClass().$asImplementationOf()**: defines  the _interface class(es)_ implemented by an _implementation class_.
@@ -264,16 +270,19 @@ Please note that in the following:
 * **MxI.$Object().init()**: _Delayed Initialization_ feature
 * **MxI.$Object().isInitialized()**: checks if an object has been initialized
 
-* **MxI.$ILogger**: interface class for _Custom Logger_ feature which is more effective and flexible than `console.log()`
+* **MxI.$System.log()**: _Custom Logger_ feature, more effective and flexible than `console.log()`
+* **MxI.$ILogger**: interface class for _Custom Logger_ feature 
 * **MxI.$DefaultLogger**: Default implementation of `MxI.$ILogger` (NB: it's a _Singleton_)
 * **MxI.$System.setLogger()**: Change the _Logger_ by providing a instance of a class which implements `MxI.$ILogger`
 * **MxI.$System.resetLogger()**: Restore the _Default Logger_ (`MxI.$DefaultLogger`)
+
+* **$mandatory_arg()**: Set a mandatory argument on a service 
 
 ***
 ```javascript
 MxI.$isInstanceOf(type, object)
 ```
-This service provides type-checking for an object (see `./test.js` for a unit test of this feature). The `type` argument is either an _implementation class_ or an _interface class_. This API service allows to identify an object as being both an instance of an _interface class_ (and its superclass(es)), as well as an instance of an _implementation class_ (and its superclass(es-).
+This service provides type-checking for an object (see `./test.js` for a unit test of this feature). The `type` argument is either an _implementation class_ or an _interface class_. This API service allows to identify an object as being both an instance of an _interface class_ (and its superclass(es)), as well as an instance of an _implementation class_ (and its superclass(es)
  > This service is a replacement for javascript `instanceof` operator
 
 ```javascript
@@ -364,21 +373,20 @@ es\i_animal.js:16:9)
 
 ***
 ```javascript
-MxI.$Object().init(arg_initialized, ...args_init)
+MxI.$Object().init(...args_init)
 MxI.$Object().isInitialized()
 ```
 These services provide the _Delayed Initialization_ feature. 
->Notice that in `init()` service, the `args_init` will be accessible to all instances created with `mixin-interface`, via `this._args_init`. 
+>Once `init()` service is called, if `args_init` is provided it is accessible to all instances of implementation class(es) via `this._$args_init`. 
 
->Notice that the first argument of init() (`arg_initialized`) is both mandatory and also must be a boolean. If one of these constraints is not fullfilled then an exception will be raised. 
+>An object may be initialized only once: `this._$args_init` cannot be set or changed.
 
->Notice that once an object has been initialized (e.g. `init(true)`), it is irreversible. It is then not possible to _unitialize_ (e.g. by using `init(false)`)
-
->A short explanation on _Delayed Initialization_: a typical example in GUI programming is when you need a widget (e.g. PushButton) but its container (e.g. CommandBar) is not yet created or known at instanciation time, so you may use later the init() service so that the PushButton can set its container (e.g. by calling setContainer() in the PushButton's implementation of init() service).
+>A short explanation on _Delayed Initialization_: a typical example in GUI programming is when you need a widget (e.g. PushButton) but its container (e.g. CommandBar) is not yet created or known at instanciation time, so you may use later  `init()` service so that the PushButton can set its container (e.g. by calling setContainer() in the PushButton's implementation of init() service).
 
 
 ***
 ```javascript
+MxI.$System.log()
 MxI.$ILogger
 MxI.$DefaultLogger
 MxI.$System.setLogger()
@@ -386,10 +394,7 @@ MxI.$System.resetLogger()
 ```
 This provides the _Custom Logger_ feature which is more effecive and flexible than `console.log()`, like enabling/disabling traces, redirectog to a File or a Stream, define trace levels and categories etc.. . To use this feature call `MxI.$System.log()` instead of `console.log()`. 
 
-* A custom logger must implement `MxI.$ILogger` interface.   
-* `MxI.$DefaultLogger` is provided as a default implementation of `MxI.$ILogger` interface.  
- 
- >Notice that the implementation class should be a _Singleton_ (see sample code below)
+A custom logger must implement `MxI.$ILogger` interface, `MxI.$DefaultLogger` is provided as a default implementation this interface (NB: the implementation class should be a _Singleton_)
  
 * You may change the _Logger_ by providing an instance of a class which implements `MxI.$ILogger`
 ```javascript
@@ -397,12 +402,12 @@ const $StarPrefixLogger = require('./src/test_classes/star_prefix_logger.js').$S
 MxI.$System.setLogger($StarPrefixLogger.getSingleton());
 ```
 
-And to revert to the default logger:
+And to revert to the default logger (`MxI.$DefaultLogger`):
 ```javascript
 MxI.$System.resetLogger();
 ```
 
-Here is the source code of `$StarPrefixLogger` (see `./src/test_classes/star_prefix_logger.js`). Once it is set as the _Logger_ (with `MxI.$System.setLogger()`), it adds `* ` prefix on each output from `MxI.$System.log()` call (see `./test.js`).
+Here is the source code of `$StarPrefixLogger` (see `./src/test_classes/star_prefix_logger.js`). Once it is set as the _Logger_ (with `MxI.$System.setLogger()`), it will add '* ' prefix on each output of `MxI.$System.log()` call (see `./test.js`).
 
 ```javascript
 const MxI = require('../mixin_interface.js').MxI;

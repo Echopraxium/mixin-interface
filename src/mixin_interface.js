@@ -2,7 +2,7 @@
 // mixin_interface.js
 // Purpose:  implementation of interface classes in es6
 //           https://www.npmjs.com/package/mixin-interface
-// Project: 'mixin-interface' module
+// Project: 'mixin-interface' npm package
 //==============================================================
 //'use strict';
 /*jshint node: true*/
@@ -14,7 +14,6 @@ const change_case = require('change-case');
 const SERVICE_NOT_IMPLEMENTED_ERROR_ID     = 100;
 const SUPER_INTERFACE_NOT_DEFINED_ERROR_ID = 101;
 const MANDATORY_ARG_MISSING_ID             = 102;
-const ARG_INITIALIZED_NOT_BOOLEAN_ID       = 103;
 
 
 // http://www.2ality.com/2016/05/six-nifty-es6-tricks.html
@@ -41,17 +40,13 @@ class $Object {
 	  this._$args_init   = [];
   } // '$Object' constructor
   
-  init(arg_initialized = $mandatory_arg(this, 'arg_initialized'), ...args_init) {
-	  if (arg_initialized===true || arg_initialized===false) {
-		this._$initialized = arg_initialized;
-		if (args_init !== undefined && args_init !== null)
-		  this._$args_init = Array.from(args_init);
+  init(...args_init) {
+	  if (this._$initialized===true) 
 		return;
-	  }
-					  
-	  var error_msg   = "** mixin-interface Error " + ARG_INITIALIZED_NOT_BOOLEAN_ID + " **\n" +
-                      "       in '" + this.name + ".init" + "()' : 'arg_initialized' must be a boolean\n";
-      throw new Error(error_msg);
+	  
+	  this._$initialized = true;
+      if (args_init !== undefined && args_init !== null)
+		  this._$args_init = Array.from(args_init);
   } // init
   
   isInitialized() {
