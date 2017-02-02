@@ -10,7 +10,7 @@ Changelog since release 4.2.0:
  * Default Logger provided `MxI.$DefaultLogger` (NB: it is a _Singleton_ implementation class)
  * `MxI.$System.setLogger()` allows to change the Logger and `MxI.$System.resetLogger()` to restore the default logger.
  
- >A custom logger is provided (`$StarPrefixLogger` in ./src/test_classes), it just adds `* ` prefix on each output (see last stepin output of `test.js`)
+ >A custom logger is provided (`./src/test_classes/star_prefix_logger.js`), it just adds `* ` prefix on each output (see last stepin output of `test.js`)
 
 #### Installation and Usage:
 ```bash
@@ -402,7 +402,7 @@ And to revert to the default logger:
 MxI.$System.resetLogger();
 ```
 
-Here is the source code of `$StarPrefixLogger`. Once it is set as the _Logger_ (with `MxI.$System.setLogger()`), it adds `* ` prefix on each `MxI.$System.log()` call (see `./test.js`).
+Here is the source code of `$StarPrefixLogger` (see `./src/test_classes/star_prefix_logger.js`). Once it is set as the _Logger_ (with `MxI.$System.setLogger()`), it adds `* ` prefix on each output from `MxI.$System.log()` call (see `./test.js`).
 
 ```javascript
 const MxI = require('../mixin_interface.js').MxI;
