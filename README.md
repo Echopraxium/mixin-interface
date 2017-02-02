@@ -2,13 +2,15 @@
 
 An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.
 
-Changelog since release 4.1.2:
-* Enhancement of `MxI.$Object` usability:  
- * New method `init(arg_initialized, ...init_args)`: this provides the "_delayed initialization_" feature. This is useful when the initialization data is not available at instanciation time. 
+Changelog since release 4.2.0:
+* Documentation update for `MxI.$Object`:  
+ * _Delayed initialization_: init() and isInitialized() service  
+* New Feature: _Custom Logger_ which allows more flexibiity than `console.log()` (see update of `test.js` sorce code)
+ * Logger must implement `MxI.$ILogger` Interface  
+ * Default Logger provided `MxI.$DefaultLogger` (NB: it is a _Singleton_ implementation class)
+ * `MxI.$System.setLogger()` allows to change the Logger and `MxI.$System.resetLogger()` to restore the default logger.
  
- >A typical example in GUI programming is when you need a widget (e.g. PushButton) but its container (e.g. CommandBar) is not yet created or known at instanciation time, so you may use later the `init()` service so that the PushButton can set its container (e.g. by calling `setContainer()` in the PushButton's implementation of init() service).
- 
- >Notice that the first argument of `init()` (`arg_initialized`) is both mandatory and also that it must be a boolean. If one of these constraints is not fullfilled then an exception will be raised.
+ >A custom logger is provided (`$StarPrefixLogger` in ./src/test_classes), it just adds `* ` prefix on each output (see last stepin output of `test.js`)
 
 #### Installation and Usage:
 ```bash
@@ -35,7 +37,7 @@ node test.js
 
 You should get the following output:
 ```bash
----------- Unit Test for mixin-interface module ----------
+---------- Unit Test for 'mixin-interface' package ----------
 1.Instance of 'Animal' created: animal_0
 animal_0 is a 'MxI.$Object'    ?   true
 animal_0 is a 'ILifeForm' ?        true
@@ -94,6 +96,10 @@ Another instance of 'Animal' created:     animal_2
 6. Initialize instance
 animal_2 isInitialized():      false
 animal_2 isInitialized():      true
+----------
+* 7. Change Logger
+* Another instance of 'Animal' created:     animal_3
+* Another instance of 'FlyingFish' created: flying_fish_2
 ---------- End of Unit Test ----------
 ```
 
@@ -255,6 +261,14 @@ Please note that in the following:
 
 * **MxI.$raiseNotImplementedError()**: error handling when a service (defined by of an _interface class_) is not implemented
 
+* **MxI.$Object().init()**: _Delayed Initialization_ feature
+* **MxI.$Object().isInitialized()**: checks if an object has been initialized
+
+* **MxI.$ILogger**: interface class for _Custom Logger_ feature which is more effective and flexible than `console.log()`
+* **MxI.$DefaultLogger**: Default implementation of `MxI.$ILogger` (NB: it's a _Singleton_)
+* **MxI.$System.setLogger()**: Change the _Logger_ by providing a instance of a class which implements `MxI.$ILogger`
+* **MxI.$System.resetLogger()**: Restore the _Default Logger_ (`MxI.$DefaultLogger`)
+
 ***
 ```javascript
 MxI.$isInstanceOf(type, object)
@@ -295,7 +309,6 @@ class IAnimal extends MxI.$Interface(ILifeForm)  {
 MxI.$setAsInterface(IAnimal).$asChildOf(ILifeForm);
 ```
 This code means that `IAnimal` is an _interface class_ which is a subclass of `ILifeForm`
-
 
 ***
 ```javascript
@@ -349,3 +362,67 @@ es\i_animal.js:16:9)
 ...
 ```
 
+***
+```javascript
+MxI.$Object().init(arg_initialized, ...args_init)
+MxI.$Object().isInitialized()
+```
+These services provide the _Delayed Initialization_ feature. 
+>Notice that in `init()` service, the `args_init` will be accessible to all instances created with `mixin-interface`, via `this._args_init`. 
+
+>Notice that the first argument of init() (`arg_initialized`) is both mandatory and also must be a boolean. If one of these constraints is not fullfilled then an exception will be raised. 
+
+>Notice that once an object has been initialized (e.g. `init(true)`), it is irreversible. It is then not possible to _unitialize_ (e.g. by using `init(false)`)
+
+>A short explanation on _Delayed Initialization_: a typical example in GUI programming is when you need a widget (e.g. PushButton) but its container (e.g. CommandBar) is not yet created or known at instanciation time, so you may use later the init() service so that the PushButton can set its container (e.g. by calling setContainer() in the PushButton's implementation of init() service).
+
+
+***
+```javascript
+MxI.$ILogger
+MxI.$DefaultLogger
+MxI.$System.setLogger()
+MxI.$System.resetLogger()
+```
+This provides the _Custom Logger_ feature which is more effecive and flexible than `console.log()`, like enabling/disabling traces, redirectog to a File or a Stream, define trace levels and categories etc.. . To use this feature call `MxI.$System.log()` instead of `console.log()`. 
+
+* A custom logger must implement `MxI.$ILogger` interface.   
+* `MxI.$DefaultLogger` is provided as a default implementation of `MxI.$ILogger` interface.  
+ 
+ >Notice that the implementation class should be a _Singleton_ (see sample code below)
+ 
+* You may change the _Logger_ by providing an instance of a class which implements `MxI.$ILogger`
+```javascript
+const $StarPrefixLogger = require('./src/test_classes/star_prefix_logger.js').$StarPrefixLogger;
+MxI.$System.setLogger($StarPrefixLogger.getSingleton());
+```
+
+And to revert to the default logger:
+```javascript
+MxI.$System.resetLogger();
+```
+
+Here is the source code of `$StarPrefixLogger`. Once it is set as the _Logger_ (with `MxI.$System.setLogger()`), it adds `* ` prefix on each `MxI.$System.log()` call (see `./test.js`).
+
+```javascript
+const MxI = require('../mixin_interface.js').MxI;
+class $StarPrefixLogger extends MxI.$Implementation(MxI.$Object).$with(MxI.$ILogger) {
+  static getSingleton() {
+	  if ($StarPrefixLogger._$singleton === undefined) {
+		  //console.log(" >>> First time (and Only normally) in getSingleton");
+		  $StarPrefixLogger._$singleton = new $StarPrefixLogger();
+	  }
+	  return $StarPrefixLogger._$singleton;
+  } // $StarPrefixLogger.getSingleton
+  
+  log(arg_msg) {
+	  var msg = arg_msg;
+	  if (msg === undefined || msg === null)
+		msg = "";
+	  var prefix = "* ";
+	  console.log(prefix + msg);
+  } // $StarPrefixLogger.log
+} // '$StarPrefixLogger' class
+$StarPrefixLogger._$singleton;
+MxI.$setClass($StarPrefixLogger).$asImplementationOf(MxI.$ILogger);
+```

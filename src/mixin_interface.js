@@ -16,17 +16,18 @@ const SUPER_INTERFACE_NOT_DEFINED_ERROR_ID = 101;
 const MANDATORY_ARG_MISSING_ID             = 102;
 const ARG_INITIALIZED_NOT_BOOLEAN_ID       = 103;
 
+
 // http://www.2ality.com/2016/05/six-nifty-es6-tricks.html
-function $mandatory_arg(obj) {
+function $mandatory_arg(obj, arg_name) {
+	var caller_data = caller_id.getData();
 	var error_msg   = "** mixin-interface Error " + MANDATORY_ARG_MISSING_ID + " **\n" +
-                      "       in init() of '" + obj.name + "' : 'arg_initialized' is mandatory\n";
+                      "       in '" + obj.name + "." + caller_data.functionName + "()' : '" + arg_name + "' is mandatory\n";
     throw new Error(error_msg);
 } // $mandatory_arg
 
-
 //==================== '$IBaseInterface' interface class ====================
 class $IBaseInterface {
-} // '$IBaseInterface' class
+} // '$IBaseInterface' interface class
 $IBaseInterface._$is_interface = true;
 exports.$IBaseInterface = $IBaseInterface;
 
@@ -40,16 +41,16 @@ class $Object {
 	  this._$args_init   = [];
   } // '$Object' constructor
   
-  init(arg_initialized = $mandatory_arg(this), ...args_init) {
+  init(arg_initialized = $mandatory_arg(this, 'arg_initialized'), ...args_init) {
 	  if (arg_initialized===true || arg_initialized===false) {
 		this._$initialized = arg_initialized;
 		if (args_init !== undefined && args_init !== null)
 		  this._$args_init = Array.from(args_init);
 		return;
 	  }
-	
-	  var error_msg = "** mixin-interface Error " + ARG_INITIALIZED_NOT_BOOLEAN_ID + " **\n" +
-                      "       in init() of '" + this.name + "' : 'arg_initialized' must be a boolean\n";
+					  
+	  var error_msg   = "** mixin-interface Error " + ARG_INITIALIZED_NOT_BOOLEAN_ID + " **\n" +
+                      "       in '" + this.name + ".init" + "()' : 'arg_initialized' must be a boolean\n";
       throw new Error(error_msg);
   } // init
   
@@ -90,20 +91,92 @@ $Object._$is_interface = false;
 exports.$Object = $Object;
 //================ '$Object' Base Implementation class
 
+var _$default_logger; // value defined at the end of this script
+
+//==================== '$ILogger' interface class ====================
+class $ILogger extends mixin($Object, $IBaseInterface) {  
+  log(msg) {
+    console.log(msg);
+  } // $ILogger.log
+} // '$ILogger' interface class
+$ILogger._$is_interface    = true;
+$ILogger._$super_interface = $IBaseInterface;
+
+
+//================ '$DefaultLogger' ================
+class $DefaultLogger extends mixin($Object, $ILogger) {
+  static getSingleton() {
+	  if ($DefaultLogger._$singleton === undefined) {
+		  //console.log(" >>> First time (and Only normally) in $DefaultLogger.getSingleton");
+		  $DefaultLogger._$singleton = new $DefaultLogger();
+	  }
+	  return $DefaultLogger._$singleton;
+  } // $DefaultLogger.getSingleton
+  
+  log(arg_msg) {
+	  var msg = arg_msg;
+	  if (msg === undefined || msg === null)
+		msg = "";
+	  console.log(msg);
+  } // $DefaultLogger.log
+} // '$DefaultLogger' class
+$DefaultLogger._$singleton;
+$DefaultLogger._$implemented_interfaces = [$ILogger];
+$DefaultLogger._$is_interface           = false;
+
+
+//================ '$System' ================
+class $System {
+  static setLogger(arg_logger) {
+    if (arg_logger === undefined) 
+		return;
+	$System._$logger = arg_logger;  
+  } // $System.setLogger
+  
+  static getLogger() {
+    if ($System._$logger === undefined) {
+		$System._$logger = $DefaultLogger.getSingleton();
+	}
+	return $System._$logger;  
+  } // $System.getLogger
+  
+  static resetLogger() {
+    $System.setLogger($DefaultLogger.getSingleton()); 
+  } // $System.resetLogger
+  
+  static log(msg) {
+	$System.getLogger().log(msg);
+  } // $DefaultLogger.getSingleton
+} // $System class
+$System._$logger;
+
 
 //================================ 'MxI' Namespace ================================
 const MxI = {
+	//--------------------- $System ---------------------
+    '$System': $System,
+
     //--------------------- $Object ---------------------
     '$Object': $Object,
 
     //----------------- $IBaseInterface -----------------
     '$IBaseInterface': $IBaseInterface,
+	
+	//--------------------- $ILogger --------------------
+    '$ILogger': $ILogger,
+	
+	//------------------ $DefaultLogger --------------------
+	'$DefaultLogger': $DefaultLogger,
+	
+	//----------------- $mandatory_arg -----------------
+	// http://www.2ality.com/2016/05/six-nifty-es6-tricks.html
+	'$mandatory_arg' : $mandatory_arg,
 
     //-------------------- $setClass --------------------
     '$setClass': function(arg_type) {
         if (arg_type === undefined)
               return;
-            return new $MixinImplementation(arg_type);
+        return new $MixinImplementation(arg_type);
     }, // $setClass
 
     //------------------ $setAsInterface ------------------

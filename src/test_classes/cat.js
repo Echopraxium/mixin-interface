@@ -17,15 +17,15 @@ class Cat extends MxI.$Implementation(Animal).$with(IMammal) {
   } // 'Cat' constructor
 
   suckle() {
-    console.log('--> Cat.suckle');
+    MxI.$System.log('--> Cat.suckle');
   } // IMammal.suckle
 
   __run() {
-    console.log('--> Cat.run');
+    MxI.$System.log('--> Cat.run');
   } // IAnimal.run
 
   __live() {
-    console.log('--> Cat.live');
+    MxI.$System.log('--> Cat.live');
   } // ILifeForm.live
 } // 'Cat' class
 MxI.$setClass(Cat).$asImplementationOf(IMammal);
