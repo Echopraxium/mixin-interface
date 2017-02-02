@@ -3,6 +3,7 @@
 An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.
 
 Changelog since release 4.3.1:
+
 * Enhancements of `MxI.$Object`:  
    
  * _Delayed initialization_: `init()` and `isInitialized()` services  
