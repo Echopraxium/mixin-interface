@@ -2,7 +2,7 @@
   "name": "mixin-interface",
   "version": "4.3.3",
   "description": "An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.",
-  "main": "test.js",
+  "main": "main.js",
   "readme": "README.md",
   "scripts": {
     "test": "node test.js"
@@ -12,13 +12,12 @@
     "url": "git+https://github.com/Echopraxium/mixin-interface.git"
   },
   "keywords": [
-    "es6",
-    "interface",
-    "class",
+    "javascript es6",
+    "interface class",
+    "implementation class",
     "mixin",
-    "mixins",
-    "method",
-    "javascript"
+    "service",
+	"implements"
   ],
   "author": "Michel Kern",
   "license": "MIT",
@@ -28,7 +27,6 @@
   "homepage": "https://github.com/Echopraxium/mixin-interface#readme",
   "dependencies": {
     "caller-id": "^0.1.0",
-    "change-case": "^3.0.0",
     "mixin": "^0.2.0"
   },
   "devDependencies": {}
