@@ -3,7 +3,12 @@
 An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.
 
 Changelog since release 4.3.3:
-* Removal of `change-case` dependency (its a very useful package but I just needed conversion from CamelCase to snake-case, so it was oversized regarding this need)
+* Removal of `change-case` dependency (its a very useful package but I just needed conversion from CamelCase to snake-case, so it was oversized regarding this need)  
+* Purposefully empty script (main.js) for 'main' entry in `package.json`. This is a Bug Fix: when 'main' was set to 'test.js' there was an unwanted side-effect with a client code like this:
+```javascript
+const mixin_interface = require('mixin-interface');
+```
+With such code, there was an unwanted side effect: import and run of 'test.js'
 
 Changelog since release 4.3.1:
 
