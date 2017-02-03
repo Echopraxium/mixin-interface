@@ -1,6 +1,6 @@
 {
   "name": "mixin-interface",
-  "version": "4.3.3",
+  "version": "4.3.4",
   "description": "An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.",
   "main": "main.js",
   "readme": "README.md",
@@ -17,7 +17,7 @@
     "implementation class",
     "mixin",
     "service",
-	"implements"
+    "implements"
   ],
   "author": "Michel Kern",
   "license": "MIT",
