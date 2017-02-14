@@ -2,30 +2,10 @@
 
 An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.
 
-Changelog since release 4.3.3:
-* Removal of `change-case` dependency (its a very useful package but I just needed conversion from CamelCase to snake-case, so it was oversized regarding this need)  
-* Purposefully empty script (main.js) for 'main' entry in `package.json`. This is a Bug Fix: when 'main' was set to 'test.js' there was an unwanted side-effect with a client code like this:
-```javascript
-const mixin_interface = require('mixin-interface');
-```
-With such code, there was an unwanted side effect: import and run of 'test.js'
+Changelog since release 4.3.5:
 
-Changelog since release 4.3.1:
-
-* Enhancements of `MxI.$Object`:  
-   
- * _Delayed initialization_: `init()` and `isInitialized()` services  
- 
- > `init()` signature is now `init(...args_init)` (no more `arg_initialized` argument)
- 
-* New Feature: _Custom Logger_ which allows more flexibility than `console.log()` (see update of `test.js` source code)
- * Logger must implement `MxI.$ILogger` Interface  
- * Default Logger provided `MxI.$DefaultLogger` (NB: it is a _Singleton_ implementation class)
- * `MxI.$System.setLogger()` allows to change the Logger and `MxI.$System.resetLogger()` to restore the default logger.
- 
- >A custom logger is provided (`./src/test_classes/star_prefix_logger.js`), it just adds '* ' prefix on each output (see last step in output of `test.js`)
- 
-* MxI workspace provides `$mandatory_arg` function to set a mandatory argument on a service 
+* New and last paragraph added in `README.md`: '_References_': this is to provide links on source documents which I have found to be related to this project and thus extend the perpective and design issues.  
+* Minor enhancement in `README.md`: internal anchor to ease link from a dependent project: `design-patterns-api`
 
 #### Installation and Usage:
 ```bash
@@ -172,7 +152,7 @@ MxI.$setAsInterface(IAnimal).$asChildOf(ILifeForm);
 exports.IAnimal = IAnimal;
 ```
 
-## How to code an Implementation class
+## [How to code an Implementation class](#howto-code-implementation-class)
 Here is an example of an _implementation class_ (see `./src/test_classes/animal.js`). An _implementation_ may implement one or more _interface classes_. To implement the services (i.e. defined by the _interface class(es)_ that are declared as implemented by this class) we must:
 
 * Inherit from `MxI.$Object` (or any of its subclasses) by using the `MxI.$Implementation().$with()` _idiom_ just after the es6 `extends` keyword to define both a subclass and the _interface class(es)_ that it implements (`IAnimal` here). 
@@ -440,3 +420,27 @@ class $StarPrefixLogger extends MxI.$Implementation(MxI.$Object).$with(MxI.$ILog
 $StarPrefixLogger._$singleton;
 MxI.$setClass($StarPrefixLogger).$asImplementationOf(MxI.$ILogger);
 ```
+
+## References
+* _A fresh look at JavaScript Mixins_  
+  https://javascriptweblog.wordpress.com/2011/05/31/a-fresh-look-at-javascript-mixins/
+* _Functional Mixins in ECMAScript 2015_   
+  http://raganwald.com/2015/06/17/functional-mixins.html
+* _JavaScript Mixins: Beyond Simple Object Extension_
+  https://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/
+* _"Real" Mixins with JavaScript Classes_
+  http://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/
+* _Classes versus Prototypes in Object-Oriented Languages_
+  ftp://ftp.cs.washington.edu/pub/constraints/papers/fjcc-86.pdf
+* _The Theory of Classification - Part 15: Mixins and the Superclass Interface_  
+  http://www.jot.fm/issues/issue_2004_11/column1/
+* _CSE 505 Lecture Notes Archive - Prototype-based Programming_
+  https://en.wikipedia.org/wiki/Prototype-based_programming
+* _19. Classes, Metaclasses, and Prototype-Based Languages_
+  https://courses.cs.washington.edu/courses/cse505/00au/lectures/19-metaclasses.txt
+* _Safe Metaclass Composition Using Mixin-Based Inheritance - ESUG_
+  http://www.esug.org/data/ESUG2003/mixinsforsafemetaclasscomposition.nourybouraqadi.bled25aug2003.pdf
+* _CSE 341: Smalltalk classes and metaclasses_
+  http://courses.cs.washington.edu/courses/cse341/04wi/lectures/17-smalltalk-classes.html
+* _Topiarist: A JavaScript OO library featuring mixins, interfaces & multiple inheritance_  
+  http://bladerunnerjs.org/blog/topiarist/
