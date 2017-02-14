@@ -2,7 +2,7 @@
 
 An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.
 
-Changelog since release 4.3.5:
+Changelog since release 4.3.5 :
 
 * New and last paragraph added in `README.md`: '_References_': this is to provide links on source documents which I have found to be related to this project and thus extend the perpective and design issues.  
 * Minor enhancement in `README.md`: internal anchor to ease link from a dependent project: `design-patterns-api`
