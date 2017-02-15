@@ -4,7 +4,7 @@ An es6 (ECMAScript 2015) lightweight implementation of interface classes with `m
 
 Changelog since release 4.3.8 :
 
-* New feature: `MxI.$Null()`, the _Null Object_. This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result. This is also a prerequisite to implement _Null Object_ Design pattern in `design-patterns-api` package
+* New feature: `MxI.$Null()`, the _Null Object_. This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result. This is also a prerequisite to implement _Null Object_ Design pattern in [`design-patterns-api`](https://www.npmjs.com/package/design-patterns-api) package
 * New service: `MxI.$isNull()`, to check if an instance is the _Null Object_
 * Fix of a "downgraded mode of operation" in `MxI.$System.log()`: now formatted strings are supported, e.g:
 ```bash
@@ -18,7 +18,7 @@ This also required to change the signature from `MxI.$Systemlog(msg)` to `MxI.$S
 ============================================================
 ```
 
-## Installation and Usage:
+## Installation and Usage
 ```bash
 npm install mixin-interface -S
 ```
@@ -401,7 +401,7 @@ These services provide the _Delayed Initialization_ feature.
 MxI.$Null
 MxI.$isNullobject()
 ```
-> `MxI.$Null` is a new feature: the _Null Object_. This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result. This is also a prerequisite to implement _Null Object_ Design pattern in `design-patterns-api` package
+> `MxI.$Null` is a new feature: the _Null Object_. This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result. This is also a prerequisite to implement _Null Object_ Design pattern in [`design-patterns-api`](https://www.npmjs.com/package/design-patterns-api) package
 > `MxI.$isNull()` a new service to check if an instance is the _Null Object_
 
 
