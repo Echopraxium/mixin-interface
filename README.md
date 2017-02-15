@@ -18,7 +18,7 @@ This also required to change the signature from `MxI.$Systemlog(msg)` to `MxI.$S
 ============================================================
 ```
 
-#### Installation and Usage:
+## Installation and Usage:
 ```bash
 npm install mixin-interface -S
 ```
