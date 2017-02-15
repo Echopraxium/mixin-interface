@@ -119,12 +119,12 @@ Null Object: 'MxI.$Null'
 >Please notice in the previous output that an _implementation class_ may _inherit_ functions (i.e implementation of services from _interface classes_) from its parent class (e.g. `FlyingFish` inherits `IAnimal.run()` and `IAnimal.live()` from `Animal`) but it is also possible to _override_ these default implementations them as well.
 
 ## How to Define an Interface class
-Here is an example of an _interface class_ (see `./src/test_classes/i_life_form.js`). Here we define a single service: `live()`
+Here is an example of an _interface class_ (see [`./src/test_classes/i_life_form.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/i_life_form.js). Here we define a single service: `live()`
 
 * Inherit from `MxI.$IBaseInterface` (or any other _super_interface_ if applicable) by using `MxI.$Interface()` just after the es6 `extends` keyword to define both that it is an _interface class_ and that its _super_interface_ is `MxI.$IBaseInterface`. 
 * Use `MxI.$raiseNotImplementedError()` in order to guarantee that the service is provided by the _implementation_. This should be put in the _Fallback implementation_ of each service defined by the interface. 
 
- >This will raise an Error if an _implementation_ which defines that it implements this _interface_ doesn't provide implemention of the service(s) (see paragraph on `MxI.$raiseNotImplementedError` API service at the end of this document).  
+ >This will raise an Error if an _implementation_ which declares it implements this _interface_ misses one or more service implemention(s) (see paragraph on `MxI.$raiseNotImplementedError` API service at the end of this document).  
 * Add the `MxI.$setAsInterface().$asChildOf()` _idiom_ after the class definition to define that this is an _interface_class_ and what is its superclass.
 
 >Note: To remind that a class is an _interface class_, it is strongly advised to use the '_I prefix_' naming convention as  a reminder. This is a reminiscence of [_Hungarian notation_](https://en.wikipedia.org/wiki/Hungarian_notation) , a fairly old _identifier naming convention_ (e.g. see [Microsoft COM](https://fr.wikipedia.org/wiki/Component_Object_Model))
@@ -144,14 +144,14 @@ exports.ILifeForm = ILifeForm;
 >Note: Each _interface class_ must have a superclass (`MxI.$IBaseInterface` if no other _interface class_ applies). In the previous case `MxI.$setAsInterface()` may be used without appending `.$asChildOf(super_interface)` idiom because `MxI.$IBaseInterface` will be the default superclass. However it is both cleaner, safer, more consistent and strongly advised to always use the full _idiom_ (`MxI.$setAsInterface().$asChildOf()`)
 
 ## How to subclass an Interface class
-Here is an example of a subclass of an _interface class_ (see `./src/test_classes/i_animal.js`). Here we want to define `IAnimal` as a subclass of the `ILifeForm` _interface class_.
+Here is an example of a subclass of an _interface class_ (see [`./src/test_classes/i_animal.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/i_animal.js)). Here we want to define `IAnimal` as a subclass of the `ILifeForm` _interface class_.
 
 * Use this syntax: `class IAnimal extends $Interface()` to define that `IAnimal` is a subclass of `ILifeForm`.
 * Add the `MxI.$setAsInterface().$asChildOf()` _idiom_ just after the class definition.
 
  >This is required so that `MxI.$isInstanceOf()` works properly to identify an object both as an being an instance of an _implementation class_ (and its superclasses) as well being an instance of an _interface class_ (and its superclasses).
 
-* We then define a new service: `run()`. It will be a regular method of an es6 class. 
+* We then define a new service: `run()`. It will be a regular method of a javascript es6 class. 
 * Use `MxI.$raiseNotImplementedError()` in order to guarantee that the service is provided by the _implementation class_. This should be put in the _Fallback implementation_ of each service defined by the interface. 
 
  >This will raise an error if the _implementation class_ does'nt provide (directly or via inheritance) one of the service(s) defined by the _interface class(es)_ (see paragraph on `MxI.$raiseNotImplementedError` API service at the end of this document). 
@@ -171,13 +171,12 @@ exports.IAnimal = IAnimal;
 ```
 
 ## [How to code an Implementation class](#howto-code-implementation-class)
-Here is an example of an _implementation class_ (see `./src/test_classes/animal.js`). An _implementation_ may implement one or more _interface classes_. To implement the services (i.e. defined by the _interface class(es)_ that are declared as implemented by this class) we must:
+Here is an example of an _implementation class_ (see [`./src/test_classes/animal.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/animal.js)). An _implementation_ may implement one or more _interface classes_. To implement the services (i.e. defined by the _interface class(es)_ that are declared as implemented by this class) we must:
 
 * Inherit from `MxI.$Object` (or any of its subclasses) by using the `MxI.$Implementation().$with()` _idiom_ just after the es6 `extends` keyword to define both a subclass and the _interface class(es)_ that it implements (`IAnimal` here). 
  
- >Inheriting from `MxI.$Object` also provides the _automatic instance naming_ feature (this feature is provided by the `name` attribute on each instance of `MxI.$Object` or any of its subclasses. Each instance name is generated from its class name and its instance count (e.g. `Animal_0`)
- > Instances are named with _SerpentCase_ pattern
- > e.g. the first instance of `FlyingFish` will be named `flying_fish_0`
+ >Inheriting from `MxI.$Object` also provides the _automatic instance naming_ feature (this feature is provided by the `name` attribute on each instance of `MxI.$Object` or any of its subclasses. Each instance name is generated from its class name and its instance count. 
+ > Instances are named with _SerpentCase_ pattern (e.g. `flying_fish_0`)
  
 * Put `MxI.$setClass(Animal).$asImplementationOf(ILifeForm, IAnimal)` _idiom_ just after the class definition. 
 
@@ -209,7 +208,7 @@ MxI.$setClass(Animal).$asImplementationOf(IAnimal, ILifeForm);
 ```
 
 ## How to subclass an Implementation class
-Here is an example of how to subclass an _implementation class_ (see `./src/test_classes/cat.js`). Here we want to both to subclass `Animal` and implement the `IMammal` _interface class_, this is how to do it:
+Here is an example of how to subclass an _implementation class_ (see [`./src/test_classes/cat.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/cat.js)). Here we want to both to subclass `Animal` and implement the `IMammal` _interface class_, this is how to do it:
 
 * Inherit from `Animal` by using the `MxI.Implementation().$with()` _idiom_ just after `extends` to define both a subclass and the _interfaces_ that it implements.
 * Provide implementation of the service defined by `IMammal` (`suckle()`). If a service from the parent _interfaces_ is not provided then it may be inherited from the parent _implementation class_.
@@ -251,7 +250,7 @@ MxI.$setClass(Cat).$asImplementationOf(IMammal);
 
 Please note that in the following: 
   
-> **API service** stands for _function provided by the mixin-interface package_ (e.g. `Mxi.$isInstanceOf()`).  
+> **API service** stands for _function provided by 'mixin-interface'_ (e.g. `Mxi.$isInstanceOf()`).  
 > **MxI** is the _namespace_ for all the _mixin-interface_ API services.  
 > **object** stands for _instance of an _implementation class_.   
 > **service** stands for _function defined by an interface class_ (e.g. `IAnimal.run()`).  
@@ -279,17 +278,18 @@ Please note that in the following:
 
 * **MxI.$System.log()**: _Custom Logger_ feature, more effective and flexible than `console.log()`  
 
- >Fix of a "Fix of a "down-graded mode of operation"": now formatted strings are supported (e.g. `MxI.$System.log("'%s': ", obj.name);`)  
- 
+ >"Down-graded mode of operation" bugfix: now formatted strings are supported (e.g. `MxI.$System.log("'%s': ", obj.name);`)  
+
+* **MxI.$System.banner()**: a variant of `MxI.$System.log()` which allows "decorated logs" with _banners_  
 * **MxI.$ILogger**: interface class for _Custom Logger_ feature   
 * **MxI.$DefaultLogger**: Default implementation of `MxI.$ILogger` (NB: it's a _Singleton_)  
 * **MxI.$System.setLogger()**: Change the _Logger_ by providing a instance of a class which implements `MxI.$ILogger`  
 * **MxI.$System.resetLogger()**: Restore the _Default Logger_ (`MxI.$DefaultLogger`)  
 * **MxI.$Null()**: the _Null Object_. This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result.  
-* **MxI.$isNull()**: to check if an instance is the _Null Object_  
-* New service: `MxI.$System.banner()`, to generate nicer logs with "banners", like the following:  
-
+* **MxI.$isNull()**: to check if an object is the _Null Object_  
+- - - -
 ***
+## Check if an object is an instance of a Type (either an Interface class or an Implementation class)
 ```javascript
 MxI.$isInstanceOf(type, object)
 ```
@@ -302,16 +302,18 @@ console.log(a_cat.name + " is a 'IMammal': " + MxI.$isInstanceOf(IMammal, a_cat)
 ```
 
 ***
+## Check if a class is an Interface class
 ```javascript
 MxI.$isInterface(type)
 ```
-This service checks if  `type` is an _interface class_ (see `./test.js` for a unit test of this feature). The `type` argument is either an _implementation class_ or an _interface class_.
+This service checks if  `type` is an _interface class_ (see [`./test.js`](https://github.com/Echopraxium/mixin-interface/blob/master/test.js) for a unit test of this feature). The `type` argument is either an _implementation class_ or an _interface class_.
 
 ```javascript
 console.log("'IAnimal' is an interface ? " + MxI.$isInterface(IAnimal));
 ```
 
 ***
+## Definition of an Interface class
 ```javascript
 MxI.$Interface(super_interface)
 MxI.$setAsInterface(interface).$asChildOf(super_interface) 
@@ -321,7 +323,7 @@ These services allow to define an _interface class_:
 * Use `MxI.$Interface()` after the `extends` clause of the es6 javascript `class` definition 
 * After the class definition, use the `MxI.$setAsInterface().$asChildOf()` _idiom_
 
-Example (see `./src/test_classes/i_animal.js` for a full sample):
+Example (see [`./src/test_classes/i_animal.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/i_animal.js) for a full sample):
 ```javascript
 class IAnimal extends MxI.$Interface(ILifeForm)  {
   ...
@@ -331,16 +333,17 @@ MxI.$setAsInterface(IAnimal).$asChildOf(ILifeForm);
 This code means that `IAnimal` is an _interface class_ which is a subclass of `ILifeForm`
 
 ***
+## Implementation of Interface class(es)
 ```javascript
 MxI.$Implementation(super_implementation).$with(...interfaces)
 MxI.$setClass(implementation).$asImplementationOf(...interfaces)
 ```
-These services allow to define an _implementation class_ (see `./src/test_classes/animal.js` for a full sample):
+These services allow to define an _implementation class_:
 
 * Use `MxI.$Implementation()` after the `extends` clause of the es6 javascript `class` definition
 * After the class definition, use the `MxI.$setClass().$asImplementationOf()` _idiom_
 
-Example (see `./src/test_classes/animal.js` for a full sample):
+Example (see [`./src/test_classes/animal.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/animal.js) for a full sample):
 ```javascript
 class Animal extends MxI.$Implementation(MxI.$Object).$with(IAnimal) {
   ...
@@ -353,11 +356,12 @@ This code means:
 * `Animal` implements both `IAnimal` and `ILifeForm` _interface classes_
 
 ***
+## Error Handling: 'service not implemented'
 ```javascript
 MxI.$raiseNotImplementedError(_interface_, object)
 ```
 This service provides _Error Handling_ when a service of an _interface class_ is not provided by an _implementation class_. It should be used in the _Fallback implementation_ for each service defined by the _interface class_.
-Here is an example of how to use this API service (see `./src/test_classes/i_life_form.js`):
+Here is an example of how to use this API service (see [`./src/test_classes/i_life_form.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/i_life_form.js):
 ```javascript
 class ILifeForm extends MxI.$Interface(MxI.$IBaseInterface) {  
   // Fallback implementation of 'live' service
@@ -369,7 +373,7 @@ MxI.$setAsInterface(ILifeForm).$asChildOf(MxI.$IBaseInterface);
 ```
 
 Let's see what happens if the `Animal` _implementation_ doesn't provide an implementation for the `run()` service §defined by `IAnimal` _interface class_). 
-If you want to test this use case, just rename `run()` to `__run()` in `./src/test_classes/animal.js`), then restart the Unit Test with `node test.js` in the command shell. An exception should be raised an you would get the following output:
+If you want to test this use case, just rename `run()` to `__run()` in [`./src/test_classes/animal.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/animal.js) ), then restart the Unit Test with `node test.js` in the command shell. An exception should be raised an you would get the following output:
 ```bash
             throw new Error(error_msg);
             ^
@@ -383,6 +387,7 @@ es\i_animal.js:16:9)
 ```
 
 ***
+## Delayed Initialization of an object
 ```javascript
 MxI.$Object().init(...args_init)
 MxI.$Object().isInitialized()
@@ -392,19 +397,21 @@ These services provide the _Delayed Initialization_ feature.
 
 >An object may be initialized only once: `this._$args_init` cannot then be set or changed.
 
->Short explanation on _Delayed Initialization_: a typical example in GUI programming is when you need a widget (e.g. PushButton) but its container (e.g. CommandBar) is not yet created or known at instanciation time, so you may use later  `init()` service so that the PushButton can set its container (e.g. by calling setContainer() in the PushButton's implementation of init() service).
+>Short explanation on _Delayed Initialization_: a typical example in _GUI programming_ is when you need a widget (e.g. _PushButton_) but its container (e.g. _CommandBar_) is not yet created or known at instanciation time, so you may use later  `init()` service so that the PushButton can set its container (e.g. by calling setContainer() in the _PushButton_'s implementation of init() service).
 
 
 ***
+## Null Object
 ```javascript
 MxI.$Null
 MxI.$isNullobject()
 ```
-> `MxI.$Null` is a new feature: the _Null Object_. This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result. This is also a prerequisite to implement _Null Object_ Design pattern in [`design-patterns-api`](https://www.npmjs.com/package/design-patterns-api) package
+> `MxI.$Null` is a new feature: the _Null Object_ (a singleton class which is a subclass of `MxI.$Object`). This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result. This is also a prerequisite to implement _Null Object_ Design pattern in [`design-patterns-api`](https://www.npmjs.com/package/design-patterns-api) package
 > `MxI.$isNull()` a new service to check if an instance is the _Null Object_
 
 
 ***
+## Custom Logger Services
 ```javascript
 MxI.$ILogger
 MxI.$DefaultLogger
@@ -453,7 +460,7 @@ And to revert to the default logger (`MxI.$DefaultLogger`):
 MxI.$System.resetLogger();
 ```
 
-Here is the source code of `$StarPrefixLogger` (see `./src/test_classes/star_prefix_logger.js`). Once it is set as the _Logger_ (with `MxI.$System.setLogger()`), it will add '* ' prefix on each output of `MxI.$System.log()` call (see `./test.js`).
+Here is the source code of `$StarPrefixLogger` (see [`./src/test_classes/star_prefix_logger.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/star_prefix_logger.js)) .Once it is set as the current _Logger_ (with `MxI.$System.setLogger()`), it will add '* ' prefix on each output of `MxI.$System.log()` call (see [`./test.js`](https://github.com/Echopraxium/mixin-interface/blob/master/test.js)).
 
 ```javascript
 const MxI = require('../mixin_interface.js').MxI;
