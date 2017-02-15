@@ -2,17 +2,28 @@
 
 An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.
 
-Changelog since release 4.3.5 :
+Changelog since release 4.3.8 :
 
-* New and last paragraph added in `README.md`: '_References_': this is to provide links on source documents which I have found to be related to this project and thus extend the perpective and design issues.  
-* Minor enhancement in `README.md`: internal anchor to ease link from a dependent project: `design-patterns-api`
+* New feature: `MxI.$Null()`, the _Null Object_. This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result. This is also a prerequisite to implement _Null Object_ Design pattern in `design-patterns-api` package
+* New service: `MxI.$isNull()`, to check if an instance is the _Null Object_
+* Fix of a "downgraded mode of operation" in `MxI.$System.log()`: now formatted strings are supported, e.g:
+```bash
+MxI.$System.log("Another instance of 'Animal' created: '%s'", another_animal.name);
+```
+This also required to change the signature from `MxI.$Systemlog(msg)` to `MxI.$Systemlog(arg_msg, ...arg_values)`
+* New service: `MxI.$System.banner()`, to generate nicer logs with "banners", like the following:
+```bash
+============================================================
+========== Unit Test for 'mixin-interface' package =========
+============================================================
+```
 
 #### Installation and Usage:
 ```bash
 npm install mixin-interface -S
 ```
 
-## Quickstart
+## How to run the Unit Test
 #### Step 1: Install Prerequisite Tools
 Install [_NodeJS_](https://nodejs.org/en/) and [_Git_](https://git-scm.com/)
 
@@ -32,40 +43,42 @@ node test.js
 
 You should get the following output:
 ```bash
----------- Unit Test for 'mixin-interface' package ----------
+============================================================
+========== Unit Test for 'mixin-interface' package =========
+============================================================
 1.Instance of 'Animal' created: animal_0
-animal_0 is a 'MxI.$Object'    ?   true
-animal_0 is a 'ILifeForm' ?        true
-animal_0 is a 'Animal' ?           true
-animal_0 is a 'IAnimal' ?          true
-animal_0 is a 'IMammal' ?          false
-animal_0 is a 'IBird' ?            false
-animal_0 is a 'IFish' ?            false
+'animal_0' is a 'MxI.$Object'    ?   true
+'animal_0' is a 'ILifeForm' ?        true
+'animal_0' is a 'Animal' ?           true
+'animal_0' is a 'IAnimal' ?          true
+'animal_0' is a 'IMammal' ?          false
+'animal_0' is a 'IBird' ?            false
+'animal_0' is a 'IFish' ?            false
 --> Animal.run
 --> Animal.live
 ----------
 2. Instance of 'Cat' created: cat_0
-cat_0 is a 'MxI.$Object' ? true
-cat_0 is a 'Animal' ?      true
-cat_0 is a 'Cat' ?         true
-cat_0 is a 'ILifeForm' ?   true
-cat_0 is a 'IAnimal' ?     true
-cat_0 is a 'IMammal' ?     true
-cat_0 is a 'IBird' ?       false
-cat_0 is a 'IFish' ?       false
+'%s' is a 'MxI.$Object' ? true
+'cat_0' is a 'Animal' ?      true
+'cat_0' is a 'Cat' ?         true
+'cat_0' is a 'ILifeForm' ?   true
+'cat_0' is a 'IAnimal' ?     true
+'cat_0' is a 'IMammal' ?     true
+'cat_0' is a 'IBird' ?       false
+'cat_0' is a 'IFish' ?       false
 --> Animal.run
 --> Cat.suckle
 --> Animal.live
 ----------
 3. Instance of 'FlyingFish' created: flying_fish_0
-flying_fish_0 is a 'MxI.$Object' ? true
-flying_fish_0 is a 'Animal' ?      true
-flying_fish_0 is a 'FlyingFish' ?  true
-flying_fish_0 is a 'ILifeForm' ?   true
-flying_fish_0 is a 'IAnimal' ?     true
-flying_fish_0 is a 'IBird' ?       true
-flying_fish_0 is a 'IFish' ?       true
-flying_fish_0 is a 'IMammal' ?     false
+'flying_fish_0' is a 'MxI.$Object' ? true
+'flying_fish_0' is a 'Animal' ?      true
+'flying_fish_0' is a 'FlyingFish' ?  true
+'flying_fish_0' is a 'ILifeForm' ?   true
+'flying_fish_0' is a 'IAnimal' ?     true
+'flying_fish_0' is a 'IBird' ?       true
+'flying_fish_0' is a 'IFish' ?       true
+'flying_fish_0' is a 'IMammal' ?     false
 --> FlyingFish.fly
 --> FlyingFish.swim
 --> Animal.run
@@ -83,18 +96,24 @@ flying_fish_0 is a 'IMammal' ?     false
 'FlyingFish'          is an interface ? false
 ----------
 5. Check generated names for instances
-Instance of 'MxI.$Object' created:        mxi_object_0
-Another instance of 'Animal' created:     animal_1
-Another instance of 'FlyingFish' created: flying_fish_1
-Another instance of 'Animal' created:     animal_2
+Instance of 'MxI.$Object' created:        'mxi_object_0'
+Another instance of 'Animal' created:     'animal_1'
+Another instance of 'FlyingFish' created: 'flying_fish_1'
+Another instance of 'Animal' created:     'animal_2'
 ----------
 6. Initialize instance
-animal_2 isInitialized():      false
-animal_2 isInitialized():      true
+animal_2 isInitialized():       false
+animal_2 isInitialized():       true
 ----------
 * 7. Change Logger
-* Another instance of 'Animal' created:     animal_3
-* Another instance of 'FlyingFish' created: flying_fish_2
+* Another instance of 'Animal' created:     'animal_3'
+* Another instance of 'FlyingFish' created: 'flying_fish_2'
+----------
+8. Null Object
+Null Object: 'MxI.$Null'
+'MxI.$Null' is Null Object ?  true
+'animal_3' is Null Object ?   false
+===================== End of Unit Test =====================
 ---------- End of Unit Test ----------
 ```
 
@@ -244,28 +263,32 @@ Please note that in the following:
 > **super_implementation** stands for _superclass of the implementation class_.  
 > **...interfaces** stands for _list of implemented interfaces_. The list is provided as _interface class(es)_ separated by a comma (e.g. `ILifeForm` and `IAnimal, ILifeForm` are valid _...interfaces_ arguments).  
 
-* **MxI.$isInstanceOf()**: replacement for javascript `instanceof` operator.
-* **MxI.$isInterface()**: checks if a _type_ is an _interface class_ or not.
+* **MxI.$isInstanceOf()**: replacement for javascript `instanceof` operator.  
+* **MxI.$isInterface()**: checks if a _type_ is an _interface class_ or not.  
 
-* **MxI.$Interface()**: defines an _interface class_ and its _super_interface_.
-* **MxI.$setAsInterface().$asChildOf()**: defines that a class is an _interface class_ and its _super_implementation_.
- >This is syntactically redundant but nevertheless required in order that `MxI.$isInstanceOf()` works correctly.
+* **MxI.$Interface()**: defines an _interface class_ and its _super_interface_.  
+* **MxI.$setAsInterface().$asChildOf()**: defines that a class is an _interface class_ and its _super_implementation_.  
+ >This is syntactically redundant but nevertheless required in order that `MxI.$isInstanceOf()` works correctly.  
 
-* **MxI.$Implementation().$with()**: defines an _implementation class_ and its superclass (`Mxi.$Object` if no other class applies).
-* **MxI.$setClass().$asImplementationOf()**: defines  the _interface class(es)_ implemented by an _implementation class_.
+* **MxI.$Implementation().$with()**: defines an _implementation class_ and its superclass (`Mxi.$Object` if no other class applies).  
+* **MxI.$setClass().$asImplementationOf()**: defines  the _interface class(es)_ implemented by an _implementation class_.  
 
-* **MxI.$raiseNotImplementedError()**: error handling when a service (defined by of an _interface class_) is not implemented
+* **MxI.$raiseNotImplementedError()**: error handling when a service (defined by of an _interface class_) is not implemented  
 
-* **MxI.$Object().init()**: _Delayed Initialization_ feature
-* **MxI.$Object().isInitialized()**: checks if an object has been initialized
+* **MxI.$Object().init()**: _Delayed Initialization_ feature  
+* **MxI.$Object().isInitialized()**: checks if an object has been initialized  
 
-* **MxI.$System.log()**: _Custom Logger_ feature, more effective and flexible than `console.log()`
-* **MxI.$ILogger**: interface class for _Custom Logger_ feature 
-* **MxI.$DefaultLogger**: Default implementation of `MxI.$ILogger` (NB: it's a _Singleton_)
-* **MxI.$System.setLogger()**: Change the _Logger_ by providing a instance of a class which implements `MxI.$ILogger`
-* **MxI.$System.resetLogger()**: Restore the _Default Logger_ (`MxI.$DefaultLogger`)
+* **MxI.$System.log()**: _Custom Logger_ feature, more effective and flexible than `console.log()`  
 
-* **$mandatory_arg()**: Set a mandatory argument on a service 
+ >Fix of a "Fix of a "down-graded mode of operation"": now formatted strings are supported (e.g. `MxI.$System.log("'%s': ", obj.name);`)  
+ 
+* **MxI.$ILogger**: interface class for _Custom Logger_ feature   
+* **MxI.$DefaultLogger**: Default implementation of `MxI.$ILogger` (NB: it's a _Singleton_)  
+* **MxI.$System.setLogger()**: Change the _Logger_ by providing a instance of a class which implements `MxI.$ILogger`  
+* **MxI.$System.resetLogger()**: Restore the _Default Logger_ (`MxI.$DefaultLogger`)  
+* **MxI.$Null()**: the _Null Object_. This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result.  
+* **MxI.$isNull()**: to check if an instance is the _Null Object_  
+* New service: `MxI.$System.banner()`, to generate nicer logs with "banners", like the following:  
 
 ***
 ```javascript
@@ -375,15 +398,50 @@ These services provide the _Delayed Initialization_ feature.
 
 ***
 ```javascript
-MxI.$System.log()
+MxI.$Null
+MxI.$isNullobject()
+```
+> `MxI.$Null` is a new feature: the _Null Object_. This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result. This is also a prerequisite to implement _Null Object_ Design pattern in `design-patterns-api` package
+> `MxI.$isNull()` a new service to check if an instance is the _Null Object_
+
+
+***
+```javascript
 MxI.$ILogger
 MxI.$DefaultLogger
-MxI.$System.setLogger()
+MxI.$System.log(arg_msg, ...arg_values)
+MxI.$System.banner(arg_msg, arg_single_line_banner, arg_separator_char, arg_separator_length)
+MxI.$System.setLogger(logger)
 MxI.$System.resetLogger()
 ```
-This provides the _Custom Logger_ feature which is more effecive and flexible than `console.log()`, like enabling/disabling traces, redirectog to a File or a Stream, define trace levels and categories etc.. . To use this feature call `MxI.$System.log()` instead of `console.log()`. 
+* `MxI.$System.log()`: this is the _Custom Logger_ feature which is more effective and flexible than `console.log()`, like enabling/disabling traces, redirectog to a File or a Stream, define trace levels and categories etc... To use this feature just replace calls to `console.log()` by `MxI.$System.log()`. 
 
-A custom logger must implement `MxI.$ILogger` interface, `MxI.$DefaultLogger` is provided as a default implementation this interface (NB: the implementation class should be a _Singleton_)
+A custom logger must implement `MxI.$ILogger` interface, `MxI.$DefaultLogger` is provided as the default implementation of this interface (NB: the implementation class should be a _Singleton_)
+
+* `MxI.$System.banner()`: generates nicer logs by surrounding the message in a banner. Optional arguments (after arg_msg) allow to change    
+ * the number of lines (3 by default, one if `arg_single_line_banner` is set to `true`)  
+ * the separator ('=' by default, another if `arg_separator_char` is set)  
+ * the banner size (60 by default, another if `arg_separator_length` is set)  
+
+Example 1:
+```bash
+MxI.$System.banner("Unit Test for 'mixin-interface' package");
+```
+will generate this output:
+```bash
+============================================================
+========== Unit Test for 'mixin-interface' package =========
+============================================================
+```
+
+Example 2:
+```bash
+MxI.$System.banner("End of Unit Test", true);
+```
+will generate this output:
+```bash
+===================== End of Unit Test =====================
+```
  
 * You may change the _Logger_ by providing an instance of a class which implements `MxI.$ILogger`
 ```javascript
@@ -400,25 +458,35 @@ Here is the source code of `$StarPrefixLogger` (see `./src/test_classes/star_pre
 
 ```javascript
 const MxI = require('../mixin_interface.js').MxI;
+//============ '$StarPrefixLogger' implementation class ============
 class $StarPrefixLogger extends MxI.$Implementation(MxI.$Object).$with(MxI.$ILogger) {
   static getSingleton() {
-	  if ($StarPrefixLogger._$singleton === undefined) {
-		  //console.log(" >>> First time (and Only normally) in getSingleton");
-		  $StarPrefixLogger._$singleton = new $StarPrefixLogger();
-	  }
-	  return $StarPrefixLogger._$singleton;
+	    if ($StarPrefixLogger._$singleton === undefined) {
+		    $StarPrefixLogger._$singleton = new $StarPrefixLogger();
+	    }
+	    return $StarPrefixLogger._$singleton;
   } // $StarPrefixLogger.getSingleton
   
-  log(arg_msg) {
-	  var msg = arg_msg;
-	  if (msg === undefined || msg === null)
-		msg = "";
-	  var prefix = "* ";
-	  console.log(prefix + msg);
+  log(arg_msg, ...arg_values) {
+	    var   msg    = "";
+		const prefix = "* ";
+	    if (arg_msg === undefined || arg_msg === null) 
+		  msg = "";		  
+	    else
+		  msg = arg_msg;
+	
+	    if (arg_values !== undefined && arg_values !== null) {
+	      if (arg_values.length > 0) {
+			console.log(prefix + msg, ...arg_values);
+		    return;
+	      }
+        }
+	    console.log(prefix + msg);
   } // $StarPrefixLogger.log
 } // '$StarPrefixLogger' class
 $StarPrefixLogger._$singleton;
 MxI.$setClass($StarPrefixLogger).$asImplementationOf(MxI.$ILogger);
+exports.$StarPrefixLogger = $StarPrefixLogger;
 ```
 
 ## References

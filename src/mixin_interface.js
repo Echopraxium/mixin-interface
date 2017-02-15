@@ -11,6 +11,8 @@ const mixin       = require('mixin');
 const caller_id   = require('caller-id');
 //const change_case = require('change-case');
 
+const MXI_NULL                             = "MxI.$Null";
+
 const SERVICE_NOT_IMPLEMENTED_ERROR_ID     = 100;
 const SUPER_INTERFACE_NOT_DEFINED_ERROR_ID = 101;
 const MANDATORY_ARG_MISSING_ID             = 102;
@@ -88,12 +90,43 @@ $Object._$is_interface = false;
 exports.$Object = $Object;
 //================ '$Object' Base Implementation class
 
-var _$default_logger; // value defined at the end of this script
+
+//==================== '$INullObject' interface class ====================
+class $INullObject extends mixin($Object, $IBaseInterface) {  
+} // '$INullObject' interface class
+$INullObject._$is_interface    = true;
+$INullObject._$super_interface = $IBaseInterface;
+
+
+//================ '$NullObject' ================
+class $NullObject extends mixin($Object, $INullObject) {
+  constructor(...args) {
+	  super();
+      this._$name = MXI_NULL;
+  } // '$Object' constructor
+  
+  toString(){
+    return this._$name;
+  } // toString override
+  
+  static getSingleton() {
+	  if ($NullObject._$singleton === undefined) {
+		  //console.log(" >>> First time (and Only normally) in $DefaultLogger.getSingleton");
+		  $NullObject._$singleton = new $NullObject();
+	  }
+	  return $NullObject._$singleton;
+  } // $NullObject.getSingleton
+} // '$NullObject' class
+$NullObject._$singleton;
+$NullObject._$implemented_interfaces = [$INullObject];
+$NullObject._$is_interface           = false;
+
 
 //==================== '$ILogger' interface class ====================
 class $ILogger extends mixin($Object, $IBaseInterface) {  
-  log(msg) {
-    console.log(msg);
+  log(arg_msg, ...arg_values) {
+    //console.log(msg);
+	//MxI.$raiseNotImplementedError($ILogger, this);
   } // $ILogger.log
 } // '$ILogger' interface class
 $ILogger._$is_interface    = true;
@@ -110,11 +143,20 @@ class $DefaultLogger extends mixin($Object, $ILogger) {
 	  return $DefaultLogger._$singleton;
   } // $DefaultLogger.getSingleton
   
-  log(arg_msg) {
-	  var msg = arg_msg;
-	  if (msg === undefined || msg === null)
-		msg = "";
-	  console.log(msg);
+  log(arg_msg, ...arg_values) {
+	    var msg = "";
+	    if (arg_msg === undefined || arg_msg === null) 
+		  msg = "";		  
+	    else
+		  msg = arg_msg;
+	
+	    if (arg_values !== undefined && arg_values !== null) {
+	      if (arg_values.length > 0) {
+			console.log(msg, ...arg_values);
+		    return;
+	      }
+        }
+	    console.log(msg);
   } // $DefaultLogger.log
 } // '$DefaultLogger' class
 $DefaultLogger._$singleton;
@@ -124,32 +166,73 @@ $DefaultLogger._$is_interface           = false;
 
 //================ '$System' ================
 class $System {
-  static setLogger(arg_logger) {
-    if (arg_logger === undefined) 
+    static setLogger(arg_logger) {
+      if (arg_logger === undefined) 
 		return;
-	$System._$logger = arg_logger;  
-  } // $System.setLogger
+	  $System._$logger = arg_logger;  
+    } // $System.setLogger
   
-  static getLogger() {
-    if ($System._$logger === undefined) {
-		$System._$logger = $DefaultLogger.getSingleton();
-	}
-	return $System._$logger;  
-  } // $System.getLogger
+    static getLogger() {
+      if ($System._$logger === undefined) {
+		  $System._$logger = $DefaultLogger.getSingleton();
+	  }
+	  return $System._$logger;  
+    } // $System.getLogger
   
-  static resetLogger() {
-    $System.setLogger($DefaultLogger.getSingleton()); 
-  } // $System.resetLogger
+    static resetLogger() {
+      $System.setLogger($DefaultLogger.getSingleton()); 
+    } // $System.resetLogger
   
-  static log(msg) {
-	$System.getLogger().log(msg);
-  } // $DefaultLogger.getSingleton
-} // $System class
+    static log(arg_msg, ...arg_values) {
+	  $System.getLogger().log(arg_msg, ...arg_values);
+    } // $DefaultLogger.log
+  
+    static banner(arg_msg, arg_single_line_banner, arg_separator_char, arg_separator_length) {
+      var single_line_banner = false;
+	  if (arg_single_line_banner !== undefined)
+	    single_line_banner = arg_single_line_banner;
+	
+	  var separator_length = 60;
+	  if (arg_separator_length !== undefined)
+	    separator_length = arg_separator_length;
+	
+	  var separator_char = '=';
+	  if (arg_separator_char !== undefined)
+	    separator_char = arg_separator_char;
+	
+      var separator_line           = separator_char.repeat(separator_length);
+      var start_msg_separator_size = Math.round((separator_length / 2) - (arg_msg.length / 2) -1);
+      var end_msg_separator_size   = Math.round((separator_length / 2) - (arg_msg.length / 2) -1);
+  
+      var msg_separator_size = start_msg_separator_size + arg_msg.length + 2 + end_msg_separator_size;
+      if (msg_separator_size > separator_length)
+	    end_msg_separator_size = end_msg_separator_size - 1;
+      else if (msg_separator_size < separator_length)
+        end_msg_separator_size = end_msg_separator_size + 1;
+
+      msg_separator_size = start_msg_separator_size + arg_msg.length + 2 + end_msg_separator_size;
+  
+      var start_msg_separator      = separator_char.repeat(start_msg_separator_size);
+      var end_msg_separator        = separator_char.repeat(end_msg_separator_size);
+  
+      if (! arg_single_line_banner)
+        $System.getLogger().log(separator_line);		
+	
+      $System.getLogger().log(start_msg_separator + ' ' + arg_msg + ' ' + end_msg_separator);
+	  
+      if (! arg_single_line_banner)
+        $System.getLogger().log(separator_line);		
+  } // $System.banner
+} // '$System' class
 $System._$logger;
 
+const $Null = $NullObject.getSingleton();
 
 //================================ 'MxI' Namespace ================================
 const MxI = {
+     //--------------------- $Null ---------------------
+    '$Null': $Null,
+	
 	//--------------------- $System ---------------------
     '$System': $System,
 
@@ -195,6 +278,14 @@ const MxI = {
     '$Implementation': function(arg_super_implementation) {
        return new $MixinInterface(arg_super_implementation);
     }, // $Implementation
+	
+	//------------------- $isNull -------------------
+    '$isNull': function(instance) {
+		if (instance === $Null)
+			return true;
+		else
+			return false;
+	}, // $isNull
 
     //------------------- $isInstanceOf -------------------
     '$isInstanceOf': function(type, instance) {
@@ -257,6 +348,7 @@ const MxI = {
     } // $raiseNotImplementedError
 }; // MxI namespace
 exports.MxI = MxI;
+
 
 //---------- getClass ----------
 function getClass(instance) {
