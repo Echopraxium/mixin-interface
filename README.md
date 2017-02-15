@@ -287,9 +287,9 @@ Please note that in the following:
 * **MxI.$System.resetLogger()**: Restore the _Default Logger_ (`MxI.$DefaultLogger`)  
 * **MxI.$Null()**: the _Null Object_. This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result.  
 * **MxI.$isNull()**: to check if an object is the _Null Object_  
-- - - -
+
 ***
-## Check if an object is an instance of a Type (either an Interface class or an Implementation class)
+## Check if an object is an instance of a Type
 ```javascript
 MxI.$isInstanceOf(type, object)
 ```
@@ -387,7 +387,7 @@ es\i_animal.js:16:9)
 ```
 
 ***
-## Delayed Initialization of an object
+## Delayed Object Initialization
 ```javascript
 MxI.$Object().init(...args_init)
 MxI.$Object().isInitialized()
@@ -406,8 +406,8 @@ These services provide the _Delayed Initialization_ feature.
 MxI.$Null
 MxI.$isNullobject()
 ```
-> `MxI.$Null` is a new feature: the _Null Object_ (a singleton class which is a subclass of `MxI.$Object`). This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result. This is also a prerequisite to implement _Null Object_ Design pattern in [`design-patterns-api`](https://www.npmjs.com/package/design-patterns-api) package
-> `MxI.$isNull()` a new service to check if an instance is the _Null Object_
+* `MxI.$Null` is a new feature: the _Null Object_ (a singleton class which is a subclass of `MxI.$Object`). This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result. This is also a prerequisite to implement _Null Object_ Design pattern in [`design-patterns-api`](https://www.npmjs.com/package/design-patterns-api) package  
+* `MxI.$isNull()` a new service to check if an instance is the _Null Object_
 
 
 ***
@@ -422,12 +422,25 @@ MxI.$System.resetLogger()
 ```
 * `MxI.$System.log()`: this is the _Custom Logger_ feature which is more effective and flexible than `console.log()`, like enabling/disabling traces, redirectog to a File or a Stream, define trace levels and categories etc... To use this feature just replace calls to `console.log()` by `MxI.$System.log()`. 
 
-A custom logger must implement `MxI.$ILogger` interface, `MxI.$DefaultLogger` is provided as the default implementation of this interface (NB: the implementation class should be a _Singleton_)
+>A custom logger must implement `MxI.$ILogger` interface, `MxI.$DefaultLogger` is provided as the default implementation of this interface (NB: the implementation class should be a _Singleton_)
 
-* `MxI.$System.banner()`: generates nicer logs by surrounding the message in a banner. Optional arguments (after arg_msg) allow to change    
- * the number of lines (3 by default, one if `arg_single_line_banner` is set to `true`)  
- * the separator ('=' by default, another if `arg_separator_char` is set)  
- * the banner size (60 by default, another if `arg_separator_length` is set)  
+* `MxI.$System.setLogger(logger)`: sets the current _Logger_.
+
+>`logger` must be an instance of a class which implements `MxI.$ILogger`
+```javascript
+const $StarPrefixLogger = require('./src/test_classes/star_prefix_logger.js').$StarPrefixLogger;
+MxI.$System.setLogger($StarPrefixLogger.getSingleton());
+```
+
+* `MxI.$System.resetLogger()`: restore the default logger (`MxI.$DefaultLogger`):
+```javascript
+MxI.$System.resetLogger();
+```
+
+* `MxI.$System.banner()`: generates nicer logs by surrounding the message in a banner. Optional arguments (after `arg_msg`) allow to change      
+  * the number of lines (3 by default, one if `arg_single_line_banner` is set to `true`)  
+  * the separator ('=' by default, another if `arg_separator_char` is set)  
+  * the banner size (60 by default, another if `arg_separator_length` is set)  
 
 Example 1:
 ```bash
@@ -447,17 +460,6 @@ MxI.$System.banner("End of Unit Test", true);
 will generate this output:
 ```bash
 ===================== End of Unit Test =====================
-```
- 
-* You may change the _Logger_ by providing an instance of a class which implements `MxI.$ILogger`
-```javascript
-const $StarPrefixLogger = require('./src/test_classes/star_prefix_logger.js').$StarPrefixLogger;
-MxI.$System.setLogger($StarPrefixLogger.getSingleton());
-```
-
-And to revert to the default logger (`MxI.$DefaultLogger`):
-```javascript
-MxI.$System.resetLogger();
 ```
 
 Here is the source code of `$StarPrefixLogger` (see [`./src/test_classes/star_prefix_logger.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/star_prefix_logger.js)) .Once it is set as the current _Logger_ (with `MxI.$System.setLogger()`), it will add '* ' prefix on each output of `MxI.$System.log()` call (see [`./test.js`](https://github.com/Echopraxium/mixin-interface/blob/master/test.js)).
