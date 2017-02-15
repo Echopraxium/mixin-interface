@@ -170,7 +170,7 @@ MxI.$setAsInterface(IAnimal).$asChildOf(ILifeForm);
 exports.IAnimal = IAnimal;
 ```
 
-## [How to code an Implementation class](#howto-code-implementation-class)
+## How to code an Implementation class]
 Here is an example of an _implementation class_ (see [`./src/test_classes/animal.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/animal.js)). An _implementation_ may implement one or more _interface classes_. To implement the services (i.e. defined by the _interface class(es)_ that are declared as implemented by this class) we must:
 
 * Inherit from `MxI.$Object` (or any of its subclasses) by using the `MxI.$Implementation().$with()` _idiom_ just after the es6 `extends` keyword to define both a subclass and the _interface class(es)_ that it implements (`IAnimal` here). 
@@ -302,7 +302,7 @@ console.log(a_cat.name + " is a 'IMammal': " + MxI.$isInstanceOf(IMammal, a_cat)
 ```
 
 ***
-## Check if a class is an Interface class
+## Check if a type is an Interface class
 ```javascript
 MxI.$isInterface(type)
 ```
