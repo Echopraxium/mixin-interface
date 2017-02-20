@@ -246,3 +246,5 @@ MxI.$System        = $System;
 MxI.$isNull        = $isNull;
 MxI.$ILogger       = $ILogger;
 MxI.$DefaultLogger = $DefaultLogger;
+
+exports.MxI = MxI;
