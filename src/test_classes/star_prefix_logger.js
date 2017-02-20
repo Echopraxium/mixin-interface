@@ -7,14 +7,29 @@
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const MxI = require('../mixin_interface.js').MxI;
+const MxI             = require('mixin-interface-api/src/mixin_interface_api.js').MxI;
+const mixin_interface = require('../mixin_interface.js');
 
 //============ '$StarPrefixLogger' implementation class ============
-class $StarPrefixLogger extends MxI.$Implementation(MxI.$Object).$with(MxI.$ILogger) {
+class $StarPrefixLogger extends MxI.$Implementation(MxI.$DefaultLogger).$with(MxI.$ILogger) {
+  // Better code reuse 4.4.7 (add new code)
+  /* { */
+  constructor(...args) {
+	  super();
+      this._$prefix = "* ";
+  } // ' $StarPrefixLogger' constructor
+  /* } */
+  // Better code reuse 4.4.7 (add new code)
+  
+  // Better code reuse 4.4.7 (comment useless code)
+  /*
   static getSingleton() {
-	    if ($StarPrefixLogger._$singleton === undefined) {
-		    //console.log(" >>> First time (and Only normally) in getSingleton");
-		    $StarPrefixLogger._$singleton = new $StarPrefixLogger();
+	    console.log("$StarPrefixLogger.getSingleton " + $StarPrefixLogger._$singleton);
+		var Klass = this;
+		console.log("Class: " + this.name);
+	    if (Klass._$singleton === undefined) {
+		    console.log(" >>> First time (and Only normally) in getSingleton");
+		    Klass._$singleton = new Klass();
 	    }
 	    return $StarPrefixLogger._$singleton;
   } // $StarPrefixLogger.getSingleton
@@ -35,7 +50,9 @@ class $StarPrefixLogger extends MxI.$Implementation(MxI.$Object).$with(MxI.$ILog
         }
 	    console.log(prefix + msg);
   } // $StarPrefixLogger.log
+  */
+  // Better code reuse 4.4.7 (comment useless code)
 } // '$StarPrefixLogger' class
-$StarPrefixLogger._$singleton;
+$StarPrefixLogger._$singleton = undefined; // BugFix 4.4.7
 MxI.$setClass($StarPrefixLogger).$asImplementationOf(MxI.$ILogger);
 exports.$StarPrefixLogger = $StarPrefixLogger;

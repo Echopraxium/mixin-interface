@@ -1,7 +1,7 @@
 {
   "name": "mixin-interface",
   "version": "4.4.6",
-  "description": "An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.",
+  "description": "An extension of 'mixin-interface-api' package with utility features.",
   "main": "main.js",
   "readme": "README.md",
   "scripts": {
@@ -26,8 +26,7 @@
   },
   "homepage": "https://github.com/Echopraxium/mixin-interface#readme",
   "dependencies": {
-    "caller-id": "^0.1.0",
-    "mixin": "^0.2.0"
+    "mixin-interface-api": "0.0.5"
   },
   "devDependencies": {}
 }

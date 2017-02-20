@@ -7,16 +7,15 @@
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
+const MxI               = require('mixin-interface-api/src/mixin_interface_api.js').MxI;
 const mixin_interface   = require('./src/mixin_interface.js');
-const MxI               = mixin_interface.MxI;
-const ILifeForm         = require('./src/test_classes/i_life_form.js').ILifeForm;
-const IAnimal           = require('./src/test_classes/i_animal.js').IAnimal;
-const IMammal           = require('./src/test_classes/i_mammal.js').IMammal;
+const ILifeForm         = require('mixin-interface-api/src/test_classes/i_life_form.js').ILifeForm;
+const IAnimal           = require('mixin-interface-api/src/test_classes/i_animal.js').IAnimal;
+const IMammal           = require('mixin-interface-api/src/test_classes/i_mammal.js').IMammal;
 const IFish             = require('./src/test_classes/i_fish.js').IFish;
 const IBird             = require('./src/test_classes/i_bird.js').IBird;
-
-const Animal            = require('./src/test_classes/animal.js').Animal;
-const Cat               = require('./src/test_classes/cat.js').Cat;
+const Animal            = require('mixin-interface-api/src/test_classes/animal.js').Animal;
+const Cat               = require('mixin-interface-api/src/test_classes/cat.js').Cat;
 const FlyingFish        = require('./src/test_classes/flying_fish.js').FlyingFish;
 
 const $StarPrefixLogger = require('./src/test_classes/star_prefix_logger.js').$StarPrefixLogger;
@@ -26,10 +25,13 @@ var unit_test_step = 0;
 
 MxI.$System.log();
 MxI.$System.banner("Unit Test for 'mixin-interface' package");
+
+//MxI.$System.getLogger().disable();
+
 unit_test_step++;
 var an_animal_0 = new Animal();
 MxI.$System.log(unit_test_step + ".Instance of 'Animal' created: " + an_animal_0.name);
-MxI.$System.log("'%s' is a 'MxI.$Object'    ?   " + MxI.$isInstanceOf(MxI.$Object, an_animal_0), an_animal_0.name);
+MxI.$System.log("'%s' is a 'MxI.$Object' ?      " + MxI.$isInstanceOf(MxI.$Object, an_animal_0), an_animal_0.name);
 MxI.$System.log("'%s' is a 'ILifeForm' ?        " + MxI.$isInstanceOf(ILifeForm,   an_animal_0), an_animal_0.name);
 MxI.$System.log("'%s' is a 'Animal' ?           " + MxI.$isInstanceOf(Animal,      an_animal_0), an_animal_0.name);
 MxI.$System.log("'%s' is a 'IAnimal' ?          " + MxI.$isInstanceOf(IAnimal,     an_animal_0), an_animal_0.name);
@@ -46,7 +48,7 @@ console.log("----------");
 unit_test_step++;
 var a_cat = new Cat();
 MxI.$System.log(unit_test_step + ". Instance of 'Cat' created: " + a_cat.name);
-MxI.$System.log("'%s' is a 'MxI.$Object' ? " + MxI.$isInstanceOf(MxI.$Object, a_cat));
+MxI.$System.log("'%s' is a 'MxI.$Object' ? " + MxI.$isInstanceOf(MxI.$Object, a_cat), a_cat.name);
 MxI.$System.log("'%s' is a 'Animal' ?      " + MxI.$isInstanceOf(Animal,      a_cat), a_cat.name);
 MxI.$System.log("'%s' is a 'Cat' ?         " + MxI.$isInstanceOf(Cat,         a_cat), a_cat.name);
 MxI.$System.log("'%s' is a 'ILifeForm' ?   " + MxI.$isInstanceOf(ILifeForm,   a_cat), a_cat.name);
@@ -111,9 +113,12 @@ MxI.$System.log(another_animal.name + " isInitialized():      ", another_animal.
 another_animal.init();
 MxI.$System.log(another_animal.name + " isInitialized():      ", another_animal.isInitialized());
 
+
 MxI.$System.log("----------");
 unit_test_step++;
+
 MxI.$System.setLogger($StarPrefixLogger.getSingleton());
+
 MxI.$System.log(unit_test_step + ". Change Logger");
 another_animal = new Animal();
 MxI.$System.log("Another instance of 'Animal' created:     '%s'", another_animal.name);

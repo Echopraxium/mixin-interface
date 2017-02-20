@@ -1,22 +1,12 @@
 # mixin-interface
 
-An es6 (ECMAScript 2015) lightweight implementation of interface classes with `mixins`. Type checking and inheritance is also supported.
+An extension of 'mixin-interface-api' with utility features (e.g: _Custom Logger_) and more complete unit test(s).
 
-Changelog since release 4.3.8 :
+### Changelog since release 4.4.6:
 
-* New feature: `MxI.$Null()`, the _Null Object_. This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result. This is also a prerequisite to implement _Null Object_ Design pattern in [`design-patterns-api`](https://www.npmjs.com/package/design-patterns-api) package
-* New service: `MxI.$isNull()`, to check if an instance is the _Null Object_
-* Fix of a "downgraded mode of operation" in `MxI.$System.log()`: now formatted strings are supported, e.g:
-```bash
-MxI.$System.log("Another instance of 'Animal' created: '%s'", another_animal.name);
-```
-This also required to change the signature from `MxI.$Systemlog(msg)` to `MxI.$Systemlog(arg_msg, ...arg_values)`
-* New service: `MxI.$System.banner()`, to generate nicer logs with "banners", like the following:
-```bash
-============================================================
-========== Unit Test for 'mixin-interface' package =========
-============================================================
-```
+* Major refactoring of `mixin-interface` package to separate the _core API_ (now moved in `mixin-interface-api`) from the _Utility features_ (like _Custom Logger_) as well as future features (all provided by `MxI.$System`)  which will now be provided this package.
+
+* Minor Refactoring of `$ILogger` and `$DefaultLogger` for easier code reuse when implementing _Custom Loggers_
 
 ## Installation and Usage
 ```bash
@@ -47,7 +37,7 @@ You should get the following output:
 ========== Unit Test for 'mixin-interface' package =========
 ============================================================
 1.Instance of 'Animal' created: animal_0
-'animal_0' is a 'MxI.$Object'    ?   true
+'animal_0' is a 'MxI.$Object' ?      true
 'animal_0' is a 'ILifeForm' ?        true
 'animal_0' is a 'Animal' ?           true
 'animal_0' is a 'IAnimal' ?          true
@@ -58,7 +48,7 @@ You should get the following output:
 --> Animal.live
 ----------
 2. Instance of 'Cat' created: cat_0
-'%s' is a 'MxI.$Object' ? true
+'cat_0' is a 'MxI.$Object' ? true
 'cat_0' is a 'Animal' ?      true
 'cat_0' is a 'Cat' ?         true
 'cat_0' is a 'ILifeForm' ?   true
@@ -114,6 +104,7 @@ Null Object: 'MxI.$Null'
 'MxI.$Null' is Null Object ?  true
 'animal_3' is Null Object ?   false
 ===================== End of Unit Test =====================
+
 ```
 
 >Please notice in the previous output that an _implementation class_ may _inherit_ functions (i.e implementation of services from _interface classes_) from its parent class (e.g. `FlyingFish` inherits `IAnimal.run()` and `IAnimal.live()` from `Animal`) but it is also possible to _override_ these default implementations them as well.
@@ -170,7 +161,7 @@ MxI.$setAsInterface(IAnimal).$asChildOf(ILifeForm);
 exports.IAnimal = IAnimal;
 ```
 
-## How to code an Implementation class]
+## How to code an Implementation class
 Here is an example of an _implementation class_ (see [`./src/test_classes/animal.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/animal.js)). An _implementation_ may implement one or more _interface classes_. To implement the services (i.e. defined by the _interface class(es)_ that are declared as implemented by this class) we must:
 
 * Inherit from `MxI.$Object` (or any of its subclasses) by using the `MxI.$Implementation().$with()` _idiom_ just after the es6 `extends` keyword to define both a subclass and the _interface class(es)_ that it implements (`IAnimal` here). 
@@ -248,18 +239,18 @@ MxI.$setClass(Cat).$asImplementationOf(IMammal);
 - - - -
 # mixin-interface API Developer's Reference
 
-Please note that in the following: 
+Please note the following keywords and their meaning: 
   
-> **API service** stands for _function provided by 'mixin-interface'_ (e.g. `Mxi.$isInstanceOf()`).  
-> **MxI** is the _namespace_ for all the _mixin-interface_ API services.  
-> **object** stands for _instance of an _implementation class_.   
-> **service** stands for _function defined by an interface class_ (e.g. `IAnimal.run()`).  
-> **type** stands for either an _implementation class_ (e.g. `Animal`) or an _interface class_ (e.g. `IAnimal`).  
-> **interface** stands for _interface class_.  
-> **super_interface** stands for _superclass of the interface class_.  
-> **implementation** stands for _implementation class_.  
-> **super_implementation** stands for _superclass of the implementation class_.  
-> **...interfaces** stands for _list of implemented interfaces_. The list is provided as _interface class(es)_ separated by a comma (e.g. `ILifeForm` and `IAnimal, ILifeForm` are valid _...interfaces_ arguments).  
+> **API service**: _function provided by 'mixin-interface'_ (e.g. `Mxi.$isInstanceOf()`)  
+> **MxI**: _namespace_ for all the _mixin-interface_ API services  
+> **object**: for _instance of an _implementation class_   
+> **service**: for _function defined by an interface class_ (e.g. `IAnimal.run()`)   
+> **type**: for either an _implementation class_ (e.g. `Animal`) or an _interface class_ (e.g. `IAnimal`)    
+> **interface**: for _interface class_  
+> **super_interface**: for _superclass of the interface class_  
+> **implementation**: for _implementation class_  
+> **super_implementation**: for _superclass of the implementation class_   
+> **...interfaces**: _list of implemented interfaces_. The list is provided as _interface class(es)_ separated by a comma (e.g. `ILifeForm` and `IAnimal, ILifeForm` are valid _...interfaces_ arguments)  
 
 * **MxI.$isInstanceOf()**: replacement for javascript `instanceof` operator.  
 * **MxI.$isInterface()**: checks if a _type_ is an _interface class_ or not.  
@@ -278,15 +269,16 @@ Please note that in the following:
 
 * **MxI.$System.log()**: _Custom Logger_ feature, more effective and flexible than `console.log()`  
 
- >"Down-graded mode of operation" bugfix: now formatted strings are supported (e.g. `MxI.$System.log("'%s': ", obj.name);`)  
+ >"Downgraded mode of operation" bugfix: now formatted strings are supported (e.g. `MxI.$System.log("'%s': ", obj.name);`)  
 
 * **MxI.$System.banner()**: a variant of `MxI.$System.log()` which allows "decorated logs" with _banners_  
 * **MxI.$ILogger**: interface class for _Custom Logger_ feature   
 * **MxI.$DefaultLogger**: Default implementation of `MxI.$ILogger` (NB: it's a _Singleton_)  
-* **MxI.$System.setLogger()**: Change the _Logger_ by providing a instance of a class which implements `MxI.$ILogger`  
-* **MxI.$System.resetLogger()**: Restore the _Default Logger_ (`MxI.$DefaultLogger`)  
+* **MxI.$System.setLogger()**: Changes the _Logger_ by providing a instance of a class which implements `MxI.$ILogger`  
+* **MxI.$System.getLogger()**: get the current _Logger_ (an instance of a class which implements `MxI.$ILogger`)
+* **MxI.$System.resetLogger()**: Restores the _Default Logger_ (`MxI.$DefaultLogger`)  
 * **MxI.$Null()**: the _Null Object_. This allows a function to return 'something' instead of 'undefined' when it cannot return a valid result.  
-* **MxI.$isNull()**: to check if an object is the _Null Object_  
+* **MxI.$isNull()**: checks if an object is the _Null Object_  
 
 ***
 ## Check if an object is an instance of a Type
