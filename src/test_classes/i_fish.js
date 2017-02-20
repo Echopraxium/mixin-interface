@@ -6,9 +6,8 @@
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const MxI             = require('mixin-interface-api/src/mixin_interface_api.js').MxI;
-const mixin_interface = require('../mixin_interface.js');
-const IAnimal         = require('mixin-interface-api/src/test_classes/i_animal.js').IAnimal;
+const MxI     = require('../mixin_interface.js').MxI;
+const IAnimal = require('mixin-interface-api/src/test_classes/i_animal.js').IAnimal;
 
 //==================== 'IFish' interface class ====================
 class IFish extends MxI.$Interface(IAnimal) {

@@ -7,8 +7,7 @@
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const MxI             = require('mixin-interface-api/src/mixin_interface_api.js').MxI;
-const mixin_interface = require('../mixin_interface.js');
+const MxI = require('../mixin_interface.js').MxI;
 
 //============ '$StarPrefixLogger' implementation class ============
 class $StarPrefixLogger extends MxI.$Implementation(MxI.$DefaultLogger).$with(MxI.$ILogger) {

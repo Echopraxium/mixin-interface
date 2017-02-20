@@ -11,8 +11,7 @@
 'use strict';
 /*jshint node: true*/
 /*jshint esversion: 6*/
-const MxI             = require('mixin-interface-api/src/mixin_interface_api.js').MxI;
-const mixin_interface = require('../mixin_interface.js');
+const MxI             = require('../mixin_interface.js').MxI;
 const Animal          = require('mixin-interface-api/src/test_classes/animal.js').Animal;
 const IAnimal         = require('mixin-interface-api/src/test_classes/i_animal.js').IAnimal;
 const IBird           = require('./i_bird.js').IBird;
