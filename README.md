@@ -4,7 +4,7 @@ An extension of 'mixin-interface-api' with utility features (e.g: _Custom Logger
 
 ### Changelog since release 4.4.6:
 
-* Major refactoring of `mixin-interface` package to separate the _core API_ (now moved in `mixin-interface-api`) from the _Utility features_ (like _Custom Logger_) as well as future features (all provided by `MxI.$System`)  which will now be provided this package.
+* Major refactoring of `mixin-interface` package to separate the _core API_ (now moved in [`mixin-interface-api`](https://www.npmjs.com/package/mixin-interface-api)) from the _Utility features_ (like _Custom Logger_) as well as future features (all provided by `MxI.$System`)  which will now be provided this package.
 
 * Minor Refactoring of `$ILogger` and `$DefaultLogger` for easier code reuse when implementing _Custom Loggers_
 
