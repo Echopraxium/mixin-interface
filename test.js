@@ -125,12 +125,5 @@ var another_flying_fish = new FlyingFish();
 MxI.$System.log("Another instance of 'FlyingFish' created: '%s'", another_flying_fish.name);
 MxI.$System.resetLogger();
 
-MxI.$System.log("----------");
-unit_test_step++;
-MxI.$System.log(unit_test_step + ". Null Object");
-MxI.$System.log("Null Object: '%s'", MxI.$Null);
-MxI.$System.log("'%s' is Null Object ? ",  MxI.$Null, MxI.$isNull(MxI.$Null));
-MxI.$System.log("'%s' is Null Object ?  ",  another_animal.name, MxI.$isNull(another_animal));
-
 MxI.$System.banner("End of Unit Test", true);
 MxI.$System.log();
