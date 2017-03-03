@@ -189,7 +189,6 @@ MxI.$setClass(implementation).$asImplementationOf(...interfaces)
 ```
 Please refer to [How to code an Implementation class](https://github.com/Echopraxium/mixin-interface-api/blob/master/README.md#how-to-code-an-implementation-class) in [`mixin-interface-api`](https://www.npmjs.com/package/mixin-interface-api)
 
-## How to subclass an Implementation class
 Please refer to [How to subclass an Implementation class](https://github.com/Echopraxium/mixin-interface-api/blob/master/README.md#how-to-subclass-an-implementation-class) in [`mixin-interface-api`](https://www.npmjs.com/package/mixin-interface-api)
 
 
