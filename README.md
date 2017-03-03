@@ -5,6 +5,7 @@ An extension of 'mixin-interface-api' with utility features (e.g: _Custom Logger
 ### Changelog in release 4.6.3:
 * Refactoring Step 1/2: _Null Object_ feature (`MxI.$Null` and `MxI.$isNull()`) moved to `mixin-interface-api` as well as the _Singleton_ features (used by _Custom Loggers_)  
 * Minor update: removal of duplicate paragraphs by linking to `mixin-interface-api` when appropriate (e.g. _How to Define an Interface class_, etc...)
+* Updates in README.md: in "Error Handling: 'service not implemented'" paragraph
 
 
 ## Installation and Usage
