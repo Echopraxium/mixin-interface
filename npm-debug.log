@@ -51,9 +51,9 @@
 21 silly publish   homepage: 'https://github.com/Echopraxium/mixin-interface#readme',
 21 silly publish   dependencies: { 'mixin-interface-api': '0.0.8' },
 21 silly publish   devDependencies: {},
-21 silly publish   gitHead: 'fa9f7bd4ac125f749f2c00346f95cfcdb81941b6',
+21 silly publish   gitHead: '0511bae48b88b26e3d7bf901c463755d3e0f9b06',
 21 silly publish   _id: 'mixin-interface@4.6.1',
-21 silly publish   _shasum: 'ed74093df95c71671e7966a95359f0a4d1d96107',
+21 silly publish   _shasum: '40a48916b571dd3cf05efc2e73df49263ad6c79a',
 21 silly publish   _from: '.' }
 22 verbose getPublishConfig undefined
 23 silly mapToRegistry name mixin-interface
@@ -72,22 +72,22 @@
 29 silly publish uploading C:\Users\maruti\AppData\Roaming\npm-cache\mixin-interface\4.6.1\package.tgz
 30 verbose request uri https://registry.npmjs.org/mixin-interface
 31 verbose request sending authorization for write operation
-32 info attempt registry request try #1 at 00:45:43
+32 info attempt registry request try #1 at 00:51:38
 33 verbose request using bearer token for auth
-34 verbose request id 917fdfd54fb65184
+34 verbose request id 98af78c2c717ccf3
 35 http request PUT https://registry.npmjs.org/mixin-interface
 36 http 403 https://registry.npmjs.org/mixin-interface
 37 verbose headers { 'content-type': 'application/json',
 37 verbose headers   'cache-control': 'max-age=300',
 37 verbose headers   'content-length': '95',
 37 verbose headers   'accept-ranges': 'bytes',
-37 verbose headers   date: 'Fri, 03 Mar 2017 23:45:57 GMT',
+37 verbose headers   date: 'Fri, 03 Mar 2017 23:51:51 GMT',
 37 verbose headers   via: '1.1 varnish',
 37 verbose headers   connection: 'keep-alive',
-37 verbose headers   'x-served-by': 'cache-lcy1146-LCY',
+37 verbose headers   'x-served-by': 'cache-lcy1148-LCY',
 37 verbose headers   'x-cache': 'MISS',
 37 verbose headers   'x-cache-hits': '0',
-37 verbose headers   'x-timer': 'S1488584755.979806,VS0,VE1139',
+37 verbose headers   'x-timer': 'S1488585110.420840,VS0,VE1165',
 37 verbose headers   vary: 'Accept-Encoding' }
 38 verbose request invalidating C:\Users\maruti\AppData\Roaming\npm-cache\registry.npmjs.org\mixin-interface on PUT
 39 error publish Failed PUT 403
