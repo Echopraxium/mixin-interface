@@ -198,7 +198,7 @@ Please refer to [How to subclass an Implementation class](https://github.com/Ech
 MxI.$raiseNotImplementedError(_interface_, object)
 ```
 This service provides _Error Handling_ when a service of an _interface class_ is not provided by an _implementation class_. It should be used in the _Fallback implementation_ for each service defined by the _interface class_.
-Here is an example of how to use this API service (see [`./src/test_classes/i_life_form.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/i_life_form.js):
+Here is an example of how to use this API service (see [`i_life_form.js` in `mixin-interface-api`](https://github.com/Echopraxium/mixin-interface-api/blob/master/src/test_classes/i_life_form.js):
 ```javascript
 class ILifeForm extends MxI.$Interface(MxI.$IBaseInterface) {  
   // Fallback implementation of 'live' service
@@ -209,17 +209,19 @@ class ILifeForm extends MxI.$Interface(MxI.$IBaseInterface) {
 MxI.$setAsInterface(ILifeForm).$asChildOf(MxI.$IBaseInterface);
 ```
 
-Let's see what happens if the `Animal` _implementation_ doesn't provide an implementation for the `run()` service §defined by `IAnimal` _interface class_). 
-If you want to test this use case, just rename `run()` to `__run()` in [`./src/test_classes/animal.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/animal.js) ), then restart the Unit Test with `node test.js` in the command shell. An exception should be raised an you would get the following output:
+Let's see what happens if the `FlyingFish` _implementation_ doesn't provide an implementation for the `swim()` service (defined by `IFish` _interface class_). 
+If you want to test this use case, just rename `swim()` to `__swim()` in [`./src/test_classes/flying_fish.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/flying_fish.js) ), then restart the Unit Test with `node test.js` in the command shell. An exception should be raised an you would get the following output:
 ```bash
-            throw new Error(error_msg);
-            ^
+         throw new Error(error_msg);
+        ^
 
-Error: ** mixin-interface Error 100 ** IAnimal.run not found on Animal_0
+Error: ** mixin-interface-api Error 100 ** IFish.swim not found on flying_fish_0
+
+
     at Object.$raiseNotImplementedError (D:\001_Lab\000_KL_Lab\_git_pub\mixin-in
-terface\src\mixin_interface.js:160:19)
-    at Animal.run (D:\001_Lab\000_KL_Lab\_git_pub\mixin-interface\src\test_class
-es\i_animal.js:16:9)
+terface\node_modules\mixin-interface-api\src\mixin_interface_api.js:29:15)
+    at FlyingFish.swim (D:\001_Lab\000_KL_Lab\_git_pub\mixin-interface\src\test_
+classes\i_fish.js:16:9)
 ...
 ```
 
