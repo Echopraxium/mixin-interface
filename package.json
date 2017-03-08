@@ -1,6 +1,6 @@
 {
   "name": "mixin-interface",
-  "version": "4.6.6",
+  "version": "4.7.0",
   "description": "An extension of 'mixin-interface-api' package with utility features.",
   "main": "main.js",
   "readme": "README.md",
