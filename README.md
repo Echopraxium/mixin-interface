@@ -119,45 +119,40 @@ Please note the following keywords and their meaning:
 > **...interfaces**: _list of implemented interfaces_. The list is provided as _interface class(es)_ separated by a comma (e.g. `ILifeForm` and `IAnimal, ILifeForm` are valid _...interfaces_ arguments) 
 
 
-# Base API services (provided by 'mixin-interface-api')
+# Base API services (from 'mixin-interface-api')
 
-For these services please refer to (['mixin-interface-api](https://www.npmjs.com/package/mixin-interface-api)) for their documentation
+For these services please refer to ([mixin-interface-api](https://www.npmjs.com/package/mixin-interface-api)) for their documentation
 
-* **MxI.$isInstanceOf()**: replacement for javascript `instanceof` operator.  
-* **MxI.$isInterface()**: checks if a _type_ is an _interface class_ or not.
+* **MxI.$isInstanceOf()**: replacement for javascript `instanceof` operator
+* **MxI.$isInterface()**: checks if a _type_ is an _interface class_ or not
 * **MxI.$implements()**: checks if a _type_ implements an _interface class_ or not
-* **MxI.$getSuperclass()**: get the superclass of a a _type 
-* **MxI.$Interface()**: defines an _interface class_ and its _super_interface_.  
-* **MxI.$setAsInterface().$asChildOf()**: defines that a class is an _interface class_ and its _super_implementation_.  
+* **MxI.$getSuperclass()**: get the superclass of a a _type
+* **MxI.$Interface()**: defines an _interface class_ and its _super_interface_
+* **MxI.$setAsInterface().$asChildOf()**: defines that a class is an _interface class_ and its _super_implementation_
  >This is syntactically redundant but nevertheless required in order that `MxI.$isInstanceOf()` works correctly.  
-
-* **MxI.$Implementation().$with()**: defines an _implementation class_ and its superclass (`Mxi.$Object` if no other class applies).  
-* **MxI.$setClass().$asImplementationOf()**: defines  the _interface class(es)_ implemented by an _implementation class_.  
-
-* **MxI.$raiseNotImplementedError()**: error handling when a service (defined by of an _interface class_) is not implemented  
-
-* **MxI.$Object().init()**: _Delayed Initialization_ feature  
-* **MxI.$Object().isInitialized()**: checks if an object has been initialized  
-
+* **MxI.$Implementation().$with()**: defines an _implementation class_ and its superclass (`Mxi.$Object` if no other class applies)
+* **MxI.$setClass().$asImplementationOf()**: defines  the _interface class(es)_ implemented by an _implementation class_
+* **MxI.$raiseNotImplementedError()**: error handling when a service (defined by of an _interface class_) is not implemented
+* **MxI.$Object().init()**: _Delayed Initialization_ feature
+* **MxI.$Object().isInitialized()**: checks if an object has been initialized
 * **MxI.$ISingleton**: _interface class_ for the _Singleton_ (i.e. Unique instance) design pattern (see [`design-patterns-api`](https://www.npmjs.com/package/design-patterns-api))
-* **MxI.$Singleton**: Default _implementation_ for `MxI.$ISingleton` _interface_  
-* **MxI.$isSingleton()**: Checks if an object is a _Singleton_  
-* **MxI.$setAsSingleton()**: Required to define that an _implementation_ is a _Singleton_  
-
-* **MxI.$INullObject**: _interface class_ for the _Null Object_ design pattern (see [`design-patterns-api`](https://www.npmjs.com/package/design-patterns-api))
-* **MxI.$NullObject**: Default _implementation_ for `MxI.$INullObject` _interface_  
-* **MxI.$Null**: Singleton of `MxI.$NullObject` 
+* **MxI.$Singleton**: Default _implementation_ for `MxI.$ISingleton` _interface_
+* **MxI.$isSingleton()**: Checks if an object is a _Singleton_
+* **MxI.$setAsSingleton()**: Required to define that an _implementation_ is a _Singleton_
+* **MxI.$INullObject**: _interface class_ for the _Null Object_ design pattern (see [`design-patterns-api`](https://www.npmjs.com/package/design-patterns-api)
+* **MxI.$NullObject**: Default _implementation_ for `MxI.$INullObject` _interface_
+* **MxI.$Null**: Singleton of `MxI.$NullObject`
 * **MxI.$isNull()**: Returns `true` in 2 cases. The first is when the input value is an object which is both a _Null Object_ an a _Singleton_ (typically the 'default Null Object' which is `MxI.$Null`). The second case is when the input value is `undefined`
 
 
 # Extension API services
-* **MxI.$System.log()**: _Custom Logger_ feature, more effective and flexible than `console.log()`  
-* **MxI.$System.banner()**: a variant of `MxI.$System.log()` which allows "decorated logs" with _banners_  
-* **MxI.$ILogger**: interface class for _Custom Logger_ feature   
-* **MxI.$DefaultLogger**: Default implementation of `MxI.$ILogger` (NB: it's a _Singleton_)  
-* **MxI.$System.setLogger()**: Changes the _Logger_ by providing a instance of a class which implements `MxI.$ILogger`  
+* **MxI.$System.log()**: _Custom Logger_ feature, more effective and flexible than `console.log()`
+* **MxI.$System.banner()**: a variant of `MxI.$System.log()` which allows "decorated logs" with _banners_
+* **MxI.$ILogger**: interface class for _Custom Logger_ feature
+* **MxI.$DefaultLogger**: Default implementation of `MxI.$ILogger` (NB: it's a _Singleton_)
+* **MxI.$System.setLogger()**: Changes the _Logger_ by providing a instance of a class which implements `MxI.$ILogger`
 * **MxI.$System.getLogger()**: get the current _Logger_ (an instance of a class which implements `MxI.$ILogger`)
-* **MxI.$System.resetLogger()**: Restores the _Default Logger_ (`MxI.$DefaultLogger`)   
+* **MxI.$System.resetLogger()**: Restores the _Default Logger_ (`MxI.$DefaultLogger`)
 
 
 ***
