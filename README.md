@@ -2,7 +2,7 @@
 
 An extension of 'mixin-interface-api' which provides an _Extended API_ (e.g: `MxI.$System.log()`) and _Utility Features_ (e.g: _Custom Logger_).
 
-## Changelog in release 4.7.4
+## Changelog in release 4.7.5
 * Documentation upgrade 1/2: UML model diagram for the implementation sample
 * Documentation upgrade 2/2: Paragraphs reordering ( _Sample UML Model_, _Core API Reference_ and _Extended API Reference_ now before _Installation and Usage_ and _How to run the Unit Test_)
 
@@ -12,8 +12,8 @@ An extension of 'mixin-interface-api' which provides an _Extended API_ (e.g: `Mx
 ## Howto: _FlyingFish_ implementation class
 Here is an example of how to subclass an _implementation class_ (see [`./src/test_classes/flying_fish.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/flying_fish.js)). Please find below how to subclass `Animal` and implement the `IBird` and `IFish` _interface classes_ as well.
 
-* Inherit from `Animal` (from `mixin-interface-api`) by means of the `MxI.Implementation().$with()` _idiom_ (after `extends` to define both a subclass and the _interfaces_ that it implements).
-* Provide implementation of the service defined by `IBird` (`fly()`) znd `IFish` (`swim()`). If a service from the parent _interfaces_ is not provided then it may be inherited from the parent _implementation class_.
+* Subclass `Animal` (from `mixin-interface-api`) by means of the `MxI.Implementation().$with()` _idiom_ (after `extends` to define both a subclass and the _interfaces_ that it implements).
+* Provide implementation of the service defined by `IBird` (fly()) and `IFish` (swim()). If a service from the parent _interface(s)_ is not provided then it may be inherited from the parent _implementation class_.
 
  >Notice this is the case in the following sample: for `run()` an `live()`, as they are _disabled_ by the `__` prefix then it is the implementation from the parent class which is inherited instead.
 
@@ -22,11 +22,11 @@ Here is an example of how to subclass an _implementation class_ (see [`./src/tes
  >This is required so that `MxI.$isInstanceOf()` works properly to identify an object both as being an instance of an _implementation class_ (and its superclass(es)) as well being an instance of an _interface class_ (and its superclass(es)).
 
 ```javascript
-const MxI      = require('../mixin_interface.js').MxI;
-const Animal   = require('mixin-interface-api/src/test_classes/animal.js').Animal;
-const IAnimal  = require('mixin-interface-api/src/test_classes/i_animal.js').IAnimal;
-const IBird    = require('./i_bird.js').IBird;
-const IFish    = require('./i_fish.js').IFish;
+const MxI     = require('../mixin_interface.js').MxI;
+const Animal  = require('mixin-interface-api/src/test_classes/animal.js').Animal;
+const IAnimal = require('mixin-interface-api/src/test_classes/i_animal.js').IAnimal;
+const IBird   = require('./i_bird.js').IBird;
+const IFish   = require('./i_fish.js').IFish;
 
 class FlyingFish extends MxI.$Implementation(Animal).$with(IBird, IFish) {
   constructor() {
