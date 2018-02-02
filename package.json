@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/Echopraxium/mixin-interface#readme",
   "dependencies": {
-    "mixin-interface-api": "^0.1.7"
+    "mixin-interface-api": "^0.1.27"
   },
   "devDependencies": {}
 }

@@ -1,6 +1,21 @@
 # mixin-interface
 
-An extension of 'mixin-interface-api' which provides an _Extended API_ (e.g: `MxI.$System.log()`) and _Utility Features_ (e.g: _Custom Logger_).
+Extension of 'mixin-interface-api' which provides a _deprecated_ implementation of a _Log feature_ (e.g. `MxI.$System.log()`).
+
+## Changelog in release 4.8.0
+This release deprecates the previous _Log feature_ implementation (`MxI.$System`). This release moves the implementation of _Log feature_ in `mixin-interface-api`. It is much better and modern thanks to the _sink metaphor_. 
+ >This idea is neither new nor mine but I thought that it would be very nice to have. You're welcome to read [this article](http://tutorials.jenkov.com/api-design/avoid-logging.html) and take a look at the [Serilog library](https://serilog.net/).
+
+Now the _Log client_ sends a _trace request_ (`MxI.$Log.write()`), then the _trace message_ is eventually processed by being sent to a specific _target_ (e.g. _Console_, _File_, _Server_, _Database_, etc...). 
+The _sink(s)_ must be explicitly declared (`MxI.$Log.addSink()`) else the _trace request_ is not processed.  
+ >Notice that _sink_ classes must implement `MxI.$ILogSink` but they are no more singletons.
+* Major refactoring of Log API: step 1/2 - move some classes from `mixin-interface` to `mixin-interface-api`
+  * `MxI.$ILogger` interface moved and rename to `MxI.$LogSink`.
+  * `MxI.$DefaultLogger` implementation moved and renamed to `MxI.$ConsoleLogSink`.
+  * Implementation of _Log feature_ moved from `MxI.$System` class to `MxI.$Log` class. Please notice that the previous API (e.g. `MxI.$System.log()`) is still supported but is now _deprecated_.
+* Major refactoring of Log API: step 2/2 - New implementation classes in `mixin-interface-api`
+  * `MxI.$Log` is the new implementation of the _Log feature_ in which _trace requests_ are processed by _sink(s)_. A _sink_ redirects traces (`MxI.$Log.write()` calls) to specific target (e.g. `$ConsoleLogSink` redirects to the console). 
+  * `MxI.$FileLogSink` is a _sink_ which redirects traces (`MxI.$Log.write()` calls) to a file (e.g. `log.txt`)
 
 ## Changelog in release 4.7.5
 * Documentation upgrade 1/2: UML model diagram for the implementation sample
@@ -71,7 +86,7 @@ Please note the following keywords and their meaning:
 > **...interfaces**: _list of implemented interfaces_. The list is provided as _interface class(es)_ separated by a comma (e.g. `ILifeForm` and `IAnimal, ILifeForm` are valid _...interfaces_ arguments) 
 
 
-# Core API reference
+# Core API reference (`mixin-interface-api`) 
 
 For these services please refer to ([mixin-interface-api](https://www.npmjs.com/package/mixin-interface-api)) for their documentation
 
@@ -96,37 +111,45 @@ For these services please refer to ([mixin-interface-api](https://www.npmjs.com/
 * **MxI.$Null**: Singleton of `MxI.$NullObject`
 * **MxI.$isNull()**: Returns `true` in 2 cases. The first is when the input value is an object which is both a _Null Object_ an a _Singleton_ (typically the 'default Null Object' which is `MxI.$Null`). The second case is when the input value is `undefined`
 
+* **Log Feature**
+ >This feature was previously implemented by `MxI.$System` (in `mixin-interface` package). `MxI.$System` still supports the previous implementation but is now _deprecated_.
+  * **MxI.$ILogSink**: interface class for a _sink_ (implementation of the Log feature).  
+  * **MxI.$Log.write(arg_msg, ...arg_values)**: new implementation of _trace requests_.  
+  * **MxI.$Log.banner()**: outputs `arg_msg` within a banner.
+  * **MxI.$Log.addSink()**: declares a _sink_ object (which must implement `$ILogSink`).
+  * **MxI.$Log.getSinkCount()**: returns the number of _sinks_.   
+  * **MxI.$Log.clearSinks()**: deletes all the _sinks_.
+  * **MxI.$ConsoleLogSink**: default _sink_ implementation class (sends _trace messages_ to the console).
+  * **MxI.$FileLogSink**: default _sink_ implementation class (sends _trace messages_ to a file - e.g. `./log.txt`).
 
-# Extended API Reference
-* **MxI.$System.log()**: _Custom Logger_ feature, more effective and flexible than `console.log()`
-* **MxI.$System.banner()**: a variant of `MxI.$System.log()` which allows "decorated logs" with _banners_
-* **MxI.$ILogger**: interface class for _Custom Logger_ feature
-* **MxI.$DefaultLogger**: Default implementation of `MxI.$ILogger` (NB: it's a _Singleton_)
-* **MxI.$System.setLogger()**: Changes the _Logger_ by providing a instance of a class which implements `MxI.$ILogger`
-* **MxI.$System.getLogger()**: get the current _Logger_ (an instance of a class which implements `MxI.$ILogger`)
-* **MxI.$System.resetLogger()**: Restores the _Default Logger_ (`MxI.$DefaultLogger`)
+# Extended API Reference (`mixin-interface`) 
+* **MxI.$System.log()**: (_deprecated_) _Log feature_, more effective and flexible than `console.log()`
+* **MxI.$System.banner()**: (_deprecated_) a variant of `MxI.$System.log()` which allows "decorated logs" with _banners_
+* **MxI.$DefaultLogger**: (_deprecated_) Default implementation of `MxI.$ILogSink`.
+* **MxI.$System.setLogger()**: (_deprecated_) Changes the _Logger_ by providing a instance of a class which implements `MxI.$ILogSink`
+* **MxI.$System.getLogger()**: (_deprecated_) get the current _Logger_ (an instance of a class which implements `MxI.$ILogSink`)
+* **MxI.$System.resetLogger()**: (_deprecated_) Restores the _Default Logger_ (`MxI.$DefaultLogger`)
 
 
 ***
-## Custom Logger Services
+## Log Feature Services
 ```javascript
-MxI.$ILogger
-MxI.$DefaultLogger
-MxI.$System.log(arg_msg, ...arg_values)
-MxI.$System.banner(arg_msg, arg_single_line_banner, arg_separator_char, arg_separator_length)
-MxI.$System.setLogger(logger)
-MxI.$System.resetLogger()
+Deprecated: MxI.$DefaultLogger
+Deprecated: MxI.$System.log(arg_msg, ...arg_values)
+Deprecated: MxI.$System.banner(arg_msg, arg_single_line_banner, arg_separator_char, arg_separator_length)
+Deprecated: MxI.$System.setLogger(log_sink)
+Deprecated: MxI.$System.resetLogger()
 ```
-* `MxI.$System.log()`: this is the _Custom Logger_ feature which is more effective and flexible than `console.log()`, like enabling/disabling traces, redirectog to a File or a Stream, define trace levels and categories etc... To use this feature just replace calls to `console.log()` by `MxI.$System.log()`. 
+* `MxI.$System.log()`: this is deprecated _Log feature_, now replaced by `MxI.$Log.write`). It is more effective and flexible than `console.log()`, like enabling/disabling traces, redirectog to a File or a Stream, define trace levels and categories etc... To use this feature just replace calls to `console.log()` by `MxI.$Log.write()`. 
 
->A custom logger must implement `MxI.$ILogger` interface, `MxI.$DefaultLogger` is provided as the default implementation of this interface (NB: the implementation class should be a _Singleton_)
+>A custom _Log sink_ must implement `MxI.$ILogSink` interface, `MxI.$DefaultLogger` is provided as the default implementation of this interface (NB: the implementation class should be a _Singleton_)
 
-* `MxI.$System.setLogger(logger)`: sets the current _Logger_.
+* `MxI.$System.setLogger(log_sink)`: sets the current _Log sink_.
 
->`logger` must be an instance of a class which implements `MxI.$ILogger`
+>`log_sink` must be an instance of a class which implements `MxI.$ILogSink`
 ```javascript
 const $StarPrefixLogger = require('./src/test_classes/star_prefix_logger.js').$StarPrefixLogger;
-MxI.$System.setLogger($StarPrefixLogger.getSingleton());
+MxI.$System.setLogger( new $StarPrefixLogger() );
 ```
 
 * `MxI.$System.resetLogger()`: restore the default logger (`MxI.$DefaultLogger`):
@@ -164,14 +187,13 @@ Here is the source code of `StarPrefixLogger` (see [`./src/test_classes/star_pre
 ```javascript
 const MxI = require('../mixin_interface.js').MxI;
 //============ 'StarPrefixLogger' implementation class ============
-class StarPrefixLogger extends MxI.$Implementation(MxI.$DefaultLogger).$with(MxI.$ILogger, MxI.$ISingleton) {
+class StarPrefixLogger extends MxI.$Implementation(MxI.$DefaultLogger).$with(MxI.$ILogSink) {
   constructor(...args) {
 	  super();
       this._$prefix = "* ";
   } // 'StarPrefixLogger' constructor
 } // 'StarPrefixLogger' class
-MxI.$setClass(StarPrefixLogger).$asImplementationOf(MxI.$ILogger, MxI.$ISingleton);
-MxI.$setAsSingleton(StarPrefixLogger);
+MxI.$setClass(StarPrefixLogger).$asImplementationOf(MxI.$ILogSink);
 exports.StarPrefixLogger = StarPrefixLogger;
 ```
 
@@ -198,7 +220,7 @@ Now enter the following command:
 node test.js
 ```
 
-You should get the following output:
+You should get this kind of output (please find [here](https://github.com/Echopraxium/mixin-interface/blob/master/log.txt) the full output):
 ```bash
 ============================================================
 ========== Unit Test for 'mixin-interface' package =========
@@ -217,54 +239,7 @@ You should get the following output:
 --> Animal.run
 --> Cat.suckle
 --> Animal.live
-----------------------------------
-3. Check if a type is an Interface class or an Implementation class
-'IBird'               is an interface ?         true
-'IFish'               is an interface ?         true
-----------------------------------
-4. Check if an Implementation class implements a given Interface
-'FlyingFish'          implements 'IBird' ?      true
-'FlyingFish'          implements 'IFish' ?      true
-----------------------------------
-5. get Superclass of a type
-Superclass of 'ILifeForm' is:                   $IBaseInterface
-Superclass of 'Animal' is:                      $Object
-Superclass of 'IAnimal' is:                     ILifeForm
-Superclass of 'Cat' is:                         Animal
-----------------------------------
-6. Instance of 'Cat' created: cat_1
-'cat_1' is a 'ILifeForm' ?                      true
-'cat_1' is a 'IAnimal' ?                        true
-'cat_1' is a 'IMammal' ?                        true
---> Animal.run
---> Cat.suckle
---> Animal.live
-----------------------------------
-7. Instance of 'FlyingFish' created: flying_fish_0
-'flying_fish_0' is a 'Animal' ?                 true
-'flying_fish_0' is a 'FlyingFish' ?             true
-'flying_fish_0' is a 'IAnimal' ?                true
-'flying_fish_0' is a 'IBird' ?                  true
-'flying_fish_0' is a 'IFish' ?                  true
---> FlyingFish.fly
---> FlyingFish.swim
---> Animal.run
---> Animal.live
-----------------------------------
-8. Check generated names for instances
-Another instance of 'Cat' created:              'cat_2'
-Another instance of 'Animal' created:           'animal_1'
-----------------------------------
-9. Change Logger
-* Logger changed to 'StarPrefixLogger'
-----------------------------------
-10. 'Null Object' feature, check if input value is 'MxI.NULL' or 'undefined'
-MxI.$isNull(undefined):                         true
-MxI.$isNull(MxI.NULL):                          true
-----------------------------------
-11. Singleton feature
-isSingleton(MxI.NULL):                          true
-'MxI.NULL' is a 'MxI.$ISingleton' ?             true
+...
 ===================== End of Unit Test =====================
 ```
 
