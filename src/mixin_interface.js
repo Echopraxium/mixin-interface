@@ -18,7 +18,7 @@ class $System {
 		    return;
 	    }
 		else if (! MxI.$isInstanceOf(MxI.$ILogger, arg_logger)) {
-			$System.getLogger().log("*** Error *** in '$System.setLogger()': '%s' is an invalid Logger object", arg_logger.name);
+			$System.getLogger().log("*** Error *** in '$System.setLogger()': '%s' is an invalid Log sink", arg_logger.name);
 		    return;
 	    }
 		
@@ -29,26 +29,26 @@ class $System {
     static getLogger() {
       if ( $System._$logger === undefined ) {
 		  $System._$logger = $DefaultLogger.getSingleton();
-		  if ($Log.getSinkCount() == 0)
-			$Log.addSink($System._$logger);
+		  if (MxI.$Log.getSinkCount() == 0)
+			MxI.$Log.addSink($System._$logger);
 	  }
 	  return $System._$logger;  
     } // $System.getLogger()
   
     static resetLogger() {
-      $Log.clearSinks();
+      MxI.$Log.clearSinks();
     } // $System.resetLogger()
   
     static log( arg_msg, ...arg_values ) {
-		if ($Log.getSinkCount() == 0)
-			$Log.addSink($System.getLogger());
-	    $Log.write(arg_msg, ...arg_values);
+		if (MxI.$Log.getSinkCount() == 0)
+			MxI.$Log.addSink($System.getLogger());
+	    MxI.$Log.write(arg_msg, ...arg_values);
     } // $System.log()
   
     static banner(arg_msg, arg_single_line_banner, arg_separator_char, arg_separator_length) {
-	  if ($Log.getSinkCount() == 0)
-		  $Log.addSink($System.getLogger());
-      $Log.banner(arg_msg, arg_single_line_banner, arg_separator_char, arg_separator_length);		
+	  if (MxI.$Log.getSinkCount() == 0)
+		  MxI.$Log.addSink($System.getLogger());
+      MxI.$Log.banner(arg_msg, arg_single_line_banner, arg_separator_char, arg_separator_length);		
   } // $System.banner()
 } // '$System' class
 $System._$logger;
