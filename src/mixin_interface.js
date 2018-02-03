@@ -13,22 +13,22 @@ const MxI = require('mixin-interface-api/src/mixin_interface_api.js').MxI;
 //=================================  '$System'  ==================================
 //================================================================================
 class $System {
-    static setLogger( arg_logger ) {
+    static setLogger(arg_sink) {
 	    if (arg_logger === undefined) {
 		    return;
 	    }
-		else if (! MxI.$isInstanceOf(MxI.$ILogger, arg_logger)) {
+		else if (! MxI.$isInstanceOf(MxI.$ILogger, arg_sink)) {
 			$System.getLogger().log("*** Error *** in '$System.setLogger()': '%s' is an invalid Log sink", arg_logger.name);
 		    return;
 	    }
 		
 		$System.resetLogger();
-	    $Log.addSink(arg_logger);  
+	    $Log.addSink(arg_sink);  
     } // $System.setLogger
   
     static getLogger() {
       if ( $System._$logger === undefined ) {
-		  $System._$logger = $DefaultLogger.getSingleton();
+		  $System._$logger = MxI.$DefaultLogger.getSingleton();
 		  if (MxI.$Log.getSinkCount() == 0)
 			MxI.$Log.addSink($System._$logger);
 	  }
@@ -57,5 +57,5 @@ $System._$logger;
 //================================================================================
 //========================= Extension of 'MxI' Namespace =========================
 //================================================================================
-MxI.$System        = $System;
+MxI.$System = $System;
 exports.MxI = MxI;
