@@ -2,7 +2,7 @@
 
 Extension of 'mixin-interface-api' which provides a _deprecated_ implementation of the _Log feature_ (e.g. `MxI.$System.log()`).
 
-## Changelog in release 4.8.1
+## Changelog in release 4.8.2
 This release deprecates the previous _Log feature_ implementation (`MxI.$System`). This release moves the implementation of _Log feature_ in `mixin-interface-api`. It is much better and modern thanks to the _sink metaphor_. 
  >This idea is neither new nor mine but I thought that it would be very nice to have. You're welcome to read [this article](http://tutorials.jenkov.com/api-design/avoid-logging.html) and take a look at the [Serilog library](https://serilog.net/).
 
@@ -10,7 +10,7 @@ Now the _Log client_ sends a _trace request_ (`MxI.$Log.write()`), then the _tra
 The _sink(s)_ must be explicitly declared (`MxI.$Log.addSink()`) else the _trace request_ is not processed.  
  >Notice that _sink_ classes must implement `MxI.$ILogSink` but they are no more singletons.  
 
- * Major refactoring of Log API: step 1/2 - move some classes from `mixin-interface` to `mixin-interface-api`
+* Major refactoring of Log API: step 1/2 - move some classes from `mixin-interface` to `mixin-interface-api`
   * `MxI.$ILogger` interface moved and rename to `MxI.$LogSink`.
   * `MxI.$DefaultLogger` implementation moved and renamed to `MxI.$ConsoleLogSink`.   
   * Implementation of _Log feature_ moved from `MxI.$System` class to `MxI.$Log` class. Please notice that the previous API (e.g. `MxI.$System.log()`) is still supported but is now _deprecated_.  
