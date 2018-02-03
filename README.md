@@ -2,7 +2,7 @@
 
 Extension of 'mixin-interface-api' which provides a _deprecated_ implementation of the _Log feature_ (e.g. `MxI.$System.log()`).
 
-## Release 4.8.6 changelog
+## Release 4.8.8 changelog
 This release deprecates the previous _Log feature_ implementation (`MxI.$System`). This release moves the implementation of _Log feature_ in `mixin-interface-api`. It is much better and modern thanks to the _sink metaphor_. 
  >This idea is neither new nor mine but I thought that it would be very nice to have. You're welcome to read [this article](http://tutorials.jenkov.com/api-design/avoid-logging.html) and take a look at the [Serilog library](https://serilog.net/).
 
@@ -10,12 +10,12 @@ Now the _Log client_ sends a _trace request_ (`MxI.$Log.write()`), then the _tra
 The _sink(s)_ must be explicitly declared (`MxI.$Log.addSink()`) else the _trace request_ is not processed.  
  >Notice that _sink_ classes must implement `MxI.$ILogSink` but they are no more singletons.  
 
-* Major refactoring of Log API: step 1/2 - move some classes from `mixin-interface` to `mixin-interface-api`
+* Major refactoring of _Log API_: step 1/2 - move some classes from `mixin-interface` to `mixin-interface-api`
   * `MxI.$ILogger` interface moved and rename to `MxI.$LogSink`.
   * `MxI.$DefaultLogger` implementation moved and renamed to `MxI.$ConsoleLogSink`.   
   * Implementation of _Log feature_ moved from `MxI.$System` class to `MxI.$Log` class. Please notice that the previous API (e.g. `MxI.$System.log()`) is still supported but is now _deprecated_.  
 <br> 
-* Major refactoring of Log API: step 2/2 - New implementation classes in `mixin-interface-api`
+* Major refactoring of _Log API_: step 2/2 - New implementation classes in `mixin-interface-api`
   * `MxI.$Log` is the new implementation of the _Log feature_ in which _trace requests_ are processed by _sink(s)_. A _sink_ redirects traces (`MxI.$Log.write()` calls) to specific target (e.g. `$ConsoleLogSink` redirects to the console). 
   * `MxI.$FileLogSink` is a _sink_ which redirects traces (`MxI.$Log.write()` calls) to a file (e.g. `log.txt`)
 ___
@@ -70,8 +70,8 @@ MxI.$setClass(FlyingFish).$asImplementationOf(IBird, IFish);
 exports.FlyingFish = FlyingFish;
 ```
 >Notice that `IAnimal.run()` and `ILifeForm.live()` services are not provided, so they are inherited from the parent _implementation class_ (`Animal`).
+<br><br>
 
-- - - -
 # API Reference - Foreword
 
 Please note the following keywords and their meaning: 
@@ -87,7 +87,6 @@ Please note the following keywords and their meaning:
 > **super_implementation**: for _superclass of the implementation class_   
 > **...interfaces**: _list of implemented interfaces_. The list is provided as _interface class(es)_ separated by a comma (e.g. `ILifeForm` and `IAnimal, ILifeForm` are valid _...interfaces_ arguments) 
 
-___
 # Core API reference (mixin-interface-api) 
 
 For these services please refer to ([mixin-interface-api](https://www.npmjs.com/package/mixin-interface-api)) for their documentation
@@ -124,7 +123,6 @@ For these services please refer to ([mixin-interface-api](https://www.npmjs.com/
   * **MxI.$ConsoleLogSink**: default _sink_ implementation class (sends _trace messages_ to the console).
   * **MxI.$FileLogSink**: default _sink_ implementation class (sends _trace messages_ to a file - e.g. `./log.txt`).
 
-___
 # Extended API Reference (mixin-interface) 
 * **MxI.$System.log()**: (_deprecated_, replaced by `MxI.$Log.write`) _Log feature_, more effective and flexible than `console.log()`
 * **MxI.$System.banner()**: (_deprecated_, replaced by `MxI.$Log.banner`) a variant of `MxI.$System.log()` which allows "decorated logs" with _banners_
