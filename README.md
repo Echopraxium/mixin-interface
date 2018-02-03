@@ -2,7 +2,7 @@
 
 Extension of 'mixin-interface-api' which provides a _deprecated_ implementation of the _Log feature_ (e.g. `MxI.$System.log()`).
 
-## Release 4.8.8 changelog
+## Release 4.9.0 changelog
 This release deprecates the previous _Log feature_ implementation (`MxI.$System`). This release moves the implementation of _Log feature_ in `mixin-interface-api`. It is much better and modern thanks to the _sink metaphor_. 
  >This idea is neither new nor mine but I thought that it would be very nice to have. You're welcome to read [this article](http://tutorials.jenkov.com/api-design/avoid-logging.html) and take a look at the [Serilog library](https://serilog.net/).
 
