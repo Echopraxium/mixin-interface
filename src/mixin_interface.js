@@ -28,7 +28,7 @@ class $System {
   
     static getLogger() {
       if ( $System._$logger === undefined ) {
-		  $System._$logger = MxI.$DefaultLogger.getSingleton();
+		  $System._$logger = new MxI.$ConsoleLogSink();
 		  if (MxI.$Log.getSinkCount() == 0)
 			MxI.$Log.addSink($System._$logger);
 	  }
@@ -37,6 +37,7 @@ class $System {
   
     static resetLogger() {
       MxI.$Log.clearSinks();
+	  $System._$logger = null;
     } // $System.resetLogger()
   
     static log( arg_msg, ...arg_values ) {
