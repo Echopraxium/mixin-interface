@@ -1,8 +1,8 @@
 # mixin-interface
 
 Extension of 'mixin-interface-api' which provides a _deprecated_ implementation of the _Log feature_ (e.g. `MxI.$System.log()`).
-___
-## Changelog in release 4.8.5
+
+## Release 4.8.6 changelog
 This release deprecates the previous _Log feature_ implementation (`MxI.$System`). This release moves the implementation of _Log feature_ in `mixin-interface-api`. It is much better and modern thanks to the _sink metaphor_. 
  >This idea is neither new nor mine but I thought that it would be very nice to have. You're welcome to read [this article](http://tutorials.jenkov.com/api-design/avoid-logging.html) and take a look at the [Serilog library](https://serilog.net/).
 
@@ -14,17 +14,12 @@ The _sink(s)_ must be explicitly declared (`MxI.$Log.addSink()`) else the _trace
   * `MxI.$ILogger` interface moved and rename to `MxI.$LogSink`.
   * `MxI.$DefaultLogger` implementation moved and renamed to `MxI.$ConsoleLogSink`.   
   * Implementation of _Log feature_ moved from `MxI.$System` class to `MxI.$Log` class. Please notice that the previous API (e.g. `MxI.$System.log()`) is still supported but is now _deprecated_.  
-```
-
-``` 
+<br> 
 * Major refactoring of Log API: step 2/2 - New implementation classes in `mixin-interface-api`
   * `MxI.$Log` is the new implementation of the _Log feature_ in which _trace requests_ are processed by _sink(s)_. A _sink_ redirects traces (`MxI.$Log.write()` calls) to specific target (e.g. `$ConsoleLogSink` redirects to the console). 
   * `MxI.$FileLogSink` is a _sink_ which redirects traces (`MxI.$Log.write()` calls) to a file (e.g. `log.txt`)
-```
-
-```
 ___
-## Changelog in release 4.7.5
+## Release 4.7.5 changelog
 * Documentation upgrade 1/2: UML model diagram for the implementation sample
 * Documentation upgrade 2/2: Paragraphs reordering ( _Sample UML Model_, _Core API Reference_ and _Extended API Reference_ now before _Installation and Usage_ and _How to run the Unit Test_)
 
@@ -77,7 +72,7 @@ exports.FlyingFish = FlyingFish;
 >Notice that `IAnimal.run()` and `ILifeForm.live()` services are not provided, so they are inherited from the parent _implementation class_ (`Animal`).
 
 - - - -
-# API Reference
+# API Reference - Foreword
 
 Please note the following keywords and their meaning: 
   
