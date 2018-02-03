@@ -1,18 +1,20 @@
 # mixin-interface
 
-Extension of 'mixin-interface-api' which provides a _deprecated_ implementation of a _Log feature_ (e.g. `MxI.$System.log()`).
+Extension of 'mixin-interface-api' which provides a _deprecated_ implementation of the _Log feature_ (e.g. `MxI.$System.log()`).
 
-## Changelog in release 4.8.0
+## Changelog in release 4.8.1
 This release deprecates the previous _Log feature_ implementation (`MxI.$System`). This release moves the implementation of _Log feature_ in `mixin-interface-api`. It is much better and modern thanks to the _sink metaphor_. 
  >This idea is neither new nor mine but I thought that it would be very nice to have. You're welcome to read [this article](http://tutorials.jenkov.com/api-design/avoid-logging.html) and take a look at the [Serilog library](https://serilog.net/).
 
 Now the _Log client_ sends a _trace request_ (`MxI.$Log.write()`), then the _trace message_ is eventually processed by being sent to a specific _target_ (e.g. _Console_, _File_, _Server_, _Database_, etc...). 
 The _sink(s)_ must be explicitly declared (`MxI.$Log.addSink()`) else the _trace request_ is not processed.  
- >Notice that _sink_ classes must implement `MxI.$ILogSink` but they are no more singletons.
-* Major refactoring of Log API: step 1/2 - move some classes from `mixin-interface` to `mixin-interface-api`
+ >Notice that _sink_ classes must implement `MxI.$ILogSink` but they are no more singletons.  
+
+ * Major refactoring of Log API: step 1/2 - move some classes from `mixin-interface` to `mixin-interface-api`
   * `MxI.$ILogger` interface moved and rename to `MxI.$LogSink`.
-  * `MxI.$DefaultLogger` implementation moved and renamed to `MxI.$ConsoleLogSink`.
-  * Implementation of _Log feature_ moved from `MxI.$System` class to `MxI.$Log` class. Please notice that the previous API (e.g. `MxI.$System.log()`) is still supported but is now _deprecated_.
+  * `MxI.$DefaultLogger` implementation moved and renamed to `MxI.$ConsoleLogSink`.   
+  * Implementation of _Log feature_ moved from `MxI.$System` class to `MxI.$Log` class. Please notice that the previous API (e.g. `MxI.$System.log()`) is still supported but is now _deprecated_.  
+
 * Major refactoring of Log API: step 2/2 - New implementation classes in `mixin-interface-api`
   * `MxI.$Log` is the new implementation of the _Log feature_ in which _trace requests_ are processed by _sink(s)_. A _sink_ redirects traces (`MxI.$Log.write()` calls) to specific target (e.g. `$ConsoleLogSink` redirects to the console). 
   * `MxI.$FileLogSink` is a _sink_ which redirects traces (`MxI.$Log.write()` calls) to a file (e.g. `log.txt`)
@@ -49,19 +51,19 @@ class FlyingFish extends MxI.$Implementation(Animal).$with(IBird, IFish) {
   } // 'FlyingFish' constructor
 
   fly() {
-    MxI.$System.log('--> FlyingFish.fly');
+    MxI.$Log.write('--> FlyingFish.fly');
   } // IBird.fly()
 
   swim() {
-    MxI.$System.log('--> FlyingFish.swim');
+    MxI.$Log.write('--> FlyingFish.swim');
   } // IFish.swim()
 
   __run() {
-    MxI.$System.log('--> FlyingFish.run');
+    MxI.$Log.write('--> FlyingFish.run');
   } // IAnimal.run()
 
   __live() {
-    MxI.$System.log('--> FlyingFish.live');
+    MxI.$Log.write('--> FlyingFish.live');
   } // ILifeForm.live()
 } // 'FlyingFish' class
 MxI.$setClass(FlyingFish).$asImplementationOf(IBird, IFish);
@@ -123,12 +125,12 @@ For these services please refer to ([mixin-interface-api](https://www.npmjs.com/
   * **MxI.$FileLogSink**: default _sink_ implementation class (sends _trace messages_ to a file - e.g. `./log.txt`).
 
 # Extended API Reference (`mixin-interface`) 
-* **MxI.$System.log()**: (_deprecated_) _Log feature_, more effective and flexible than `console.log()`
-* **MxI.$System.banner()**: (_deprecated_) a variant of `MxI.$System.log()` which allows "decorated logs" with _banners_
+* **MxI.$System.log()**: (_deprecated_, replaced by `MxI.$Log.write`) _Log feature_, more effective and flexible than `console.log()`
+* **MxI.$System.banner()**: (_deprecated_, replaced by `MxI.$Log.banner`) a variant of `MxI.$System.log()` which allows "decorated logs" with _banners_
 * **MxI.$DefaultLogger**: (_deprecated_) Default implementation of `MxI.$ILogSink`.
 * **MxI.$System.setLogger()**: (_deprecated_) Changes the _Logger_ by providing a instance of a class which implements `MxI.$ILogSink`
-* **MxI.$System.getLogger()**: (_deprecated_) get the current _Logger_ (an instance of a class which implements `MxI.$ILogSink`)
-* **MxI.$System.resetLogger()**: (_deprecated_) Restores the _Default Logger_ (`MxI.$DefaultLogger`)
+* **MxI.$System.getLogger()**: (_deprecated_) get the current _LogSink_ (an instance of a class which implements `MxI.$ILogSink`)
+* **MxI.$System.resetLogger()**: (_deprecated_) Restores the _Default LogSink_ (`MxI.$DefaultLogger`)
 
 
 ***
@@ -140,7 +142,7 @@ Deprecated: MxI.$System.banner(arg_msg, arg_single_line_banner, arg_separator_ch
 Deprecated: MxI.$System.setLogger(log_sink)
 Deprecated: MxI.$System.resetLogger()
 ```
-* `MxI.$System.log()`: this is deprecated _Log feature_, now replaced by `MxI.$Log.write`). It is more effective and flexible than `console.log()`, like enabling/disabling traces, redirectog to a File or a Stream, define trace levels and categories etc... To use this feature just replace calls to `console.log()` by `MxI.$Log.write()`. 
+* `MxI.$System.log()`: (_deprecated_, replaced by `MxI.$Log.write`) It is more effective and flexible than `console.log()`, like enabling/disabling traces, redirectog to a File or a Stream, define trace levels and categories etc... To use this feature just replace calls to `console.log()` by `MxI.$Log.write()`. 
 
 >A custom _Log sink_ must implement `MxI.$ILogSink` interface, `MxI.$DefaultLogger` is provided as the default implementation of this interface (NB: the implementation class should be a _Singleton_)
 
@@ -157,14 +159,14 @@ MxI.$System.setLogger( new $StarPrefixLogger() );
 MxI.$System.resetLogger();
 ```
 
-* `MxI.$System.banner()`: generates nicer logs by surrounding the message in a banner. Optional arguments (after `arg_msg`) allow to change      
+* `MxI.$System.banner()`: (_deprecated_, replaced by `MxI.$Log.banner`) generates nicer logs by surrounding the message in a banner. Optional arguments (after `arg_msg`) allow to change      
   * the number of lines (3 by default, one if `arg_single_line_banner` is set to `true`)  
   * the separator ('=' by default, another if `arg_separator_char` is set)  
   * the banner size (60 by default, another if `arg_separator_length` is set)  
 
 Example 1:
 ```bash
-MxI.$System.banner("Unit Test for 'mixin-interface' package");
+MxI.$Log.banner("Unit Test for 'mixin-interface' package");
 ```
 will generate this output:
 ```bash
@@ -175,14 +177,14 @@ will generate this output:
 
 Example 2:
 ```bash
-MxI.$System.banner("End of Unit Test", true);
+MxI.$Log.banner("End of Unit Test", true);
 ```
 will generate this output:
 ```bash
 ===================== End of Unit Test =====================
 ```
 
-Here is the source code of `StarPrefixLogger` (see [`./src/test_classes/star_prefix_logger.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/star_prefix_logger.js)). Once it is set as the current _Logger_ (with `MxI.$System.setLogger()`), it will add '* ' prefix on each output of `MxI.$System.log()` call (see [`./test.js`](https://github.com/Echopraxium/mixin-interface/blob/master/test.js)).
+Here is the source code of `StarPrefixLogger` (see [`./src/test_classes/star_prefix_logger.js`](https://github.com/Echopraxium/mixin-interface/blob/master/src/test_classes/star_prefix_logger.js)). Once it is set as the current _Log sink_ (with `MxI.$System.setLogger()`), it will add '* ' prefix on each output of `MxI.$System.log()` call (see [`./test.js`](https://github.com/Echopraxium/mixin-interface/blob/master/test.js)).
 
 ```javascript
 const MxI = require('../mixin_interface.js').MxI;
