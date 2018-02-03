@@ -1,8 +1,8 @@
 # mixin-interface
 
 Extension of 'mixin-interface-api' which provides a _deprecated_ implementation of the _Log feature_ (e.g. `MxI.$System.log()`).
-
-## Changelog in release 4.8.4
+___
+## Changelog in release 4.8.5
 This release deprecates the previous _Log feature_ implementation (`MxI.$System`). This release moves the implementation of _Log feature_ in `mixin-interface-api`. It is much better and modern thanks to the _sink metaphor_. 
  >This idea is neither new nor mine but I thought that it would be very nice to have. You're welcome to read [this article](http://tutorials.jenkov.com/api-design/avoid-logging.html) and take a look at the [Serilog library](https://serilog.net/).
 
@@ -14,11 +14,16 @@ The _sink(s)_ must be explicitly declared (`MxI.$Log.addSink()`) else the _trace
   * `MxI.$ILogger` interface moved and rename to `MxI.$LogSink`.
   * `MxI.$DefaultLogger` implementation moved and renamed to `MxI.$ConsoleLogSink`.   
   * Implementation of _Log feature_ moved from `MxI.$System` class to `MxI.$Log` class. Please notice that the previous API (e.g. `MxI.$System.log()`) is still supported but is now _deprecated_.  
-__  
+```
+
+``` 
 * Major refactoring of Log API: step 2/2 - New implementation classes in `mixin-interface-api`
   * `MxI.$Log` is the new implementation of the _Log feature_ in which _trace requests_ are processed by _sink(s)_. A _sink_ redirects traces (`MxI.$Log.write()` calls) to specific target (e.g. `$ConsoleLogSink` redirects to the console). 
   * `MxI.$FileLogSink` is a _sink_ which redirects traces (`MxI.$Log.write()` calls) to a file (e.g. `log.txt`)
+```
 
+```
+___
 ## Changelog in release 4.7.5
 * Documentation upgrade 1/2: UML model diagram for the implementation sample
 * Documentation upgrade 2/2: Paragraphs reordering ( _Sample UML Model_, _Core API Reference_ and _Extended API Reference_ now before _Installation and Usage_ and _How to run the Unit Test_)
@@ -87,7 +92,7 @@ Please note the following keywords and their meaning:
 > **super_implementation**: for _superclass of the implementation class_   
 > **...interfaces**: _list of implemented interfaces_. The list is provided as _interface class(es)_ separated by a comma (e.g. `ILifeForm` and `IAnimal, ILifeForm` are valid _...interfaces_ arguments) 
 
-
+___
 # Core API reference (mixin-interface-api) 
 
 For these services please refer to ([mixin-interface-api](https://www.npmjs.com/package/mixin-interface-api)) for their documentation
@@ -124,6 +129,7 @@ For these services please refer to ([mixin-interface-api](https://www.npmjs.com/
   * **MxI.$ConsoleLogSink**: default _sink_ implementation class (sends _trace messages_ to the console).
   * **MxI.$FileLogSink**: default _sink_ implementation class (sends _trace messages_ to a file - e.g. `./log.txt`).
 
+___
 # Extended API Reference (mixin-interface) 
 * **MxI.$System.log()**: (_deprecated_, replaced by `MxI.$Log.write`) _Log feature_, more effective and flexible than `console.log()`
 * **MxI.$System.banner()**: (_deprecated_, replaced by `MxI.$Log.banner`) a variant of `MxI.$System.log()` which allows "decorated logs" with _banners_
@@ -135,12 +141,13 @@ For these services please refer to ([mixin-interface-api](https://www.npmjs.com/
 
 ***
 ## Log Feature Services
+Notice that these are _deprecated_ services.  
 ```javascript
-Deprecated: MxI.$DefaultLogger
-Deprecated: MxI.$System.log(arg_msg, ...arg_values)
-Deprecated: MxI.$System.banner(arg_msg, arg_single_line_banner, arg_separator_char, arg_separator_length)
-Deprecated: MxI.$System.setLogger(log_sink)
-Deprecated: MxI.$System.resetLogger()
+MxI.$DefaultLogger
+MxI.$System.log(arg_msg, ...arg_values)
+MxI.$System.banner(arg_msg, arg_single_line_banner, arg_separator_char, arg_separator_length)
+MxI.$System.setLogger(log_sink)
+MxI.$System.resetLogger()
 ```
 * `MxI.$System.log()`: (_deprecated_, replaced by `MxI.$Log.write`) It is more effective and flexible than `console.log()`, like enabling/disabling traces, redirectog to a File or a Stream, define trace levels and categories etc... To use this feature just replace calls to `console.log()` by `MxI.$Log.write()`. 
 
@@ -169,7 +176,7 @@ Example 1:
 MxI.$Log.banner("Unit Test for 'mixin-interface' package");
 ```
 will generate this output:
-```bash
+```
 ============================================================
 ========== Unit Test for 'mixin-interface' package =========
 ============================================================
@@ -180,7 +187,7 @@ Example 2:
 MxI.$Log.banner("End of Unit Test", true);
 ```
 will generate this output:
-```bash
+```
 ===================== End of Unit Test =====================
 ```
 
@@ -223,7 +230,7 @@ node test.js
 ```
 
 You should get this kind of output (please find [here](https://github.com/Echopraxium/mixin-interface/blob/master/log.txt) the full output):
-```bash
+```
 ============================================================
 ========== Unit Test for 'mixin-interface' package =========
 ============================================================
