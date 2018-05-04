@@ -1,6 +1,10 @@
 # mixin-interface
 
-Extension of 'mixin-interface-api' which provides a _deprecated_ implementation of the _Log feature_ (e.g. `MxI.$System.log()`).
+This extension of 'mixin-interface-api' provided a (_now deprecated_) implementation of the _Log feature_ (e.g. `MxI.$System.log()`).
+Please note that this package is now obsolete (event though if is still usable). It is strongly advised to use 'mixin-interface-api' instead. 
+
+## Release 4.9.3 changelog
+Documentation fixes
 
 ## Release 4.9.0 changelog
 This release deprecates the previous _Log feature_ implementation (`MxI.$System`). This release moves the implementation of _Log feature_ in `mixin-interface-api`. It is much better and modern thanks to the _sink metaphor_. 
@@ -11,7 +15,7 @@ The _sink(s)_ must be explicitly declared (`MxI.$Log.addSink()`) else the _trace
  >Notice that _sink_ classes must implement `MxI.$ILogSink` but they are no more singletons.  
 
 * Major refactoring of _Log API_: step 1/2 - move some classes from `mixin-interface` to `mixin-interface-api`
-  * `MxI.$ILogger` interface moved and rename to `MxI.$LogSink`.
+  * `MxI.$ILogger` interface moved and rename to `MxI.$ILogSink`.
   * `MxI.$DefaultLogger` implementation moved and renamed to `MxI.$ConsoleLogSink`.   
   * Implementation of _Log feature_ moved from `MxI.$System` class to `MxI.$Log` class. Please notice that the previous API (e.g. `MxI.$System.log()`) is still supported but is now _deprecated_.  
 <br> 
@@ -121,7 +125,7 @@ For these services please refer to ([mixin-interface-api](https://www.npmjs.com/
   * **MxI.$Log.getSinkCount()**: returns the number of _sinks_.   
   * **MxI.$Log.clearSinks()**: deletes all the _sinks_.
   * **MxI.$ConsoleLogSink**: default _sink_ implementation class (sends _trace messages_ to the console).
-  * **MxI.$FileLogSink**: default _sink_ implementation class (sends _trace messages_ to a file - e.g. `./log.txt`).
+  * **MxI.$FileLogSink**: predefined _sink_ implementation class (sends _trace messages_ to a file - e.g. `./log.txt`).
 
 # Extended API Reference (mixin-interface) 
 * **MxI.$System.log()**: (_deprecated_, replaced by `MxI.$Log.write`) _Log feature_, more effective and flexible than `console.log()`
